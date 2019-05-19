@@ -9,10 +9,5 @@ import {AuthenticationMiddleware} from './common/auth.middleware';
     controllers: [],
     providers: [],
 })
-export class AppModule implements NestModule {
-    configure(consumer: MiddlewareConsumer) {
-        consumer
-            .apply(AuthenticationMiddleware)
-            .forRoutes('transactions');
-    }
+export class AppModule {
 }
