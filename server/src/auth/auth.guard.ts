@@ -1,4 +1,4 @@
-import {CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import {CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable, Logger} from '@nestjs/common';
 import {AuthService} from './auth.service';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
             const request = context.switchToHttp().getRequest();
             const token = this.getTokenFromAuthHeader(request.headers.authorization);
             const result = await this.authService.validateToken(token);
-            console.log(result);
+            Logger.log(result, 'Authentication Attempt');
             return true;
         } catch (err) {
             throw new HttpException(err, HttpStatus.BAD_REQUEST);

@@ -1,11 +1,16 @@
 import * as jwksClientFactory from 'jwks-rsa';
+import {Injectable, Logger, OnModuleInit} from '@nestjs/common';
+import {ConfigService} from '../../config/config.service';
 
+@Injectable()
 export class JwtConfigService {
 
-    private kid = 'RTMxREEwRTE1MUJERUVDMDY0MkNBMEFBMzFCRjcyN0Y2QjhBQUZDNA';
+    constructor(private readonly config: ConfigService) {}
+
+    private kid = this.config.get('AUTH0_KID');
     private jwksClient = jwksClientFactory({
         cache: true,
-        jwksUri: 'https://dev-l2w-mks0.eu.auth0.com/.well-known/jwks.json',
+        jwksUri: this.config.get('AUTH0_JWKS_URL'),
     });
 
     async getPublicKey(): Promise<any> {
