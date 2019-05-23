@@ -3,21 +3,22 @@ import {JwtModule} from '@nestjs/jwt';
 
 import { AuthService } from './auth.service';
 import {AuthGuard} from './auth.guard';
-import {JwtConfigService} from './jwt/jwt-config.service';
-import {JwtConfigModule} from './jwt/jwt-config.module';
+import {JwksConfigService} from './jwt/jwks-config.service';
+import {JwksConfigModule} from './jwt/jwks-config.module';
+import {UserModule} from '../user/user.module';
 
 @Module({
     imports: [
         JwtModule.registerAsync({
-            imports: [JwtConfigModule],
-            useFactory: async (jwtConfigService: JwtConfigService) => ({
+            imports: [JwksConfigModule],
+            useFactory: async (jwtConfigService: JwksConfigService) => ({
                 publicKey: await jwtConfigService.getPublicKey(),
             }),
-            inject: [JwtConfigService],
+            inject: [JwksConfigService],
         }),
+        UserModule,
     ],
-    controllers: [],
     providers: [AuthService, AuthGuard],
-    exports: [AuthGuard, AuthService],
+    exports: [AuthService, AuthGuard],
 })
 export class AuthModule {}

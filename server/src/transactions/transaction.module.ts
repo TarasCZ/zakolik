@@ -1,14 +1,17 @@
-import {DatabaseModule} from '../database/database.module';
 import {Module} from '@nestjs/common';
 import {TransactionController} from './transaction.controller';
 import {TransactionService} from './transaction.service';
-import {transactionProviders} from './transaction.provider';
 import {AuthModule} from '../auth/auth.module';
+import {MongooseModule} from '@nestjs/mongoose';
+import {TransactionSchema} from './transaction.schema';
 
 @Module({
-    imports: [DatabaseModule, AuthModule],
+    imports: [
+        MongooseModule.forFeature([{ name: 'Transaction', schema: TransactionSchema }]),
+        AuthModule,
+    ],
     controllers: [TransactionController],
-    providers: [TransactionService, ...transactionProviders],
+    providers: [TransactionService],
 })
 
 export class TransactionModule {}

@@ -1,11 +1,13 @@
-import {Inject, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {Model} from 'mongoose';
 import {Transaction} from './transaction.interface';
 import {CreateTransactionDto} from './dto/create-transaction.dto';
+import {InjectModel} from '@nestjs/mongoose';
+import {User} from '../user/user.interface';
 
 @Injectable()
 export class TransactionService {
-    constructor(@Inject('TRANSACTION_MODEL') private readonly transactionModel: Model<Transaction>) {
+    constructor(@InjectModel('Transaction') private readonly transactionModel: Model<Transaction>) {
     }
 
     async create(createUserDto: CreateTransactionDto): Promise<Transaction> {
@@ -13,7 +15,7 @@ export class TransactionService {
         return await createTransaction.save();
     }
 
-    async findAll(): Promise<Transaction[]> {
-        return await this.transactionModel.find().exec();
+    async findAll(user: User): Promise<Transaction[]> {
+        return await this.transactionModel.find({user}).exec();
     }
 }

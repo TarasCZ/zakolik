@@ -1,4 +1,6 @@
-export interface Transaction {
+import {Document} from 'mongoose';
+
+export interface Transaction extends Document {
     name: string;
     type: string;
     value: number;

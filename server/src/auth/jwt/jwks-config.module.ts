@@ -1,10 +1,11 @@
-import {JwtConfigService} from './jwt-config.service';
+import {JwksConfigService} from './jwks-config.service';
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '../../config/config.module';
 
 @Module({
     imports: [ConfigModule],
-    providers: [JwtConfigService],
-    exports: [JwtConfigService],
+    providers: [JwksConfigService],
+    exports: [JwksConfigService],
 })
-export class JwtConfigModule {}
+export class JwksConfigModule {
+}
