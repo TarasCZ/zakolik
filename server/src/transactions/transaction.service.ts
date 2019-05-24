@@ -16,6 +16,6 @@ export class TransactionService {
     }
 
     async findAll(user: User): Promise<Transaction[]> {
-        return await this.transactionModel.find({user}).exec();
+        return await this.transactionModel.find({owner: user.id}).exec();
     }
 }

@@ -1,7 +1,7 @@
 export class CreateTransactionDto {
-    readonly name: string;
-    readonly type: string;
+    readonly name?: string;
+    readonly type?: string;
     readonly value: number;
     readonly owner: string;
-    readonly date: string;
+    readonly date: number;
 }

@@ -15,7 +15,7 @@ export class TransactionController {
         return this.transactionService.findAll(user);
     }
 
-    @Post('create')
+    @Post()
     async create(@Body() createTransactionDto: CreateTransactionDto) {
         return this.transactionService.create(createTransactionDto);
     }
