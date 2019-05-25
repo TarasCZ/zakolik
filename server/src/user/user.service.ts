@@ -1,12 +1,11 @@
 import {Injectable} from '@nestjs/common';
 import {Model} from 'mongoose';
-import {User} from './user.interface';
-import {CreateUserDto} from './dto/create-user.dto';
+import {User, UserDocument} from './user.interface';
 import {InjectModel} from '@nestjs/mongoose';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectModel('User') private readonly userModel: Model<User>) {
+    constructor(@InjectModel('User') private readonly userModel: Model<UserDocument>) {
     }
 
     async getUser(token: any) {
@@ -23,7 +22,7 @@ export class UserService {
         return this.userModel.findOne({ id }).exec();
     }
 
-    private async create(createUserDto: CreateUserDto): Promise<User> {
-        return new this.userModel(createUserDto).save();
+    private async create(newUser: User): Promise<User> {
+        return new this.userModel(newUser).save();
     }
 }
