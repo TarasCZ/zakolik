@@ -12,11 +12,17 @@ export class TransactionController {
     @UseGuards(AuthGuard)
     async findAll(@Request() req): Promise<Transaction[]> {
         const user = await req.user;
+
         return this.transactionService.findAll(user);
     }
 
     @Post()
-    async create(@Body() createTransactionDto: CreateTransactionDto) {
-        return this.transactionService.create(createTransactionDto);
+    @UseGuards(AuthGuard)
+    async create(@Body() createTransactionDto: CreateTransactionDto, @Request() req) {
+        const user = await req.user;
+
+        const createTransaction = this.transactionService.assignMetadataToTransaction(createTransactionDto, user);
+
+        return this.transactionService.create(createTransaction);
     }
 }

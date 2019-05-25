@@ -1,9 +1,11 @@
 import * as mongoose from 'mongoose';
 
 export const TransactionSchema = new mongoose.Schema({
+    id: String,
+    value: Number,
     name: String,
     type: String,
-    value: Number,
     owner: String,
-    date: Number,
+    transactionDate: Number,
+    creationDate: Number,
 });
