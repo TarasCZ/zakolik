@@ -12,8 +12,8 @@ export class TransactionService {
     }
 
     async create(createTransactionDto: CreateTransactionDto): Promise<Transaction> {
-        const createTransaction = new this.transactionModel(createTransactionDto);
-        return await createTransaction.save();
+        const createTransaction = await this.transactionModel.create(createTransactionDto);
+        return createTransaction.save();
     }
 
     async findAll(user: User): Promise<Transaction[]> {
