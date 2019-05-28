@@ -1,0 +1,9 @@
+$zklk-light-primary: mat-palette($mat-grey, 200, 500, 300);
+$zklk-light-accent: mat-palette($mat-brown, 200);
+$zklk-light-warn: mat-palette($mat-deep-orange, 200);
+
+$zklk-light-theme: mat-light-theme(
+  $zklk-light-primary,
+  $zklk-light-accent,
+  $zklk-light-warn
+);

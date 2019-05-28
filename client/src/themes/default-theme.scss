@@ -1,0 +1,5 @@
+$zklk-primary: mat-palette($mat-indigo, 800, 300, 900);
+$zklk-accent: mat-palette($mat-light-blue);
+$zklk-warn: mat-palette($mat-pink, 600);
+
+$zklk-theme: mat-light-theme($zklk-primary, $zklk-accent, $zklk-warn);

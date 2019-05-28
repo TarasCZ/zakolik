@@ -1,0 +1,42 @@
+<div class="container" rtl>
+  <h1>{{ 'zklk.examples.crud.title' | translate }}</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <mat-card *ngFor="let transaction of transactions$ | async" [ngClass]="routeAnimationsElements"
+        (click)=select(transaction) data-testid="crud-item">
+        <h3 data-testid="item-title">{{transaction.title}}</h3>
+        <small>{{transaction.author}}</small>
+      </mat-card>
+      <p *ngIf="(transactions$ | async)?.length === 0">{{'zklk.examples.crud.empty' | translate}}</p>
+      <button type="button" mat-fab color="primary" class="add" [ngClass]="routeAnimationsElements"
+        *ngIf="!isEditing" (click)="addNew(transactionForm)" data-testid="add-crud">
+        <fa-icon icon="plus"></fa-icon>
+      </button>
+    </div>
+    <div class="col-md-6">
+      <span class="d-flex justify-content-between">
+        <h2>{{ 'zklk.examples.crud.subtitle2' | translate }}</h2>
+        <span class="d-flex justify-content-end">
+          <span *ngIf="selectedBook$ | async as selectedBook">
+            <button mat-icon-button color="accent" *ngIf="!isEditing" data-testid="edit-crud">
+              <fa-icon icon="edit" (click)="edit(selectedBook)" [matTooltip]="'zklk.examples.crud.tooltip.edit' | translate"
+                matTooltipPosition="above">
+              </fa-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(selectedBook)" data-testid="delete-crud">
+              <fa-icon icon="trash" [matTooltip]="'zklk.examples.crud.tooltip.delete' | translate"
+                matTooltipPosition="above">
+              </fa-icon>
+            </button>
+            <button mat-icon-button (click)="deselect()">
+              <fa-icon icon="times" [matTooltip]="'zklk.examples.crud.tooltip.deselect' | translate"
+                matTooltipPosition="above">
+              </fa-icon>
+            </button>
+          </span>
+        </span>
+      </span>
+
+    </div>
+  </div>
+</div>

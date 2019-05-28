@@ -8,9 +8,10 @@ services:
       context: ./client/
       dockerfile: Dockerfile
     volumes:
-      - './client:/usr/app'
+      - './client:/usr/src/app'
+      - '/usr/src/app/node_modules'
     ports:
-      - '3000:3000'
+      - '4200:4200'
     links:
       - server
     environment:
@@ -22,7 +23,8 @@ services:
       context: ./server/
       dockerfile: Dockerfile
     volumes:
-      - './server:/usr/app'
+      - './server:/usr/src/app'
+      - '/usr/src/app/node_modules'
     ports:
       - '4000:4000'
     links:

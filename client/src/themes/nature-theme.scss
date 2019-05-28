@@ -1,0 +1,9 @@
+$zklk-nature-primary: mat-palette($mat-brown, 700, 300, 900);
+$zklk-nature-accent: mat-palette($mat-deep-purple, 300);
+$zklk-nature-warn: mat-palette($mat-red, 600);
+
+$zklk-nature-theme: mat-light-theme(
+  $zklk-nature-primary,
+  $zklk-nature-accent,
+  $zklk-nature-warn
+);

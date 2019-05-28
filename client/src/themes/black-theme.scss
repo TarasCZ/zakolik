@@ -1,0 +1,9 @@
+$zklk-black-primary: mat-palette($mat-grey, 700, 300, 900);
+$zklk-black-accent: mat-palette($mat-blue-grey, 400);
+$zklk-black-warn: mat-palette($mat-red, 500);
+
+$zklk-black-theme: mat-dark-theme(
+  $zklk-black-primary,
+  $zklk-black-accent,
+  $zklk-black-warn
+);
