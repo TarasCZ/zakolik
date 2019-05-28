@@ -1,7 +1,7 @@
 FROM node:11.6
 
-RUN mkdir /usr/app
-WORKDIR /usr/app
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
 
 COPY . .
 
