@@ -8,9 +8,9 @@ import { Store, select } from '@ngrx/store';
 import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 
 import { State } from '../../examples.state';
-import { Book } from '../transaction.model';
-import { ActionBooksUpsertOne, ActionBooksDeleteOne } from '../books.actions';
-import { selectSelectedBook, selectAllBooks } from '../books.selectors';
+import {Transaction} from '../store/transaction.model';
+import { ActionTransactionsUpsertOne, ActionTransactionsDeleteOne } from '../transactions.actions';
+import { selectSelectedTransaction, selectAllTransactions } from '../transactions.selectors';
 
 @Component({
   selector: 'zklk-crud',
@@ -21,13 +21,12 @@ import { selectSelectedBook, selectAllBooks } from '../books.selectors';
 export class CrudComponent {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
-  bookFormGroup = this.fb.group(CrudComponent.createBook());
-  books$: Observable<Book[]> = this.store.pipe(select(selectAllBooks));
-  selectedBook$: Observable<Book> = this.store.pipe(select(selectSelectedBook));
+  transactionFormGroup = this.fb.group(CrudComponent.createTransaction());
+  transactions$: Observable<Transaction[]> = this.store.pipe(select(selectAllTransactions));
 
   isEditing: boolean;
 
-  static createBook(): Book {
+  static createTransaction(): Transaction {
     return {
       id: uuid(),
       title: '',
@@ -37,14 +36,14 @@ export class CrudComponent {
   }
 
   constructor(
-    public store: Store<State>,
+    public store: Store<Transaction>,
     public fb: FormBuilder,
     private router: Router
   ) {}
 
-  select(book: Book) {
+  select(transaction: Transaction) {
     this.isEditing = false;
-    this.router.navigate(['examples/crud', book.id]);
+    this.router.navigate(['examples/crud', transaction.id]);
   }
 
   deselect() {
@@ -52,30 +51,30 @@ export class CrudComponent {
     this.router.navigate(['examples/crud']);
   }
 
-  edit(book: Book) {
+  edit(transaction: Transaction) {
     this.isEditing = true;
-    this.bookFormGroup.setValue(book);
+    this.transactionFormGroup.setValue(transaction);
   }
 
-  addNew(bookForm: NgForm) {
-    bookForm.resetForm();
-    this.bookFormGroup.reset();
-    this.bookFormGroup.setValue(CrudComponent.createBook());
+  addNew(transactionForm: NgForm) {
+    transactionForm.resetForm();
+    this.transactionFormGroup.reset();
+    this.transactionFormGroup.setValue(CrudComponent.createTransaction());
     this.isEditing = true;
   }
 
-  delete(book: Book) {
-    this.store.dispatch(new ActionBooksDeleteOne({ id: book.id }));
+  delete(transaction: Transaction) {
+    this.store.dispatch(new ActionTransactionsDeleteOne({ id: transaction.id }));
     this.isEditing = false;
     this.router.navigate(['examples/crud']);
   }
 
   save() {
-    if (this.bookFormGroup.valid) {
-      const book = this.bookFormGroup.value;
-      this.store.dispatch(new ActionBooksUpsertOne({ book }));
+    if (this.transactionFormGroup.valid) {
+      const transaction = this.transactionFormGroup.value;
+      this.store.dispatch(new ActionTransactionsUpsertOne({ transaction }));
       this.isEditing = false;
-      this.router.navigate(['examples/crud', book.id]);
+      this.router.navigate(['examples/crud', transaction.id]);
     }
   }
 }

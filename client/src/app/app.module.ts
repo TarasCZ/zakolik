@@ -6,7 +6,6 @@ import { SharedModule } from '@app/shared';
 import { CoreModule } from '@app/core';
 
 import { SettingsModule } from './settings';
-import { StaticModule } from './static';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,7 +21,6 @@ import { AppComponent } from './app.component';
     SharedModule,
 
     // features
-    StaticModule,
     SettingsModule,
 
     // app

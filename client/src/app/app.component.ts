@@ -35,8 +35,6 @@ export class AppComponent implements OnInit {
   logo = require('../assets/logo.png');
   languages = ['en', 'cz', 'sk'];
   navigation = [
-    { link: 'about', label: 'zklk.menu.about' },
-    { link: 'features', label: 'zklk.menu.features' },
     { link: 'examples', label: 'zklk.menu.examples' },
     { link: 'transactions', label: 'zklk.menu.examples' },
   ];

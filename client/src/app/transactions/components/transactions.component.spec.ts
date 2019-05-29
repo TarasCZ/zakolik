@@ -5,7 +5,7 @@ import { CoreModule } from '@app/core';
 import { MockStore, TestingModule } from '@testing/utils';
 
 import { State } from '../../examples.state';
-import { BookState } from '../transaction.model';
+import { BookState } from '../store/transaction.model';
 import { CrudComponent } from './transactions.component';
 
 describe('CrudComponent', () => {

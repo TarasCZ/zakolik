@@ -10,7 +10,7 @@ import {
 } from '@app/settings';
 import { ActivationEnd } from '@angular/router';
 import { TitleService } from '@app/core';
-import { ExamplesEffects } from './transactions.effects';
+import { TransactionEffects } from './transactions.effects';
 
 describe('SettingsEffects', () => {
   let router: any;
@@ -38,7 +38,7 @@ describe('SettingsEffects', () => {
   describe('setTranslateServiceLanguage', () => {
     it('should not dispatch action', function() {
       const actions = new Actions<SettingsActions>();
-      const effect = new ExamplesEffects(
+      const effect = new TransactionEffects(
         actions,
         store,
         translateService,
@@ -54,7 +54,7 @@ describe('SettingsEffects', () => {
   describe('setTitle', () => {
     it('should not dispatch action', function() {
       const actions = new Actions<SettingsActions>();
-      const effect = new ExamplesEffects(
+      const effect = new TransactionEffects(
         actions,
         store,
         translateService,
@@ -73,7 +73,7 @@ describe('SettingsEffects', () => {
       const routerEvent = new ActivationEnd(router.routerState.snapshot);
       router.events = cold('a', { a: routerEvent });
 
-      const effect = new ExamplesEffects(
+      const effect = new TransactionEffects(
         actions,
         store,
         translateService,
