@@ -6,6 +6,9 @@ h1 {
 mat-card {
   margin: 0 0 10px 0;
   cursor: pointer;
+
+  display: flex;
+  justify-content: space-between;
 }
 
 .mat-fab {

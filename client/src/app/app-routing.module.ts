@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'transactions',
-    loadChildren: 'app/transactions/transactions.module#TransactionssModule'
+    loadChildren: 'app/transactions/transactions.module#TransactionsModule'
   },
   {
     path: '**',

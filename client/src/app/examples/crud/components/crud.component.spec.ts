@@ -8,7 +8,7 @@ import { State } from '../../examples.state';
 import { BookState } from '../books.model';
 import { CrudComponent } from './crud.component';
 
-describe('CrudComponent', () => {
+describe('TransactionsComponent', () => {
   let component: CrudComponent;
   let fixture: ComponentFixture<CrudComponent>;
   let store: MockStore<State>;

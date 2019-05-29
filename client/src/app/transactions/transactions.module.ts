@@ -9,10 +9,9 @@ import {SharedModule} from '@app/shared';
 import {environment} from '@env/environment';
 
 import {TransactionsRoutingModule} from './transactions-routing.module';
-import {ParentComponent} from './theming/parent/parent.component';
-import {ChildComponent} from './theming/child/child.component';
 import {TransactionEffects} from './store/transactions.effects';
 import {transactionReducer} from '@app/transactions/store/transactions.reducer';
+import {TransactionsComponent} from '@app/transactions/components/transactions.component';
 
 @NgModule({
   imports: [
@@ -29,10 +28,7 @@ import {transactionReducer} from '@app/transactions/store/transactions.reducer';
     }),
     EffectsModule.forFeature([TransactionEffects])
   ],
-  declarations: [
-    ParentComponent,
-    ChildComponent,
-  ],
+  declarations: [TransactionsComponent],
   providers: []
 })
 export class TransactionsModule {

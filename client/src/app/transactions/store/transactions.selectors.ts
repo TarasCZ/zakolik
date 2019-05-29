@@ -5,7 +5,7 @@ import {TransactionState} from '@app/transactions/store/transaction.model';
 
 export const selectTransactionState = createFeatureSelector<TransactionState>('transaction');
 
-const {
+export const {
   selectIds,
   selectEntities,
   selectAll,

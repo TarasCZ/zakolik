@@ -6,21 +6,21 @@ import { MockStore, TestingModule } from '@testing/utils';
 
 import { State } from '../../examples.state';
 import { BookState } from '../store/transaction.model';
-import { CrudComponent } from './transactions.component';
+import { TransactionsComponent } from './transactions.component';
 
-describe('CrudComponent', () => {
-  let component: CrudComponent;
-  let fixture: ComponentFixture<CrudComponent>;
+describe('TransactionsComponent', () => {
+  let component: TransactionsComponent;
+  let fixture: ComponentFixture<TransactionsComponent>;
   let store: MockStore<State>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CoreModule, TestingModule],
-      declarations: [CrudComponent]
+      declarations: [TransactionsComponent]
     }).compileComponents();
     store = TestBed.get(Store);
     store.setState(createState({ ids: [], entities: {} }));
-    fixture = TestBed.createComponent(CrudComponent);
+    fixture = TestBed.createComponent(TransactionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
