@@ -1,4 +1,4 @@
-import {createFeatureSelector} from '@ngrx/store';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
 
 import {transactionAdapter} from './transactions.reducer';
 import {TransactionState} from '@app/transactions/store/transaction.model';
@@ -11,3 +11,8 @@ export const {
   selectAll,
   selectTotal,
 } = transactionAdapter.getSelectors(selectTransactionState);
+
+export const selectTransaction = (id: string) => createSelector(
+  selectEntities,
+  entities => entities[id]
+);

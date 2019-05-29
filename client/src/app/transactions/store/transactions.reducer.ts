@@ -1,7 +1,8 @@
 import {createEntityAdapter, EntityAdapter} from '@ngrx/entity';
 
 import {Transaction, TransactionState} from './transaction.model';
-import {TransactionActionTypes, TransactionActions} from './transactions.actions';
+import {TransactionActions, TransactionActionTypes} from './transactions.actions';
+import * as fromTransactions from './transactions.selectors';
 
 export const transactionAdapter: EntityAdapter<Transaction> = createEntityAdapter<Transaction>();
 
@@ -15,6 +16,7 @@ export const initialState: TransactionState = transactionAdapter.getInitialState
       type: 'OTHER',
       description: 'Vyplata od meho zamestnavatele',
       date: Date.now(),
+      isSelected: false,
     }
   }
 });
@@ -25,10 +27,13 @@ export function transactionReducer(
 ): TransactionState {
   switch (action.type) {
     case TransactionActionTypes.UPSERT_ONE:
-      return transactionAdapter.upsertOne(action.payload.transaction, state);
+      return transactionAdapter.upsertOne(action.transaction, state);
 
     case TransactionActionTypes.DELETE_ONE:
-      return transactionAdapter.removeOne(action.payload.id, state);
+      return transactionAdapter.removeOne(action.id, state);
+
+    case TransactionActionTypes.SELECT_ONE:
+      return transactionAdapter.updateOne({id: action.id, changes: {isSelected: action.isSelected}}, state);
 
     default:
       return state;

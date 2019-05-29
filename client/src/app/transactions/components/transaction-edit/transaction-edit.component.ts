@@ -22,7 +22,8 @@ export class TransactionEditComponent {
       value: 0,
       type: '',
       description: '',
-      date: 123
+      date: 123,
+      isSelected: false,
     };
   }
 
@@ -36,12 +37,11 @@ export class TransactionEditComponent {
     this.router.navigate(['transactions']);
   }
 
-  edit(transaction: Transaction) {
+  edit(transaction: any) {
     this.router.navigate(['transactions', transaction.id]);
   }
 
-  delete(transaction: Transaction) {
-    this.store.dispatch(new ActionDeleteOneTransaction({ id: transaction.id }));
+  delete(transaction: any) {
     this.router.navigate(['transactions']);
   }
 

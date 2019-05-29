@@ -9,6 +9,7 @@ import { SettingsModule } from './settings';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TransactionsModule } from '@app/transactions/transactions.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { AppComponent } from './app.component';
 
     // features
     SettingsModule,
+    TransactionsModule,
 
     // app
     AppRoutingModule

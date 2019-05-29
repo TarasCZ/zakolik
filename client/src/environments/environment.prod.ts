@@ -5,7 +5,7 @@ export const environment = {
   envName: 'PROD',
   production: true,
   test: false,
-  i18nPrefix: '/zakolik',
+  i18nPrefix: '',
   versions: {
     app: packageJson.version,
     angular: packageJson.dependencies['@angular/core'],

@@ -4,7 +4,7 @@
 
     <mat-sidenav #sidenav mode="push">
       <div class="branding"><img [src]="logo" />
-        <span data-testid="title">{{ 'zklk.title.short' | translate}}</span></div>
+        <span data-testid="title">Zakolik</span></div>
       <mat-nav-list>
         <a mat-list-item *ngFor="let item of navigationSideMenu" (click)="sidenav.close()" [routerLink]="[item.link]"
           routerLinkActive="active">
@@ -24,10 +24,8 @@
 
           <span routerLink="" class="branding spacer center d-inline d-sm-none">
             <img [src]="logo" /></span>
-          <span routerLink="" class="branding spacer center d-none d-sm-inline d-md-none"><img [src]="logo" /> {{
-            'zklk.title.short' | translate }}</span>
-          <span routerLink="" class="branding spacer d-none d-md-inline"><img [src]="logo" /> {{ 'zklk.title.long' | translate
-            }}</span>
+          <span routerLink="" class="branding spacer center d-none d-sm-inline d-md-none"><img [src]="logo" /> Zakolik</span>
+          <span routerLink="" class="branding spacer d-none d-md-inline"><img [src]="logo" /> Zakolik</span>
 
           <span class="d-none d-md-inline">
             <button mat-button class="nav-button" *ngFor="let item of navigation" [routerLink]="[item.link]"
