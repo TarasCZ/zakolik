@@ -1,0 +1,21 @@
+<div class="container" rtl>
+  <h1>{{ 'zklk.menu.transactions' | translate }}</h1>
+  <div class="row">
+    <div class="col-md">
+
+        <zklk-transaction-card
+          *ngFor="let transaction of transactions$ | async"
+          [transaction]="transaction"
+          (select)="selectTransaction($event)"
+          (edit)="editTransaction($event)"
+          (remove)="removeTransaction($event)"
+        ></zklk-transaction-card>
+
+      <p *ngIf="(transactions$ | async)?.length === 0">{{'zklk.transaction.empty' | translate}}</p>
+      <button type="button" mat-fab color="primary" class="add" [ngClass]="routeAnimationsElements"
+              (click)="addNewTransaction()" data-testid="add-transaction">
+        <fa-icon icon="plus"></fa-icon>
+      </button>
+    </div>
+  </div>
+</div>

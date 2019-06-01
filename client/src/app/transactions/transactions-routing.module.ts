@@ -1,15 +1,16 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {TransactionsComponent} from '@app/transactions/components/transactions.component';
+import {TransactionsContainerComponent} from '@app/transactions/components/transactions-container/transactions-container.component';
+import {TransactionEditComponent} from '@app/transactions/components/transaction-edit/transaction-edit.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TransactionsComponent
+    component: TransactionsContainerComponent
   },
   {
     path: ':id',
-    component: TransactionsComponent,
+    component: TransactionEditComponent,
     data: { title: 'zklk.menu.transactions' }
   },
 ];

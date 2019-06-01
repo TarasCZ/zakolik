@@ -11,7 +11,9 @@ import {environment} from '@env/environment';
 import {TransactionsRoutingModule} from './transactions-routing.module';
 import {TransactionEffects} from './store/transactions.effects';
 import {transactionReducer} from '@app/transactions/store/transactions.reducer';
-import {TransactionsComponent} from '@app/transactions/components/transactions.component';
+import {TransactionsContainerComponent} from '@app/transactions/components/transactions-container/transactions-container.component';
+import {TransactionEditComponent} from '@app/transactions/components/transaction-edit/transaction-edit.component';
+import { TransactionCardComponent } from './components/transaction-card/transaction-card.component';
 
 @NgModule({
   imports: [
@@ -28,7 +30,11 @@ import {TransactionsComponent} from '@app/transactions/components/transactions.c
     }),
     EffectsModule.forFeature([TransactionEffects])
   ],
-  declarations: [TransactionsComponent],
+  declarations: [
+    TransactionsContainerComponent,
+    TransactionEditComponent,
+    TransactionCardComponent
+  ],
   providers: []
 })
 export class TransactionsModule {

@@ -1,0 +1,21 @@
+mat-card {
+  margin: 0 0 10px 0;
+  cursor: pointer;
+}
+
+.mat-icon-button {
+  font-size: 20px;
+  width: 50px;
+  height: 50px;
+}
+
+.mat-fab {
+  .fa-icon {
+    position: relative;
+    top: 4px;
+  }
+}
+
+.text-right {
+  text-align: right;
+}

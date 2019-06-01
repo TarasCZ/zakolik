@@ -1,0 +1,24 @@
+<mat-card [ngClass]="routeAnimationsElements"
+          (click)=emitSelect() data-testid="transaction-item">
+  <div class="row">
+    <h2 class="col" data-testid="item-name">{{transaction.name}}</h2>
+    <h2 class="col text-right">{{transaction.value}} Kč</h2>
+  </div>
+  <div *ngIf="transaction.isSelected">
+    <hr/>
+    <div class="row">
+      <div class="col">
+        {{transaction.description}}<br/>
+        {{transaction.date | date:dateFormat}}
+      </div>
+      <div class="col text-right">
+        <button stop-click-propagation type="button" mat-icon-button class="d-sm-inline" (click)=emitRemoveClick()>
+          <fa-icon icon="trash"></fa-icon>
+        </button>
+        <button stop-click-propagation type="button" mat-icon-button class="d-sm-inline" (click)=emitEditClick()>
+          <fa-icon icon="edit"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-card>

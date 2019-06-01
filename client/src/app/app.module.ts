@@ -23,7 +23,7 @@ import { TransactionsModule } from '@app/transactions/transactions.module';
 
     // features
     SettingsModule,
-    TransactionsModule,
+    // TransactionsModule,
 
     // app
     AppRoutingModule

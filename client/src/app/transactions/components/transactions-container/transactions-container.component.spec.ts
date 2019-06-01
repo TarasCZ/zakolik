@@ -5,22 +5,22 @@ import { CoreModule } from '@app/core';
 import { MockStore, TestingModule } from '@testing/utils';
 
 import { State } from '../../examples.state';
-import { BookState } from '../store/transaction.model';
-import { TransactionsComponent } from './transactions.component';
+import { BookState } from '../../store/transaction.model';
+import { TransactionsContainerComponent } from './transactions-container.component';
 
-describe('TransactionsComponent', () => {
-  let component: TransactionsComponent;
-  let fixture: ComponentFixture<TransactionsComponent>;
+describe('TransactionsContainerComponent', () => {
+  let component: TransactionsContainerComponent;
+  let fixture: ComponentFixture<TransactionsContainerComponent>;
   let store: MockStore<State>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CoreModule, TestingModule],
-      declarations: [TransactionsComponent]
+      declarations: [TransactionsContainerComponent]
     }).compileComponents();
     store = TestBed.get(Store);
     store.setState(createState({ ids: [], entities: {} }));
-    fixture = TestBed.createComponent(TransactionsComponent);
+    fixture = TestBed.createComponent(TransactionsContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

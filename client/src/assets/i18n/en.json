@@ -20,5 +20,14 @@
   "zklk.settings.themes.saneago": "",
   "zklk.settings.themes.sticky-header": "Sticky header",
   "zklk.settings.themes.title": "Themes",
-  "zklk.settings.title": "Settings"
+  "zklk.settings.title": "Settings",
+  "zklk.transaction.form.title": "Transaction",
+  "zklk.transaction.form.name.placeholder": "Name",
+  "zklk.transaction.form.value.placeholder": "Value",
+  "zklk.transaction.form.type.placeholder": "Type",
+  "zklk.transaction.form.description.placeholder": "Description",
+  "zklk.transaction.form.date.placeholder": "Date",
+  "zklk.transaction.form.error": "Error",
+  "zklk.transaction.form.save": "Save",
+  "zklk.transaction.form.cancel": "Cancel"
 }

@@ -6,18 +6,22 @@ import {select, Store} from '@ngrx/store';
 
 import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
 
-import {Transaction} from '../store/transaction.model';
+import {Transaction} from '../../store/transaction.model';
 import {selectAll} from '@app/transactions/store/transactions.selectors';
-import {ActionSelectOneTransaction, ActionUpsertOneTransaction} from '@app/transactions/store/transactions.actions';
+import {
+  ActionDeleteOneTransaction,
+  ActionSelectOneTransaction,
+  ActionUpsertOneTransaction
+} from '@app/transactions/store/transactions.actions';
 import {v4 as uuid} from 'uuid';
 
 @Component({
   selector: 'zklk-transactions',
-  templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.scss'],
+  templateUrl: './transactions-container.component.html',
+  styleUrls: ['./transactions-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TransactionsComponent {
+export class TransactionsContainerComponent {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
   transactions$: Observable<Transaction[]> = this.store.pipe(select(selectAll));
@@ -29,20 +33,19 @@ export class TransactionsComponent {
   ) {
   }
 
-  select({id, isSelected}: Transaction) {
-    this.store.dispatch(new ActionSelectOneTransaction(id, !isSelected))
+  selectTransaction({ id, isSelected }) {
+    this.store.dispatch(new ActionSelectOneTransaction(id, !isSelected));
   }
 
-  addNew() {
-    this.store.dispatch(new ActionUpsertOneTransaction({
-      id: uuid(),
-      name: 'New Transaction',
-      value: 1234,
-      type: 'Other',
-      description: 'Short text description',
-      date: Date.now(),
-      isSelected: false,
-    }));
-    this.router.navigate(['transactions']);
+  addNewTransaction() {
+    this.router.navigate(['transactions/new'])
+  }
+
+  editTransaction(id: string) {
+    this.router.navigate([`transactions/${id}`])
+  }
+
+  removeTransaction(id: string) {
+    this.store.dispatch(new ActionDeleteOneTransaction(id))
   }
 }
