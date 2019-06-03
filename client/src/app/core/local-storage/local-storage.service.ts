@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 
-const APP_PREFIX = 'ANMS-';
+const APP_PREFIX = 'ZKLK-';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class LocalStorageService {
   constructor() {}
 
@@ -38,20 +40,19 @@ export class LocalStorageService {
     }, {});
   }
 
-  setItem(key: string, value: any) {
+  static setItem(key: string, value: any) {
     localStorage.setItem(`${APP_PREFIX}${key}`, JSON.stringify(value));
   }
 
-  getItem(key: string) {
+  static getItem(key: string) {
     return JSON.parse(localStorage.getItem(`${APP_PREFIX}${key}`));
   }
 
-  removeItem(key: string) {
+  static removeItem(key: string) {
     localStorage.removeItem(`${APP_PREFIX}${key}`);
   }
 
-  /** Tests that localStorage exists, can be written to, and read from. */
-  testLocalStorage() {
+  static testLocalStorage() {
     const testValue = 'testValue';
     const testKey = 'testKey';
     let retrievedValue: string;

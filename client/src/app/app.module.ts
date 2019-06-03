@@ -10,6 +10,8 @@ import { SettingsModule } from './settings';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TransactionsModule } from '@app/transactions/transactions.module';
+import { LoginComponent } from './static/welcome/login.component';
+import { CallbackComponent } from './static/callback/callback.component';
 
 @NgModule({
   imports: [
@@ -28,7 +30,7 @@ import { TransactionsModule } from '@app/transactions/transactions.module';
     // app
     AppRoutingModule
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent, CallbackComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

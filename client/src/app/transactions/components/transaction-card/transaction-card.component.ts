@@ -1,6 +1,7 @@
 import {Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter} from '@angular/core';
 import {Transaction} from '@app/transactions/store/transaction.model';
 import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'zklk-transaction-card',
@@ -9,7 +10,7 @@ import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
 })
 export class TransactionCardComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
-  dateFormat = 'dd. MM. yyyy';
+  dateFormat = 'dd. MM. yyyy'; // TODO: Move to settings
 
   @Input() transaction: Transaction;
 
@@ -35,13 +36,5 @@ export class TransactionCardComponent implements OnInit {
 
   emitRemoveClick() {
     this.remove.emit(this.transaction.id)
-  }
-
-  getDate(timestamp: number) {
-    const date = new Date(timestamp);
-    const day = date.getUTCDate();
-    const month = date.getUTCMonth();
-    const year = date.getFullYear();
-    return `${day}. ${month}. ${year}`;
   }
 }

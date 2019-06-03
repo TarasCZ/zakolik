@@ -1,5 +1,4 @@
 import { ActionReducerMap } from '@ngrx/store';
-import { AppState } from '@app/core';
 
 import {TransactionState} from '@app/transactions/store/transaction.model';
 import {transactionReducer} from '@app/transactions/store/transactions.reducer';

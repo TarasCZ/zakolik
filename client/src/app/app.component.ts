@@ -8,8 +8,7 @@ import {
   ActionAuthLogout,
   routeAnimations,
   AppState,
-  LocalStorageService,
-  selectIsAuthenticated
+  selectIsAuthenticated, LocalStorageService
 } from '@app/core';
 import { environment as env } from '@env/environment';
 
@@ -20,6 +19,7 @@ import {
   selectSettingsLanguage,
   selectSettingsStickyHeader
 } from './settings';
+import {AuthService} from '@app/core/auth/auth.service';
 
 @Component({
   selector: 'zklk-root',
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private storageService: LocalStorageService
+    private authService: AuthService
   ) {}
 
   private static isIEorEdgeOrSafari() {
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.storageService.testLocalStorage();
+    LocalStorageService.testLocalStorage();
     if (AppComponent.isIEorEdgeOrSafari()) {
       this.store.dispatch(
         new ActionSettingsChangeAnimationsPageDisabled({
@@ -74,6 +74,7 @@ export class AppComponent implements OnInit {
 
   onLoginClick() {
     this.store.dispatch(new ActionAuthLogin());
+    // this.authService.login();
   }
 
   onLogoutClick() {

@@ -8,19 +8,18 @@ import {Observable} from 'rxjs';
 import * as fromTransactions from '@app/transactions/store/transactions.selectors';
 import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
 import {ActionUpsertOneTransaction} from '@app/transactions/store/transactions.actions';
-import {take, tap} from 'rxjs/operators';
-import {Location} from '@angular/common';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'zklk-transaction-edit',
-  templateUrl: './transaction-edit.component.html',
-  styleUrls: ['./transaction-edit.component.scss']
+  templateUrl: './transaction-form.component.html',
+  styleUrls: ['./transaction-form.component.scss']
 })
-export class TransactionEditComponent implements OnInit {
+export class TransactionFormComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
   transaction$: Observable<Transaction>;
-  transactionFormGroup = this.fb.group(TransactionEditComponent.createTransaction());
+  transactionFormGroup = this.fb.group(TransactionFormComponent.createTransaction());
 
   @Input()
   id: string;

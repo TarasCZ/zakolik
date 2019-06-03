@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {TransactionsContainerComponent} from '@app/transactions/components/transactions-container/transactions-container.component';
-import {TransactionEditComponent} from '@app/transactions/components/transaction-edit/transaction-edit.component';
+import {TransactionFormComponent} from '@app/transactions/components/transaction-edit/transaction-form.component';
 
 const routes: Routes = [
   {
@@ -10,8 +10,7 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: TransactionEditComponent,
-    data: { title: 'zklk.menu.transactions' }
+    component: TransactionFormComponent
   },
 ];
 

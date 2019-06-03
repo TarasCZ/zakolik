@@ -6,17 +6,16 @@ import {
 describe('Books Actions', () => {
   it('should create ActionUpsertOneTransaction action', () => {
     const action = new ActionUpsertOneTransaction({
-      transaction: {
-        id: '1',
-        name: 'test',
-        value: 12000,
-        description: '',
-        type: 'OTHER',
-        date: 123
-      }
+      id: '1',
+      name: 'test',
+      value: 12000,
+      description: '',
+      type: 'OTHER',
+      date: 123,
+      isSelected: false
     });
     expect(action.type).toEqual(TransactionActionTypes.UPSERT_ONE);
-    expect(action.payload.transaction).toEqual(
+    expect(action.transaction).toEqual(
       jasmine.objectContaining({
         id: '1',
         name: 'test',
@@ -29,8 +28,8 @@ describe('Books Actions', () => {
   });
 
   it('should create ActionDeleteOneTransaction action', () => {
-    const action = new ActionDeleteOneTransaction({ id: '1' });
+    const action = new ActionDeleteOneTransaction('1' );
     expect(action.type).toEqual(TransactionActionTypes.DELETE_ONE);
-    expect(action.payload.id).toEqual('1');
+    expect(action.id).toEqual('1');
   });
 });

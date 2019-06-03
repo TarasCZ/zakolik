@@ -1,29 +1,27 @@
-import { NgModule, Optional, SkipSelf, ErrorHandler } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {
-  StoreRouterConnectingModule,
-  RouterStateSerializer
-} from '@ngrx/router-store';
+import {ErrorHandler, NgModule, Optional, SkipSelf} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
 
-import { environment } from '@env/environment';
+import {environment} from '@env/environment';
 
-import { httpInterceptorProviders } from './http-interceptors';
-import { LocalStorageService } from './local-storage/local-storage.service';
-import { AuthEffects } from './auth/auth.effects';
-import { AuthGuardService } from './auth/auth-guard.service';
-import { AnimationsService } from './animations/animations.service';
-import { TitleService } from './title/title.service';
-import { reducers, metaReducers } from './core.state';
-import { AppErrorHandler } from './error-handler/app-error-handler.service';
-import { CustomSerializer } from './router/custom-serializer';
-import { NotificationService } from './notifications/notification.service';
-import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effects';
+import {httpInterceptorProviders} from './http-interceptors';
+import {LocalStorageService} from './local-storage/local-storage.service';
+import {AuthEffects} from './auth/auth.effects';
+import {AuthGuardService} from './auth/auth-guard.service';
+import {AnimationsService} from './animations/animations.service';
+import {TitleService} from './title/title.service';
+import {metaReducers, reducers} from './core.state';
+import {AppErrorHandler} from './error-handler/app-error-handler.service';
+import {CustomSerializer} from './router/custom-serializer';
+import {NotificationService} from './notifications/notification.service';
+import {GoogleAnalyticsEffects} from './google-analytics/google-analytics.effects';
+import {AuthService} from '@app/core/auth/auth.service';
 
 @NgModule({
   imports: [
@@ -55,6 +53,7 @@ import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effe
     NotificationService,
     LocalStorageService,
     AuthGuardService,
+    AuthService,
     AnimationsService,
     httpInterceptorProviders,
     TitleService,

@@ -1,7 +1,6 @@
 {
   "zklk.about.change-theme": "Change Theme",
   "zklk.footer.changelog": "Show changelog",
-  "zklk.transactions.title": "Transactions",
   "zklk.menu.transactions": "Transactions",
   "zklk.menu.login": "Sign in",
   "zklk.menu.logout": "Logout",
@@ -21,7 +20,8 @@
   "zklk.settings.themes.sticky-header": "Sticky header",
   "zklk.settings.themes.title": "Themes",
   "zklk.settings.title": "Settings",
-  "zklk.transaction.form.title": "Transaction",
+  "zklk.transactions.title": "Transactions",
+  "zklk.transaction.form.title": "Transaction information",
   "zklk.transaction.form.name.placeholder": "Name",
   "zklk.transaction.form.value.placeholder": "Value",
   "zklk.transaction.form.type.placeholder": "Type",
@@ -29,5 +29,6 @@
   "zklk.transaction.form.date.placeholder": "Date",
   "zklk.transaction.form.error": "Error",
   "zklk.transaction.form.save": "Save",
-  "zklk.transaction.form.cancel": "Cancel"
+  "zklk.transaction.form.cancel": "Cancel",
+  "zklk.transaction.empty": "You don't have any transactions"
 }
