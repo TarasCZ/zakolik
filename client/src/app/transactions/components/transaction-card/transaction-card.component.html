@@ -4,7 +4,7 @@
     <h2 class="col" data-testid="item-name">{{transaction.name}}</h2>
     <h2 class="col text-right">{{transaction.value}} Kč</h2>
   </div>
-  <div *ngIf="transaction.isSelected">
+  <div [@openClose]="transaction.isSelected ? 'open' : 'closed'">
     <hr/>
     <div class="row">
       <div class="col">

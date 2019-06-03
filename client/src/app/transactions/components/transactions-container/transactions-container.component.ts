@@ -11,9 +11,7 @@ import {selectAll} from '@app/transactions/store/transactions.selectors';
 import {
   ActionDeleteOneTransaction,
   ActionSelectOneTransaction,
-  ActionUpsertOneTransaction
 } from '@app/transactions/store/transactions.actions';
-import {v4 as uuid} from 'uuid';
 
 @Component({
   selector: 'zklk-transactions',
@@ -47,5 +45,9 @@ export class TransactionsContainerComponent {
 
   removeTransaction(id: string) {
     this.store.dispatch(new ActionDeleteOneTransaction(id))
+  }
+
+  trackByFn(index, item) {
+    return item.id;
   }
 }

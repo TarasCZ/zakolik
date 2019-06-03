@@ -4,7 +4,7 @@
     <div class="col-md">
 
         <zklk-transaction-card
-          *ngFor="let transaction of transactions$ | async"
+          *ngFor="let transaction of transactions$ | async; trackBy: trackByFn"
           [transaction]="transaction"
           (select)="selectTransaction($event)"
           (edit)="editTransaction($event)"
