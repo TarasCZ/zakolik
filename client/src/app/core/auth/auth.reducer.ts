@@ -1,5 +1,5 @@
-import { AuthState } from './auth.models';
-import { AuthActions, AuthActionTypes } from './auth.actions';
+import {AuthState} from './auth.models';
+import {AuthActions, AuthActionTypes} from './auth.actions';
 
 export const initialState: AuthState = {
   isAuthenticated: false

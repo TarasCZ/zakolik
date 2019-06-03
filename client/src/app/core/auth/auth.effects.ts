@@ -4,14 +4,16 @@ import {Action} from '@ngrx/store';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {catchError, exhaustMap, map, tap} from 'rxjs/operators';
 
-import {LocalStorageService} from '../local-storage/local-storage.service';
-
 import {
-  ActionAuthLogin, ActionAuthLoginComplete, ActionAuthLoginFailure, ActionAuthLoginSuccess,
+  ActionAuthCheckLogin,
+  ActionAuthLogin,
+  ActionAuthLoginComplete,
+  ActionAuthLoginFailure,
+  ActionAuthLoginSuccess,
   ActionAuthLogout,
   AuthActionTypes
 } from './auth.actions';
-import {Observable, of} from 'rxjs';
+import {empty, Observable, of} from 'rxjs';
 import {AuthService} from '@app/core/auth/auth.service';
 
 export const AUTH_KEY = 'AUTH';
@@ -23,7 +25,7 @@ export class AuthEffects {
   login$ = this.actions$.pipe(
     ofType<ActionAuthLogin>(AuthActionTypes.LOGIN),
     tap(() => {
-      return this.authService.login();
+      this.authService.login();
     })
   );
 
@@ -33,11 +35,11 @@ export class AuthEffects {
     exhaustMap(() => {
       return this.authService.parseHash$().pipe(
         map((authResult: any) => {
-          console.log('AUTH RESULT', authResult);
-          if (authResult && authResult.accessToken) {
-            this.authService.setAuth(authResult);
-            window.location.hash = '';
+          if (authResult && authResult.idToken) {
+            this.authService.setAuth(authResult.idToken);
             return new ActionAuthLoginSuccess();
+          } else {
+            return new ActionAuthLoginFailure('Missing Access Token');
           }
         }),
         catchError(error => of(new ActionAuthLoginFailure(error)))
@@ -49,7 +51,7 @@ export class AuthEffects {
   loginRedirect$ = this.actions$.pipe(
     ofType<ActionAuthLoginSuccess>(AuthActionTypes.LOGIN_SUCCESS),
     tap(() => {
-      this.router.navigate(['']);
+      return this.router.navigate(['transactions']);
     })
   );
 
@@ -63,7 +65,7 @@ export class AuthEffects {
       } else {
         console.error(`Error: ${JSON.stringify(err)}`);
       }
-      this.router.navigate(['/login']);
+      return this.router.navigate(['login']);
     })
   );
 
@@ -71,14 +73,35 @@ export class AuthEffects {
   logout = this.actions$.pipe(
     ofType<ActionAuthLogout>(AuthActionTypes.LOGOUT),
     tap(() => {
-      this.router.navigate(['login']);
-      this.localStorageService.setItem(AUTH_KEY, { isAuthenticated: false, accessToken: null });
+      this.authService.logout();
+    })
+  );
+
+  @Effect()
+  checkLogin$ = this.actions$.pipe(
+    ofType<ActionAuthCheckLogin>(AuthActionTypes.CHECK_LOGIN),
+    exhaustMap(() => {
+      if (this.authService.authenticated) {
+        return of(new ActionAuthLoginSuccess());
+        // return this.authService.checkSession$({}).pipe(
+        //   map((authResult: any) => {
+        //     if (authResult && authResult.idToken) {
+        //       this.authService.setAuth(authResult.idToken);
+        //       return new ActionAuthLoginSuccess();
+        //     } else {
+        //       return new ActionAuthLoginFailure('Missing Access Token');
+        //     }
+        //   }),
+        //   catchError(error => of(new ActionAuthLoginFailure({ error })))
+        // );
+      } else {
+        return empty();
+      }
     })
   );
 
   constructor(
     private actions$: Actions<Action>,
-    private localStorageService: LocalStorageService,
     private router: Router,
     private authService: AuthService
   ) {

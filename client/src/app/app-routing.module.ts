@@ -18,10 +18,6 @@ const routes: Routes = [
     data: { title: 'zklk.menu.settings' }
   },
   {
-    path: 'examples',
-    loadChildren: 'app/examples/examples.module#ExamplesModule'
-  },
-  {
     path: 'transactions',
     canActivate: [AuthGuardService],
     loadChildren: 'app/transactions/transactions.module#TransactionsModule'

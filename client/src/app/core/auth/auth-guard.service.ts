@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CanActivate, Router} from '@angular/router';
-import { Store } from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import {of} from 'rxjs';
 
 import * as fromAuth from './auth.selectors';
-import { AppState } from '../core.state';
+import {AppState} from '../core.state';
 import {map, mergeMap, take} from 'rxjs/operators';
 import {AuthService} from '@app/core/auth/auth.service';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
-  constructor(private store: Store<AppState>, private authService: AuthService ,private router: Router) {}
+  constructor(private store: Store<AppState>, private authService: AuthService, private router: Router) {
+  }
 
   canActivate() {
     return this.checkStoreAuthentication().pipe(
@@ -27,7 +28,7 @@ export class AuthGuardService implements CanActivate {
           return false;
         }
 
-        return false;
+        return true;
       })
     );
   }

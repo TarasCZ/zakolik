@@ -1,7 +1,7 @@
 import {Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter} from '@angular/core';
 import {Transaction} from '@app/transactions/store/transaction.model';
 import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
-import {animate, query, sequence, state, style, transition, trigger} from '@angular/animations';
+import {animate, sequence, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'zklk-transaction-card',
@@ -29,7 +29,6 @@ import {animate, query, sequence, state, style, transition, trigger} from '@angu
 export class TransactionCardComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
   dateFormat = 'dd. MM. yyyy'; // TODO: Move to settings
-  isOpen = false;
 
   @Input() transaction: Transaction;
 
@@ -43,7 +42,6 @@ export class TransactionCardComponent implements OnInit {
   }
 
   emitSelect() {
-    this.isOpen = !this.isOpen;
     this.select.emit({
       id: this.transaction.id,
       isSelected: this.transaction.isSelected
@@ -56,9 +54,5 @@ export class TransactionCardComponent implements OnInit {
 
   emitRemoveClick() {
     this.remove.emit(this.transaction.id)
-  }
-
-  consoleLog(event) {
-    console.log(event)
   }
 }

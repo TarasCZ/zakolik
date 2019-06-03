@@ -1,13 +1,9 @@
 import {WebAuth} from 'auth0-js';
 import {bindNodeCallback} from 'rxjs';
 import {LocalStorageService} from '../local-storage/local-storage.service';
-import * as uuid from 'uuid'
 
 
 export class AuthService {
-  private accessToken: string | null = null;
-  private idToken: string | null = null;
-  private expiresAt: number | null = null;
 
   private auth0 = new WebAuth({
     domain: 'dev-l2w-mks0.eu.auth0.com',
@@ -24,45 +20,24 @@ export class AuthService {
   }
 
   get authenticated(): boolean {
-    return true;
-    // return JSON.parse(this.localStorageService.getItem('isAuthenticated'));
+    return LocalStorageService.getItem('isAuthenticated');
   }
 
   login() {
-    const nonce = '123';
-
-    LocalStorageService.setItem('state', nonce);
-    this.auth0.authorize({state: nonce, nonce: nonce});
-  }
-
-  setSession(authResult: any) {
-    // Set the time that the Access Token will expire at
-    const expiresAt = (authResult.expiresIn * 1000) + new Date().getTime();
-    this.accessToken = authResult.accessToken;
-    this.idToken = authResult.idToken;
-    this.expiresAt = expiresAt;
-
-    // navigate to the home route
-    // window.location.replace('/home');
-  }
-
-  renewSession() {
-    this.auth0.checkSession({}, (err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult);
-      } else if (err) {
-        this.logout();
-        console.log(err);
-        alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
-      }
-    });
+    this.auth0.authorize();
   }
 
   logout() {
+    LocalStorageService.removeItem('accessToken');
+    LocalStorageService.setItem('isAuthenticated', false);
+    this.auth0.logout({
+      returnTo: 'http://localhost:4200/',
+      clientID: 'jiyDt6vp21wmCl7WlnlLNhhPoAyMt41A'
+    });
   }
 
-  setAuth(authResult) {
-    console.log(authResult);
-    // this.localStorageService.setItem('AuthResult', authResult);
+  setAuth(idToken) {
+    LocalStorageService.setItem('accessToken', idToken);
+    LocalStorageService.setItem('isAuthenticated', true);
   }
 }

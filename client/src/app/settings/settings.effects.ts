@@ -42,7 +42,6 @@ export class SettingsEffects {
     private store: Store<State>,
     private router: Router,
     private overlayContainer: OverlayContainer,
-    private localStorageService: LocalStorageService,
     private titleService: TitleService,
     private animationsService: AnimationsService,
     private translateService: TranslateService
@@ -68,7 +67,7 @@ export class SettingsEffects {
     ),
     withLatestFrom(this.store.pipe(select(selectSettingsState))),
     tap(([action, settings]) =>
-      this.localStorageService.setItem(SETTINGS_KEY, settings)
+      LocalStorageService.setItem(SETTINGS_KEY, settings)
     )
   );
 
