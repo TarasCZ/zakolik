@@ -1,30 +1,14 @@
 import {Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter} from '@angular/core';
 import {Transaction} from '@app/transactions/store/transaction.model';
 import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
-import {animate, sequence, state, style, transition, trigger} from '@angular/animations';
+import {openCloseAnimation} from '@app/core/animations/open-close.animations';
 
 @Component({
   selector: 'zklk-transaction-card',
   templateUrl: './transaction-card.component.html',
   styleUrls: ['./transaction-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('openClose', [
-      state('closed', style({ opacity: 0, height: 0 })),
-      transition('closed => open', [
-        sequence([
-          animate('400ms ease-in-out', style({ height: '*' })),
-          animate('300ms ease-in-out', style({ opacity: 1 }))
-        ])
-      ]),
-      transition('open => closed', [
-        sequence([
-          animate('300ms ease-in-out', style({ opacity: 0 })),
-          animate('400ms ease-in-out', style({ height: 0 })),
-        ])
-      ])
-    ])
-  ]
+  animations: [openCloseAnimation]
 })
 export class TransactionCardComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
