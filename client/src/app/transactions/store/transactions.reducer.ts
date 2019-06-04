@@ -6,24 +6,9 @@ import {TransactionActions, TransactionActionTypes} from './transactions.actions
 export const transactionAdapter: EntityAdapter<Transaction> = createEntityAdapter<Transaction>();
 
 export const initialState: TransactionState = transactionAdapter.getInitialState({
-  ids: ['123'],
-  entities: {
-    '123': {
-      id: '123',
-      name: 'Transakce Jedna',
-      value: 12345,
-      type: 'OTHER',
-      description: 'I hope your animations will work someday',
-      date: Date.now(),
-      isSelected: false
-    }
-  }
+  ids: [],
+  entities: {}
 });
-
-// export const initialState: TransactionState = transactionAdapter.getInitialState({
-//   ids: [],
-//   entities: {}
-// });
 
 export function transactionReducer(
   state: TransactionState = initialState,

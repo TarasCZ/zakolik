@@ -12,7 +12,7 @@ import {
 import { NIGHT_MODE_THEME } from './settings.model';
 
 describe('Settings Actions', () => {
-  it('should create ActionSettingsChangeTheme action', () => {
+  it('should upsert ActionSettingsChangeTheme action', () => {
     const action = new ActionSettingsChangeTheme({
       theme: NIGHT_MODE_THEME
     });
@@ -21,7 +21,7 @@ describe('Settings Actions', () => {
     expect(action.payload.theme).toEqual(NIGHT_MODE_THEME);
   });
 
-  it('should create ActionSettingsChangeAnimationsElements action', () => {
+  it('should upsert ActionSettingsChangeAnimationsElements action', () => {
     const action = new ActionSettingsChangeAnimationsElements({
       elementsAnimations: true
     });
@@ -30,7 +30,7 @@ describe('Settings Actions', () => {
     expect(action.payload.elementsAnimations).toEqual(true);
   });
 
-  it('should create ActionSettingsChangeAnimationsPage action', () => {
+  it('should upsert ActionSettingsChangeAnimationsPage action', () => {
     const action = new ActionSettingsChangeAnimationsPage({
       pageAnimations: true
     });
@@ -39,7 +39,7 @@ describe('Settings Actions', () => {
     expect(action.payload.pageAnimations).toEqual(true);
   });
 
-  it('should create ActionSettingsChangeAnimationsPageDisabled action', () => {
+  it('should upsert ActionSettingsChangeAnimationsPageDisabled action', () => {
     const action = new ActionSettingsChangeAnimationsPageDisabled({
       pageAnimationsDisabled: true
     });
@@ -50,7 +50,7 @@ describe('Settings Actions', () => {
     expect(action.payload.pageAnimationsDisabled).toEqual(true);
   });
 
-  it('should create ActionSettingsChangeAutoNightMode action', () => {
+  it('should upsert ActionSettingsChangeAutoNightMode action', () => {
     const action = new ActionSettingsChangeAutoNightMode({
       autoNightMode: true
     });
@@ -61,7 +61,7 @@ describe('Settings Actions', () => {
     expect(action.payload.autoNightMode).toEqual(true);
   });
 
-  it('should create ActionSettingsChangeLanguage action', () => {
+  it('should upsert ActionSettingsChangeLanguage action', () => {
     const action = new ActionSettingsChangeLanguage({
       language: 'en'
     });
@@ -70,7 +70,7 @@ describe('Settings Actions', () => {
     expect(action.payload.language).toEqual('en');
   });
 
-  it('should create ActionSettingsChangeStickyHeader action', () => {
+  it('should upsert ActionSettingsChangeStickyHeader action', () => {
     const action = new ActionSettingsChangeStickyHeader({
       stickyHeader: true
     });
@@ -79,7 +79,7 @@ describe('Settings Actions', () => {
     expect(action.payload.stickyHeader).toEqual(true);
   });
 
-  it('should create ActionSettingsChangeHour action', () => {
+  it('should upsert ActionSettingsChangeHour action', () => {
     const action = new ActionSettingsChangeHour({
       hour: 7
     });

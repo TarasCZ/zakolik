@@ -5,7 +5,9 @@ export enum TransactionActionTypes {
   UPSERT_ONE = '[Transactions] Upsert One',
   DELETE_ONE = '[Transactions] Delete One',
   SELECT_ONE = '[Transactions] Select One',
-  UPSERT_MANY = '[Transactions] Upsert Many'
+  UPSERT_MANY = '[Transactions] Upsert Many',
+  LOAD_ALL = '[Transactions] Load All'
+  // LOADED_ALL = '[Transactions] Loaded All'
 }
 
 export class ActionUpsertOneTransaction implements Action {
@@ -28,8 +30,13 @@ export class ActionUpsertManyTransactions implements Action {
   constructor(readonly transactions: Array<Transaction>) {}
 }
 
+export class ActionLoadAllTransactions implements Action {
+  readonly type = TransactionActionTypes.LOAD_ALL;
+}
+
 export type TransactionActions =
   ActionUpsertOneTransaction |
   ActionDeleteOneTransaction |
   ActionSelectOneTransaction |
-  ActionUpsertManyTransactions;
+  ActionUpsertManyTransactions |
+  ActionLoadAllTransactions;

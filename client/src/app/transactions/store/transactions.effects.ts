@@ -1,28 +1,45 @@
-import { Injectable } from '@angular/core';
-import { ActivationEnd, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Store, select } from '@ngrx/store';
-import { merge } from 'rxjs';
-import { tap, map, distinctUntilChanged, filter } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {ActivationEnd, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {select, Store} from '@ngrx/store';
+import {merge} from 'rxjs';
+import {distinctUntilChanged, exhaustMap, filter, map, tap} from 'rxjs/operators';
 
-import { TitleService } from '@app/core';
+import {TitleService} from '@app/core';
+import {selectSettingsState, SettingsActions, SettingsActionTypes, State} from '@app/settings';
+import {TransactionDataService} from '@app/transactions/services/transaction-data.service';
 import {
-  State,
-  selectSettingsState,
-  SettingsActions,
-  SettingsActionTypes
-} from '@app/settings';
+  ActionDeleteOneTransaction,
+  ActionUpsertManyTransactions,
+  ActionUpsertOneTransaction,
+  TransactionActionTypes
+} from '@app/transactions/store/transactions.actions';
 
 @Injectable()
 export class TransactionEffects {
-  constructor(
-    private actions$: Actions<SettingsActions>,
-    private store: Store<State>,
-    private translateService: TranslateService,
-    private router: Router,
-    private titleService: TitleService
-  ) {}
+
+  @Effect()
+  loadAllTransactions = this.actions$.pipe(
+    ofType(TransactionActionTypes.LOAD_ALL),
+    exhaustMap(() => {
+      return this.transactionDataService.getAllTransactions().pipe(
+        map((transactions) => new ActionUpsertManyTransactions(transactions))
+      )
+    })
+  );
+
+  @Effect({dispatch: false})
+  postTransaction = this.actions$.pipe(
+    ofType<ActionUpsertOneTransaction>(TransactionActionTypes.UPSERT_ONE),
+    exhaustMap(({transaction}) => this.transactionDataService.postTransaction(transaction))
+  );
+
+  @Effect({dispatch: false})
+  deleteTransaction = this.actions$.pipe(
+    ofType<ActionDeleteOneTransaction>(TransactionActionTypes.DELETE_ONE),
+    exhaustMap(({id}) => this.transactionDataService.deleteTransaction(id))
+  );
 
   @Effect({ dispatch: false })
   setTranslateServiceLanguage = this.store.pipe(
@@ -44,4 +61,14 @@ export class TransactionEffects {
       );
     })
   );
+
+  constructor(
+    private actions$: Actions<SettingsActions>,
+    private store: Store<State>,
+    private translateService: TranslateService,
+    private transactionDataService: TransactionDataService,
+    private router: Router,
+    private titleService: TitleService
+  ) {
+  }
 }

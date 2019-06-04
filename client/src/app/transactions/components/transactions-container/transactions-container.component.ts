@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
@@ -8,10 +7,7 @@ import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
 
 import {Transaction} from '../../store/transaction.model';
 import {selectAll} from '@app/transactions/store/transactions.selectors';
-import {
-  ActionDeleteOneTransaction,
-  ActionSelectOneTransaction,
-} from '@app/transactions/store/transactions.actions';
+import {ActionDeleteOneTransaction, ActionSelectOneTransaction, } from '@app/transactions/store/transactions.actions';
 
 @Component({
   selector: 'zklk-transactions',
@@ -26,7 +22,6 @@ export class TransactionsContainerComponent {
 
   constructor(
     public store: Store<Transaction>,
-    public fb: FormBuilder,
     private router: Router
   ) {
   }

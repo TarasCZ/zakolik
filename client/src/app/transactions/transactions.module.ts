@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
+import {NgModule, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {StoreModule} from '@ngrx/store';
+import {Store, StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -14,6 +14,9 @@ import {transactionReducer} from '@app/transactions/store/transactions.reducer';
 import {TransactionsContainerComponent} from '@app/transactions/components/transactions-container/transactions-container.component';
 import {TransactionFormComponent} from '@app/transactions/components/transaction-edit/transaction-form.component';
 import { TransactionCardComponent } from './components/transaction-card/transaction-card.component';
+import {TransactionDataService} from '@app/transactions/services/transaction-data.service';
+import {Transaction} from '@app/transactions/store/transaction.model';
+import {ActionLoadAllTransactions} from '@app/transactions/store/transactions.actions';
 
 @NgModule({
   imports: [
@@ -35,10 +38,12 @@ import { TransactionCardComponent } from './components/transaction-card/transact
     TransactionFormComponent,
     TransactionCardComponent
   ],
-  providers: []
+  providers: [TransactionDataService]
 })
 export class TransactionsModule {
-  constructor() {}
+  constructor(private store: Store<Transaction>) {
+    this.store.dispatch(new ActionLoadAllTransactions())
+  }
 }
 
 export function HttpLoaderFactory(http: HttpClient) {

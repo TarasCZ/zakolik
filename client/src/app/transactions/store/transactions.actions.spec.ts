@@ -4,7 +4,7 @@ import {
 } from './transactions.actions';
 
 describe('Books Actions', () => {
-  it('should create ActionUpsertOneTransaction action', () => {
+  it('should upsert ActionUpsertOneTransaction action', () => {
     const action = new ActionUpsertOneTransaction({
       id: '1',
       name: 'test',
@@ -27,7 +27,7 @@ describe('Books Actions', () => {
     );
   });
 
-  it('should create ActionDeleteOneTransaction action', () => {
+  it('should upsert ActionDeleteOneTransaction action', () => {
     const action = new ActionDeleteOneTransaction('1' );
     expect(action.type).toEqual(TransactionActionTypes.DELETE_ONE);
     expect(action.id).toEqual('1');
