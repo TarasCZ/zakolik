@@ -1,24 +1,19 @@
 import {Injectable} from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {AuthService} from '@app/core';
+import {LocalStorageService} from '../local-storage/local-storage.service';
 
 @Injectable()
-export class TokenInterceptor implements HttpInterceptor {
+export class JwtInterceptor implements HttpInterceptor {
 
-  constructor(public authService: AuthService) {
+  constructor() {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     request = request.clone({
       setHeaders: {
-        Authorization: `Bearer ${this.authService.getToken()}`
+        Authorization: `Bearer ${LocalStorageService.getItem('accessToken')}`
       }
     });
 

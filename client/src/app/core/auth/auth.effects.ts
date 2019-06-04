@@ -16,8 +16,6 @@ import {
 import {empty, Observable, of} from 'rxjs';
 import {AuthService} from '@app/core/auth/auth.service';
 
-export const AUTH_KEY = 'AUTH';
-
 @Injectable()
 export class AuthEffects {
 
@@ -50,9 +48,7 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   loginRedirect$ = this.actions$.pipe(
     ofType<ActionAuthLoginSuccess>(AuthActionTypes.LOGIN_SUCCESS),
-    tap(() => {
-      return this.router.navigate(['transactions']);
-    })
+    tap(() => this.router.navigate(['']))
   );
 
   @Effect({ dispatch: false })
@@ -65,7 +61,7 @@ export class AuthEffects {
       } else {
         console.error(`Error: ${JSON.stringify(err)}`);
       }
-      return this.router.navigate(['login']);
+      return this.router.navigate(['home']);
     })
   );
 

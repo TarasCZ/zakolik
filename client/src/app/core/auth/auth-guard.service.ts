@@ -24,7 +24,7 @@ export class AuthGuardService implements CanActivate {
       }),
       map(storeOrApiAuth => {
         if (!storeOrApiAuth) {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/home']);
           return false;
         }
 

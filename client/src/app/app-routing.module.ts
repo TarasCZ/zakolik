@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { SettingsContainerComponent } from './settings';
 import {AuthGuardService} from '@app/core';
-import {LoginComponent} from '@app/static/welcome/login.component';
+import {HomeComponent} from '@app/static/home/home.component';
 import {CallbackComponent} from '@app/static/callback/callback.component';
 
 const routes: Routes = [
@@ -23,8 +23,8 @@ const routes: Routes = [
     loadChildren: 'app/transactions/transactions.module#TransactionsModule'
   },
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'home',
+    component: HomeComponent
   },
   {
     path: 'callback',
