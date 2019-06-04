@@ -6,6 +6,7 @@ export const TransactionSchema = new mongoose.Schema({
     name: String,
     type: String,
     owner: String,
-    transactionDate: Number,
+    date: Number,
+    description: String,
     creationDate: Number,
 });

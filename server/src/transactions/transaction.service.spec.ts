@@ -34,7 +34,7 @@ describe('Transaction Service', () => {
     describe('when transaction is created', () => {
         const transaction = {value: 1};
 
-        it('should call create method with transaction data', async () => {
+        it('should call upsert method with transaction data', async () => {
             await  transactionService.create(transaction);
 
             expect(MongoModelMock.create).toHaveBeenCalledWith(transaction);
@@ -44,7 +44,8 @@ describe('Transaction Service', () => {
 
     describe('when all transactions are requested', () => {
         beforeAll(async () => {
-            await transactionService.findAll(user);
+            await transactionService.
+            findAll(user);
         });
 
         it('should call find with proper query parameters', async () => {

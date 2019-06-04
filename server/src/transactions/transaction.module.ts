@@ -13,5 +13,4 @@ import {TransactionSchema} from './transaction.schema';
     controllers: [TransactionController],
     providers: [TransactionService],
 })
-
 export class TransactionModule {}

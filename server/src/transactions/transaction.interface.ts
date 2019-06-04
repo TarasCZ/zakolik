@@ -6,7 +6,7 @@ export interface Transaction {
     name?: string;
     type: string;
     owner: string;
-    transactionDate: number;
+    date: number;
     creationDate: number;
 }
 
