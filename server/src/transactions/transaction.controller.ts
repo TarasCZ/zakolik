@@ -1,6 +1,6 @@
 import {Controller, Get, Post, Body, Request, UseGuards, Delete, Param} from '@nestjs/common';
 import {TransactionService} from './transaction.service';
-import {UpserTransactionDto} from './dto/upser-transaction.dto';
+import {UpsertTransactionDto} from './dto/upsert-transaction.dto';
 import {Transaction} from './transaction.interface';
 import {AuthGuard} from '../auth/auth.guard';
 
@@ -19,7 +19,7 @@ export class TransactionController {
 
     @Post()
     @UseGuards(AuthGuard)
-    async upsert(@Body() createTransactionDto: UpserTransactionDto, @Request() req) {
+    async upsert(@Body() createTransactionDto: UpsertTransactionDto, @Request() req) {
         const user = await req.user;
 
         const createTransaction = this.transactionService.assignMetadataToTransaction(createTransactionDto, user);

@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {Model} from 'mongoose';
 import {Transaction, TransactionDocument} from './transaction.interface';
-import {UpserTransactionDto} from './dto/upser-transaction.dto';
+import {UpsertTransactionDto} from './dto/upsert-transaction.dto';
 import {InjectModel} from '@nestjs/mongoose';
 import {User} from '../user/user.interface';
 import * as uuidv4 from 'uuidv4';
@@ -11,7 +11,7 @@ export class TransactionService {
     constructor(@InjectModel('Transaction') private readonly transactionModel: Model<TransactionDocument>) {
     }
 
-    async create(transaction: UpserTransactionDto): Promise<Transaction> {
+    async create(transaction: UpsertTransactionDto): Promise<Transaction> {
         const { id } = transaction; // Can someone knowing id of someone elses transaction edit?
         return this.transactionModel.findOneAndUpdate({ id }, transaction, { upsert: true }).exec();
     }
@@ -30,7 +30,7 @@ export class TransactionService {
         return this.transactionModel.deleteOne({ id }).exec();
     }
 
-    assignMetadataToTransaction(transaction: UpserTransactionDto, user: User): Transaction {
+    assignMetadataToTransaction(transaction: UpsertTransactionDto, user: User): Transaction {
         // ToDo: Make Transformation Pipe
         const timestamp = Date.now();
 
