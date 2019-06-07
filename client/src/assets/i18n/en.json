@@ -23,11 +23,12 @@
   "zklk.transactions.title": "Transactions",
   "zklk.transaction.form.title": "Transaction information",
   "zklk.transaction.form.name.placeholder": "Name",
+  "zklk.transaction.form.value.error.missing": "Value is required",
+  "zklk.transaction.form.value.error.zero": "Value cannot be zero",
   "zklk.transaction.form.value.placeholder": "Value",
   "zklk.transaction.form.type.placeholder": "Type",
   "zklk.transaction.form.description.placeholder": "Description",
   "zklk.transaction.form.date.placeholder": "Date",
-  "zklk.transaction.form.error": "Error",
   "zklk.transaction.form.save": "Save",
   "zklk.transaction.form.cancel": "Cancel",
   "zklk.transaction.empty": "You don't have any transactions"

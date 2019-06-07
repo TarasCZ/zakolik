@@ -9,10 +9,6 @@
           <mat-form-field class="col">
             <input matInput placeholder="{{ 'zklk.transaction.form.name.placeholder' | translate }}"
                    formControlName="name" autofocus>
-            <mat-error *ngIf="transactionFormGroup.get('name').invalid" data-testid="error-title-crud">
-              {{ 'zklk.transaction.form.name.placeholder' | translate }}
-              {{ 'zklk.transaction.form.error' | translate }}
-            </mat-error>
           </mat-form-field>
         </div>
 
@@ -21,8 +17,10 @@
             <input matInput placeholder="{{ 'zklk.transaction.form.value.placeholder' | translate }}"
                    formControlName="value" type="number">
             <mat-error *ngIf="transactionFormGroup.get('value').hasError('required')" data-testid="error-author-crud">
-              {{ 'zklk.transaction.form.value.placeholder' | translate }}
-              {{ 'zklk.transaction.form.error' | translate }}
+              {{ 'zklk.transaction.form.value.error.missing' | translate }}
+            </mat-error>
+            <mat-error *ngIf="transactionFormGroup.get('value').hasError('zero')" data-testid="error-author-crud">
+              {{ 'zklk.transaction.form.value.error.zero' | translate }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -48,16 +46,12 @@
           <mat-form-field class="col">
             <textarea matInput placeholder="{{ 'zklk.transaction.form.description.placeholder' | translate }}"
                       formControlName="description" rows="5"></textarea>
-            <mat-error *ngIf="transactionFormGroup.get('description').invalid">
-              {{ 'zklk.transaction.form.description.placeholder' | translate }}
-              {{ 'zklk.transaction.form.error' | translate }}
-            </mat-error>
           </mat-form-field>
         </div>
 
         <div class="row">
           <div class="col-12 d-flex justify-content-between">
-            <button (click)="save()" mat-raised-button color="primary" type="button">
+            <button (click)="save()" mat-raised-button color="primary" type="button" [disabled]="transactionFormGroup.invalid">
               {{'zklk.transaction.form.save' | translate }}
             </button>
             <button routerLink="/transactions" mat-raised-button type="button">

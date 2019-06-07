@@ -1,8 +1,5 @@
-import {AbstractControl, ValidatorFn} from '@angular/forms';
+import {AbstractControl} from '@angular/forms';
 
-export function notZeroValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    console.log(control.value);
-    return control.value && control.value !== 0 ? { value: control.value } : null;
-  }
+export function notZeroValidator(control: AbstractControl) {
+  return control.value === 0 ? { zero: true } : null;
 }
