@@ -32,4 +32,5 @@ import {CallbackComponent} from './static/callback/callback.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

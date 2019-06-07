@@ -7,11 +7,11 @@
   <div [@openClose]="transaction.isSelected ? 'open' : 'closed'">
     <hr/>
     <div class="row">
-      <div class="col">
+      <p class="col">
         {{transaction.description}}<br/>
         {{transaction.date | date:dateFormat}}
-      </div>
-      <div class="col text-right">
+      </p>
+      <div class="col-auto text-right">
         <button stop-click-propagation type="button" mat-icon-button class="d-sm-inline" (click)=emitRemoveClick()>
           <fa-icon icon="trash"></fa-icon>
         </button>

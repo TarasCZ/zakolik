@@ -6,6 +6,7 @@
         <zklk-transaction-card
           *ngFor="let transaction of transactions$ | async; trackBy: trackByFn"
           [transaction]="transaction"
+          [@removeTransactionCard]
           (select)="selectTransaction($event)"
           (edit)="editTransaction($event)"
           (remove)="removeTransaction($event)"

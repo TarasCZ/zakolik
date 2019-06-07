@@ -1,9 +1,10 @@
 <div class="container">
-  <h1>{{ 'zklk.transaction.form.title' | translate }}</h1>
   <div class="row justify-content-md-center">
-    <div class="col-lg-9 col-xl-8">
+    <h1 class="col-lg-9">{{ 'zklk.transaction.form.title' | translate }}</h1>
+    <div class="col-lg-9">
       <form [formGroup]="transactionFormGroup"
             [ngClass]="routeAnimationsElements">
+
         <div class="row">
           <mat-form-field class="col">
             <input matInput placeholder="{{ 'zklk.transaction.form.name.placeholder' | translate }}"
@@ -14,17 +15,35 @@
             </mat-error>
           </mat-form-field>
         </div>
+
         <div class="row">
-          <mat-slide-toggle class="col-1 align-self-center"></mat-slide-toggle>
           <mat-form-field class="col">
             <input matInput placeholder="{{ 'zklk.transaction.form.value.placeholder' | translate }}"
-                   formControlName="value" required type="number">
+                   formControlName="value" type="number">
             <mat-error *ngIf="transactionFormGroup.get('value').hasError('required')" data-testid="error-author-crud">
               {{ 'zklk.transaction.form.value.placeholder' | translate }}
               {{ 'zklk.transaction.form.error' | translate }}
             </mat-error>
           </mat-form-field>
         </div>
+
+        <div class="row">
+          <mat-form-field class="col">
+            <input matInput [matDatepicker]="datePicker" [max]="maxDate" formControlName="date" placeholder="Transaction date">
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker [touchUi]="isTouchDevice" [disabled]="false"></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="col">
+            <mat-label>Transaction type</mat-label>
+            <mat-select formControlName="type">
+              <mat-option *ngFor="let type of types" [value]="type">
+                {{type}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="row">
           <mat-form-field class="col">
             <textarea matInput placeholder="{{ 'zklk.transaction.form.description.placeholder' | translate }}"
@@ -35,6 +54,7 @@
             </mat-error>
           </mat-form-field>
         </div>
+
         <div class="row">
           <div class="col-12 d-flex justify-content-between">
             <button (click)="save()" mat-raised-button color="primary" type="button">
@@ -45,6 +65,7 @@
             </button>
           </div>
         </div>
+
       </form>
     </div>
   </div>

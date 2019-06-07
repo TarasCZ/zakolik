@@ -19,3 +19,13 @@ mat-card {
 .text-right {
   text-align: right;
 }
+
+@media (max-width: 767px) {
+  h2 {
+    font-size: 100%;
+  }
+
+  p {
+    font-size: 70%;
+  }
+}

@@ -22,6 +22,7 @@ import {CustomSerializer} from './router/custom-serializer';
 import {NotificationService} from './notifications/notification.service';
 import {GoogleAnalyticsEffects} from './google-analytics/google-analytics.effects';
 import {AuthService} from '@app/core/auth/auth.service';
+import {DeviceDetectorModule} from 'ngx-device-detector';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import {AuthService} from '@app/core/auth/auth.service';
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    DeviceDetectorModule.forRoot()
   ],
   declarations: [],
   providers: [

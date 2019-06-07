@@ -1,14 +1,14 @@
 import {Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter} from '@angular/core';
 import {Transaction} from '@app/transactions/store/transaction.model';
 import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
-import {openCloseAnimation} from '@app/core/animations/open-close.animations';
+import {transactionCardAnimations} from '@app/core/animations/transaction-card.animations';
 
 @Component({
   selector: 'zklk-transaction-card',
   templateUrl: './transaction-card.component.html',
   styleUrls: ['./transaction-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [openCloseAnimation]
+  animations: transactionCardAnimations
 })
 export class TransactionCardComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;

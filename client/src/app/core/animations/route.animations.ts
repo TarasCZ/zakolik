@@ -52,7 +52,7 @@ const STEPS_ALL: any[] = [
     stagger(75, [
       style({ transform: 'translateY(10%)', opacity: 0 }),
       animate(
-        '0.5s ease-in-out',
+        '0.3s ease-in-out',
         style({ transform: 'translateY(0%)', opacity: 1 })
       )
     ]),

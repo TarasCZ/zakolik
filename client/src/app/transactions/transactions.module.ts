@@ -1,4 +1,4 @@
-import {NgModule, OnInit} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Store, StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
@@ -13,7 +13,7 @@ import {TransactionEffects} from './store/transactions.effects';
 import {transactionReducer} from '@app/transactions/store/transactions.reducer';
 import {TransactionsContainerComponent} from '@app/transactions/components/transactions-container/transactions-container.component';
 import {TransactionFormComponent} from '@app/transactions/components/transaction-edit/transaction-form.component';
-import { TransactionCardComponent } from './components/transaction-card/transaction-card.component';
+import {TransactionCardComponent} from './components/transaction-card/transaction-card.component';
 import {TransactionDataService} from '@app/transactions/services/transaction-data.service';
 import {Transaction} from '@app/transactions/store/transaction.model';
 import {ActionLoadAllTransactions} from '@app/transactions/store/transactions.actions';

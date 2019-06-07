@@ -8,12 +8,14 @@ import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
 import {Transaction} from '../../store/transaction.model';
 import {selectAll} from '@app/transactions/store/transactions.selectors';
 import {ActionDeleteOneTransaction, ActionSelectOneTransaction, } from '@app/transactions/store/transactions.actions';
+import {removeTransactionAnimation} from '@app/core/animations/remove-card.animation';
 
 @Component({
   selector: 'zklk-transactions',
   templateUrl: './transactions-container.component.html',
   styleUrls: ['./transactions-container.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [removeTransactionAnimation]
 })
 export class TransactionsContainerComponent {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
