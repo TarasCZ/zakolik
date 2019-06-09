@@ -1,18 +1,19 @@
-import {Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Transaction} from '@app/transactions/store/transaction.model';
 import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
-import {transactionCardAnimations} from '@app/core/animations/transaction-card.animations';
+import {openCloseAnimation} from '@app/core/animations/transaction-card.animations';
 
 @Component({
   selector: 'zklk-transaction-card',
   templateUrl: './transaction-card.component.html',
   styleUrls: ['./transaction-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: transactionCardAnimations
+  animations: [openCloseAnimation]
 })
 export class TransactionCardComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
   dateFormat = 'dd. MM. yyyy'; // TODO: Move to settings
+  currencyTag = 'Kč';
 
   @Input() transaction: Transaction;
 

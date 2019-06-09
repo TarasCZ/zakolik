@@ -15,7 +15,7 @@
         <div class="row">
           <mat-form-field class="col">
             <input matInput placeholder="{{ 'zklk.transaction.form.value.placeholder' | translate }}"
-                   formControlName="value" type="number">
+                   formControlName="value" type="number" lang="fr">
             <mat-error *ngIf="transactionFormGroup.get('value').hasError('required')" data-testid="error-author-crud">
               {{ 'zklk.transaction.form.value.error.missing' | translate }}
             </mat-error>

@@ -2,7 +2,7 @@
           (click)=emitSelect() data-testid="transaction-item">
   <div class="row">
     <h2 class="col" data-testid="item-name">{{transaction.name}}</h2>
-    <h2 class="col text-right">{{transaction.value}} Kč</h2>
+    <h2 class="col text-right">{{transaction.value | number : '.2-2':'fr'}} {{currencyTag}}</h2>
   </div>
   <div [@openClose]="transaction.isSelected ? 'open' : 'closed'">
     <hr/>
