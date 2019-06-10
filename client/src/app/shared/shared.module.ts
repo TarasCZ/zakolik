@@ -93,7 +93,6 @@ library.add(
 
 import { BigInputComponent } from './big-input/big-input.component';
 import { BigInputActionComponent } from './big-input/big-input-action.component';
-import { RtlSupportDirective } from './rtl-support/rtl-support.directive';
 import {StopClickPropagationDirective} from '@app/shared/directives/stop-click-propagation.directive';
 
 @NgModule({
@@ -126,7 +125,6 @@ import {StopClickPropagationDirective} from '@app/shared/directives/stop-click-p
   declarations: [
     BigInputComponent,
     BigInputActionComponent,
-    RtlSupportDirective,
     StopClickPropagationDirective,
   ],
   exports: [
@@ -161,7 +159,6 @@ import {StopClickPropagationDirective} from '@app/shared/directives/stop-click-p
 
     BigInputComponent,
     BigInputActionComponent,
-    RtlSupportDirective,
     StopClickPropagationDirective
   ]
 })

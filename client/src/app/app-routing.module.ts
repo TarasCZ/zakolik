@@ -5,11 +5,12 @@ import { SettingsContainerComponent } from './settings';
 import {AuthGuardService} from '@app/core';
 import {HomeComponent} from '@app/static/home/home.component';
 import {CallbackComponent} from '@app/static/callback/callback.component';
+import {LoginComponent} from '@app/static/login/login.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'transaction',
+    redirectTo: 'transactions', // dashboard in the future
     pathMatch: 'full'
   },
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'transactions',
-    canActivate: [AuthGuardService],
+    canLoad: [AuthGuardService],
     loadChildren: 'app/transactions/transactions.module#TransactionsModule'
   },
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: 'callback',
     component: CallbackComponent
+  },
+  {
+    path: 'login',
+    component:  LoginComponent
   },
   {
     path: '**',

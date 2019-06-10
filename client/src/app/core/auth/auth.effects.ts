@@ -48,7 +48,7 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   loginRedirect$ = this.actions$.pipe(
     ofType<ActionAuthLoginSuccess>(AuthActionTypes.LOGIN_SUCCESS),
-    tap(() => this.router.navigate(['']))
+    tap(({payload}) => this.router.navigate([payload.redirectUrl]))
   );
 
   @Effect({ dispatch: false })
@@ -76,14 +76,14 @@ export class AuthEffects {
   @Effect()
   checkLogin$ = this.actions$.pipe(
     ofType<ActionAuthCheckLogin>(AuthActionTypes.CHECK_LOGIN),
-    exhaustMap(() => {
+    exhaustMap(({payload}) => {
       if (this.authService.authenticated) {
-        return of(new ActionAuthLoginSuccess());
+        return of(new ActionAuthLoginSuccess(payload));
         // return this.authService.checkSession$({}).pipe(
         //   map((authResult: any) => {
         //     if (authResult && authResult.idToken) {
         //       this.authService.setAuth(authResult.idToken);
-        //       return new ActionAuthLoginSuccess();
+        //       return new ActionAuthLoginSuccess(payload);
         //     } else {
         //       return new ActionAuthLoginFailure('Missing Access Token');
         //     }

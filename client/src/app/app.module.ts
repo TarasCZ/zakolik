@@ -13,6 +13,7 @@ import {HomeComponent} from './static/home/home.component';
 import {CallbackComponent} from './static/callback/callback.component';
 import {registerLocaleData} from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import {LoginComponent} from './static/login/login.component';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -32,7 +33,12 @@ registerLocaleData(localeFr, 'fr');
     // app
     AppRoutingModule
   ],
-  declarations: [AppComponent, HomeComponent, CallbackComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    CallbackComponent,
+    LoginComponent
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

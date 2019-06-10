@@ -16,9 +16,9 @@ import {
   ActionSettingsChangeLanguage,
   ActionSettingsChangeTheme,
   ActionSettingsChangeStickyHeader
-} from '../settings.actions';
-import { SettingsState, State } from '../settings.model';
-import { selectSettings } from '../settings.selectors';
+} from '../store/settings.actions';
+import { SettingsState, State } from '../store/settings.model';
+import { selectSettings } from '../store/settings.selectors';
 
 @Component({
   selector: 'zklk-settings',

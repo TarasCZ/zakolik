@@ -4,7 +4,6 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import {
-  ActionAuthLogin,
   ActionAuthLogout,
   routeAnimations,
   AppState,
@@ -19,7 +18,6 @@ import {
   selectSettingsLanguage,
   selectSettingsStickyHeader
 } from './settings';
-import {AuthService} from '@app/core/auth/auth.service';
 
 @Component({
   selector: 'zklk-root',
@@ -48,8 +46,7 @@ export class AppComponent implements OnInit {
   theme$: Observable<string>;
 
   constructor(
-    private store: Store<AppState>,
-    private authService: AuthService
+    private store: Store<AppState>
   ) {}
 
   private static isIEorEdgeOrSafari() {
@@ -66,16 +63,11 @@ export class AppComponent implements OnInit {
       );
     }
 
-    this.store.dispatch(new ActionAuthCheckLogin());
+    this.store.dispatch(new ActionAuthCheckLogin({redirectUrl: window.location.pathname}));
     this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
     this.stickyHeader$ = this.store.pipe(select(selectSettingsStickyHeader));
     this.language$ = this.store.pipe(select(selectSettingsLanguage));
     this.theme$ = this.store.pipe(select(selectEffectiveTheme));
-  }
-
-  onLoginClick() {
-    this.store.dispatch(new ActionAuthLogin());
-    // this.authService.login();
   }
 
   onLogoutClick() {

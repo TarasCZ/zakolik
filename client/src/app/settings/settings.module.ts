@@ -4,8 +4,8 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { SharedModule } from '@app/shared';
 
-import { settingsReducer } from './settings.reducer';
-import { SettingsEffects } from './settings.effects';
+import { settingsReducer } from './store/settings.reducer';
+import { SettingsEffects } from './store/settings.effects';
 import { SettingsContainerComponent } from './components/settings-container.component';
 
 @NgModule({

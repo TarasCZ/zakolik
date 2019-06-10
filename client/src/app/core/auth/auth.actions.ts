@@ -19,6 +19,9 @@ export class ActionAuthLoginComplete implements Action {
 
 export class ActionAuthLoginSuccess implements Action {
   readonly type = AuthActionTypes.LOGIN_SUCCESS;
+
+  constructor(readonly payload: { redirectUrl: string } = { redirectUrl: '' }) {
+  }
 }
 
 export class ActionAuthLoginFailure implements Action {
@@ -33,7 +36,10 @@ export class ActionAuthLogout implements Action {
 }
 
 export class ActionAuthCheckLogin implements Action {
-  readonly type = AuthActionTypes.CHECK_LOGIN
+  readonly type = AuthActionTypes.CHECK_LOGIN;
+
+  constructor(readonly payload: { redirectUrl: string }) {
+  }
 }
 
 export type AuthActions =

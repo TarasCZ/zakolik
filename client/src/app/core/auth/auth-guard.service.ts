@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CanActivate, Router} from '@angular/router';
+import {CanLoad, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {of} from 'rxjs';
 
@@ -9,11 +9,11 @@ import {map, mergeMap, take} from 'rxjs/operators';
 import {AuthService} from '@app/core/auth/auth.service';
 
 @Injectable()
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService implements CanLoad {
   constructor(private store: Store<AppState>, private authService: AuthService, private router: Router) {
   }
 
-  canActivate() {
+  canLoad() {
     return this.checkStoreAuthentication().pipe(
       mergeMap(storeAuth => {
         if (storeAuth) {

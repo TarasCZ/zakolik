@@ -12,7 +12,7 @@ import {
   ActionSettingsChangeAutoNightMode,
   ActionSettingsChangeTheme,
   ActionSettingsChangeStickyHeader
-} from '../settings.actions';
+} from '../store/settings.actions';
 
 describe('SettingsComponent', () => {
   let component: SettingsContainerComponent;
