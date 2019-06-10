@@ -1,8 +1,9 @@
 import {WebAuth} from 'auth0-js';
 import {bindNodeCallback} from 'rxjs';
 import {LocalStorageService} from '../local-storage/local-storage.service';
+import {Injectable} from '@angular/core';
 
-
+@Injectable()
 export class AuthService {
 
   private auth0 = new WebAuth({
@@ -16,11 +17,11 @@ export class AuthService {
   checkSession$ = bindNodeCallback(this.auth0.checkSession.bind(this.auth0));
 
 
-  constructor() {
+  constructor(private localStorageService: LocalStorageService) {
   }
 
   get authenticated(): boolean {
-    return LocalStorageService.getItem('isAuthenticated');
+    return this.localStorageService.getItem('isAuthenticated');
   }
 
   login() {
@@ -28,8 +29,8 @@ export class AuthService {
   }
 
   logout() {
-    LocalStorageService.removeItem('accessToken');
-    LocalStorageService.setItem('isAuthenticated', false);
+    this.localStorageService.removeItem('accessToken');
+    this.localStorageService.setItem('isAuthenticated', false);
     this.auth0.logout({
       returnTo: 'http://localhost:4200/',
       clientID: 'jiyDt6vp21wmCl7WlnlLNhhPoAyMt41A'
@@ -37,7 +38,7 @@ export class AuthService {
   }
 
   setAuth(idToken) {
-    LocalStorageService.setItem('accessToken', idToken);
-    LocalStorageService.setItem('isAuthenticated', true);
+    this.localStorageService.setItem('accessToken', idToken);
+    this.localStorageService.setItem('isAuthenticated', true);
   }
 }

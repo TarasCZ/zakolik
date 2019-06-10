@@ -12,7 +12,7 @@ import {environment} from '@env/environment';
 
 import {httpInterceptorProviders} from './http-interceptors';
 import {LocalStorageService} from './local-storage/local-storage.service';
-import {AuthEffects} from './auth/auth.effects';
+import {AuthEffects} from './auth/store/auth.effects';
 import {AuthGuardService} from './auth/auth-guard.service';
 import {AnimationsService} from './animations/animations.service';
 import {TitleService} from './title/title.service';

@@ -61,7 +61,7 @@ export class AuthEffects {
       } else {
         console.error(`Error: ${JSON.stringify(err)}`);
       }
-      return this.router.navigate(['home']);
+      return this.router.navigate(['']);
     })
   );
 

@@ -3,7 +3,7 @@ import {CanLoad, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {of} from 'rxjs';
 
-import * as fromAuth from './auth.selectors';
+import * as fromAuth from './store/auth.selectors';
 import {AppState} from '../core.state';
 import {map, mergeMap, take} from 'rxjs/operators';
 import {AuthService} from '@app/core/auth/auth.service';

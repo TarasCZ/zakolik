@@ -6,14 +6,15 @@ import { EMPTY } from 'rxjs';
 import {
   LocalStorageService,
   ActionAuthLogin,
-  ActionAuthLogout
+  ActionAuthLogout, AuthService
 } from '@app/core';
 
-import { AuthEffects, AUTH_KEY } from './auth.effects';
+import { AuthEffects } from './auth.effects';
 
 describe('AuthEffects', () => {
   let localStorageService: jasmine.SpyObj<LocalStorageService>;
   let router: jasmine.SpyObj<Router>;
+  let authService: AuthService;
 
   beforeEach(() => {
     localStorageService = jasmine.createSpyObj('LocalStorageService', [
@@ -25,17 +26,17 @@ describe('AuthEffects', () => {
   describe('login', () => {
     it('should not dispatch any action', () => {
       const actions = new Actions(EMPTY);
-      const effect = new AuthEffects(actions, localStorageService, router);
+      const effect = new AuthEffects(actions, router, authService);
       const metadata = getEffectsMetadata(effect);
 
-      expect(metadata.login).toEqual({ dispatch: false });
+      expect(metadata.login$).toEqual({ dispatch: false });
     });
 
     it('should call setItem on LocalStorageService', () => {
       const loginAction = new ActionAuthLogin();
       const source = cold('a', { a: loginAction });
       const actions = new Actions(source);
-      const effect = new AuthEffects(actions, localStorageService, router);
+      const effect = new AuthEffects(actions, router, authService);
 
       effect.login.subscribe(() => {
         expect(localStorageService.setItem).toHaveBeenCalledWith(AUTH_KEY, {
@@ -48,7 +49,7 @@ describe('AuthEffects', () => {
   describe('logout', () => {
     it('should not dispatch any action', () => {
       const actions = new Actions(EMPTY);
-      const effect = new AuthEffects(actions, localStorageService, router);
+      const effect = new AuthEffects(actions, router, authService);
       const metadata = getEffectsMetadata(effect);
 
       expect(metadata.logout).toEqual({ dispatch: false });

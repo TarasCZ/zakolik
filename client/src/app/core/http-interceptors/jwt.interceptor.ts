@@ -6,14 +6,14 @@ import {LocalStorageService} from '../local-storage/local-storage.service';
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
-  constructor() {
+  constructor(private localStorageService: LocalStorageService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     request = request.clone({
       setHeaders: {
-        Authorization: `Bearer ${LocalStorageService.getItem('accessToken')}`
+        Authorization: `Bearer ${this.localStorageService.getItem('accessToken')}`
       }
     });
 

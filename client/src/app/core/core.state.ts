@@ -10,8 +10,8 @@ import { environment } from '@env/environment';
 
 import { initStateFromLocalStorage } from './meta-reducers/init-state-from-local-storage.reducer';
 import { debug } from './meta-reducers/debug.reducer';
-import { AuthState } from './auth/auth.models';
-import { authReducer } from './auth/auth.reducer';
+import { AuthState } from './auth/store/auth.models';
+import { authReducer } from './auth/store/auth.reducer';
 import { RouterStateUrl } from './router/router.state';
 
 export const reducers: ActionReducerMap<AppState> = {

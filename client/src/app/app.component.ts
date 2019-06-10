@@ -1,7 +1,7 @@
 import browser from 'browser-detect';
-import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {Store, select} from '@ngrx/store';
+import {Observable} from 'rxjs';
 
 import {
   ActionAuthLogout,
@@ -9,7 +9,7 @@ import {
   AppState,
   selectIsAuthenticated, LocalStorageService, ActionAuthCheckLogin
 } from '@app/core';
-import { environment as env } from '@env/environment';
+import {environment as env} from '@env/environment';
 
 import {
   ActionSettingsChangeLanguage,
@@ -18,6 +18,7 @@ import {
   selectSettingsLanguage,
   selectSettingsStickyHeader
 } from './settings';
+import {Local} from 'protractor/built/driverProviders';
 
 @Component({
   selector: 'zklk-root',
@@ -46,15 +47,17 @@ export class AppComponent implements OnInit {
   theme$: Observable<string>;
 
   constructor(
-    private store: Store<AppState>
-  ) {}
+    private store: Store<AppState>,
+    private localStorageService: LocalStorageService
+  ) {
+  }
 
   private static isIEorEdgeOrSafari() {
     return ['ie', 'edge', 'safari'].includes(browser().name);
   }
 
   ngOnInit(): void {
-    LocalStorageService.testLocalStorage();
+    this.localStorageService.testLocalStorage();
     if (AppComponent.isIEorEdgeOrSafari()) {
       this.store.dispatch(
         new ActionSettingsChangeAnimationsPageDisabled({
@@ -63,7 +66,7 @@ export class AppComponent implements OnInit {
       );
     }
 
-    this.store.dispatch(new ActionAuthCheckLogin({redirectUrl: window.location.pathname}));
+    this.store.dispatch(new ActionAuthCheckLogin({ redirectUrl: window.location.pathname }));
     this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
     this.stickyHeader$ = this.store.pipe(select(selectSettingsStickyHeader));
     this.language$ = this.store.pipe(select(selectSettingsLanguage));

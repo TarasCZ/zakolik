@@ -37,15 +37,6 @@ const INIT = of('zklk-init-effect-trigger');
 
 @Injectable()
 export class SettingsEffects {
-  constructor(
-    private actions$: Actions<SettingsActions>,
-    private store: Store<State>,
-    private router: Router,
-    private overlayContainer: OverlayContainer,
-    private titleService: TitleService,
-    private animationsService: AnimationsService,
-    private translateService: TranslateService
-  ) {}
 
   @Effect()
   changeHour = interval(60_000).pipe(
@@ -67,7 +58,7 @@ export class SettingsEffects {
     ),
     withLatestFrom(this.store.pipe(select(selectSettingsState))),
     tap(([action, settings]) =>
-      LocalStorageService.setItem(SETTINGS_KEY, settings)
+      this.localStorageService.setItem(SETTINGS_KEY, settings)
     )
   );
 
@@ -128,4 +119,15 @@ export class SettingsEffects {
       );
     })
   );
+
+  constructor(
+    private actions$: Actions<SettingsActions>,
+    private store: Store<State>,
+    private router: Router,
+    private overlayContainer: OverlayContainer,
+    private localStorageService: LocalStorageService,
+    private titleService: TitleService,
+    private animationsService: AnimationsService,
+    private translateService: TranslateService
+  ) {}
 }

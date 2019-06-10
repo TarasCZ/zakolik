@@ -3,7 +3,7 @@ import { AppState } from '@app/core';
 import { Store, StoreModule } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@testing/utils';
 import { AuthGuardService } from './auth-guard.service';
-import { AuthState } from './auth.models';
+import { AuthState } from './store/auth.models';
 
 describe('AuthGuardService', () => {
   let authGuardService: AuthGuardService;
