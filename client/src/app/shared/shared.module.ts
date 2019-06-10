@@ -125,7 +125,7 @@ import {StopClickPropagationDirective} from '@app/shared/directives/stop-click-p
   declarations: [
     BigInputComponent,
     BigInputActionComponent,
-    StopClickPropagationDirective,
+    StopClickPropagationDirective
   ],
   exports: [
     CommonModule,

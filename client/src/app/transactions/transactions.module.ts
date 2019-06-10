@@ -17,6 +17,7 @@ import {TransactionCardComponent} from './components/transaction-card/transactio
 import {TransactionDataService} from '@app/transactions/services/transaction-data.service';
 import {Transaction} from '@app/transactions/store/transaction.model';
 import {ActionLoadAllTransactions} from '@app/transactions/store/transactions.actions';
+import { TransactionAmountComponent } from './components/transaction-amount/transaction-amount.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import {ActionLoadAllTransactions} from '@app/transactions/store/transactions.ac
   declarations: [
     TransactionsContainerComponent,
     TransactionFormComponent,
-    TransactionCardComponent
+    TransactionCardComponent,
+    TransactionAmountComponent
   ],
   providers: [TransactionDataService]
 })
