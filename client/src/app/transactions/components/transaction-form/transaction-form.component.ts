@@ -6,10 +6,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {v4 as uuid} from 'uuid';
 import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
 import {ActionUpsertOneTransaction} from '@app/transactions/store/transactions.actions';
-import {DeviceDetectorService} from 'ngx-device-detector';
 import {notZeroValidator} from '@app/shared/validators/not-zero.validator';
 import * as fromTransactions from '@app/transactions/store/transactions.selectors';
 import {take} from 'rxjs/operators';
+import browser from 'browser-detect';
 
 @Component({
   selector: 'zklk-transaction-edit',
@@ -40,14 +40,13 @@ export class TransactionFormComponent implements OnInit {
     public store: Store<Transaction>,
     public fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute,
-    private deviceService: DeviceDetectorService
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
     this.id = this.route.params['value'].id;
-    this.isTouchDevice = !this.deviceService.isDesktop();
+    this.isTouchDevice = browser().mobile;
 
     this.store.pipe(select(fromTransactions.selectTransaction(this.id))).pipe(take(1))
       .subscribe((transaction) => {

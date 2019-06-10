@@ -12,7 +12,7 @@ import {TransactionsRoutingModule} from './transactions-routing.module';
 import {TransactionEffects} from './store/transactions.effects';
 import {transactionReducer} from '@app/transactions/store/transactions.reducer';
 import {TransactionsContainerComponent} from '@app/transactions/components/transactions-container/transactions-container.component';
-import {TransactionFormComponent} from '@app/transactions/components/transaction-edit/transaction-form.component';
+import {TransactionFormComponent} from '@app/transactions/components/transaction-form/transaction-form.component';
 import {TransactionCardComponent} from './components/transaction-card/transaction-card.component';
 import {TransactionDataService} from '@app/transactions/services/transaction-data.service';
 import {Transaction} from '@app/transactions/store/transaction.model';
