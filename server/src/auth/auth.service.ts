@@ -1,16 +1,13 @@
 import {Injectable} from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';
+import {UserToken} from '../user/user.interface';
 
 @Injectable()
 export class AuthService {
     constructor(private readonly jwtService: JwtService) {
     }
 
-    async validateToken(token: string) {
+    async validateToken(token: string): Promise<UserToken> {
         return this.jwtService.verifyAsync(token, {algorithms: ['RS256']});
-    }
-
-    async validateUser(payload: any): Promise<any> {
-        return {};
     }
 }

@@ -1,6 +1,7 @@
 import {CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable, Logger} from '@nestjs/common';
 import {AuthService} from './auth.service';
 import {UserService} from '../user/user.service';
+import {UserToken} from '../user/user.interface';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -11,8 +12,8 @@ export class AuthGuard implements CanActivate {
     async canActivate(context: ExecutionContext) {
         try {
             const request = context.switchToHttp().getRequest();
-            const token = this.getTokenFromAuthHeader(request.headers.authorization);
-            const result = await this.authService.validateToken(token);
+            const JSONToken = this.getTokenFromAuthHeader(request.headers.authorization);
+            const result = await this.authService.validateToken(JSONToken);
             request.user = await this.userService.getUser(result);
 
             return true;

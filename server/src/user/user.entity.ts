@@ -18,5 +18,5 @@ export class UserEntity implements User {
     email: string;
 
     @OneToMany(type => TransactionEntity, transaction => transaction.user, {eager: false})
-    transactions: Transaction[];
+    transactions?: Transaction[];
 }

@@ -1,58 +1,74 @@
-import {TransactionService} from './transaction.service';
-import {User} from '../user/user.interface';
+import {TransactionService, UnauthorizedTransactionUpdateException} from './transaction.service';
 import {Test} from '@nestjs/testing';
-import {MongoModelMock} from '../../test/mocks/mongo-model.mock';
+import {RepositoryMock} from '../../test/mocks/repository.mock';
+import {getRepositoryToken} from '@nestjs/typeorm';
+import {TransactionEntity} from './transaction.entity';
+import {TransactionTestFactory} from '../../test/test-factory/transaction-test.factory';
+import {UserTestFactory} from '../../test/test-factory/user-test.factory';
+import {Transaction} from './transaction.interface';
+import {User} from '../user/user.interface';
 
 describe('Transaction Service', () => {
 
-    const userId = '123';
-    const user: User = {
-        id: userId,
-        email: 'a@a.a',
-        nickname: '',
-        name: '',
-    };
+    let user: User;
+    let user2: User;
+    let transaction: Transaction;
+    let transactionEntity: TransactionEntity;
+    let repositoryMock: RepositoryMock<TransactionEntity>;
 
     let transactionService: TransactionService;
 
     beforeEach(async () => {
+        user = UserTestFactory.createUser({ id: '123' });
+        user2 = UserTestFactory.createUser({ id: '000' });
+        transaction = TransactionTestFactory.createTransaction();
+        transactionEntity = { ...transaction, user };
+        repositoryMock = new RepositoryMock();
+        repositoryMock.findOneResult = transactionEntity;
+
         const testingModule = await Test.createTestingModule({
             providers: [
                 TransactionService,
                 {
-                    provide: getModelToken('Transaction'),
-                    useValue: MongoModelMock,
+                    provide: getRepositoryToken(TransactionEntity),
+                    useValue: repositoryMock,
                 },
             ],
         }).compile();
 
         transactionService = testingModule.get<TransactionService>(TransactionService);
-
     });
 
     describe('when transaction is created', () => {
-        const transaction = {value: 1};
+        it('should throw HttpException when user does not match', async () => {
+            await expect(transactionService.create(transaction, user2))
+                .rejects.toEqual(UnauthorizedTransactionUpdateException);
+        });
 
-        it('should call upsert method with transaction data', async () => {
-            await  transactionService.create(transaction);
+        it('should call save method with transaction data', async () => {
+            await transactionService.create(transaction, user);
 
-            expect(MongoModelMock.create).toHaveBeenCalledWith(transaction);
-            expect(MongoModelMock.mockFunctions.save).toHaveBeenCalledTimes(1);
+            expect(repositoryMock.save).toHaveBeenCalledWith(transactionEntity);
+            expect(repositoryMock.save).toHaveBeenCalledTimes(1);
         });
     });
 
     describe('when all transactions are requested', () => {
-        beforeAll(async () => {
-            await transactionService.
-            findAll(user);
-        });
+        it('should call find with proper query parameters once', async () => {
+            await transactionService.findAll(user);
 
-        it('should call find with proper query parameters', async () => {
-            expect(MongoModelMock.find).toHaveBeenCalledWith({owner: userId});
+            expect(repositoryMock.find).toHaveBeenCalledWith({ user });
+            expect(repositoryMock.find).toHaveBeenCalledTimes(1);
         });
+    });
 
-        it('should call exec method once', async () => {
-            expect(MongoModelMock.mockFunctions.exec).toHaveBeenCalledTimes(1);
+    describe('when transaction is deleted', async () => {
+        it('should call delete with proper query parameters once', async () => {
+            const { id } = transaction;
+            await transactionService.delete(id, user);
+
+            expect(repositoryMock.delete).toHaveBeenCalledWith({ id, user });
+            expect(repositoryMock.delete).toHaveBeenCalledTimes(1);
         });
     });
 });

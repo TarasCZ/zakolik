@@ -6,10 +6,10 @@ export class UpsertTransactionDto {
     readonly id: string;
 
     @IsString()
-    readonly name?: string;
+    readonly name: string;
 
     @IsString() // ToDo: Make ENUM
-    readonly type?: string;
+    readonly type: string;
 
     @IsNumber()
     @IsNotEmpty()
@@ -19,5 +19,5 @@ export class UpsertTransactionDto {
     readonly date: number;
 
     @IsString()
-    readonly description?: string;
+    readonly description: string;
 }
