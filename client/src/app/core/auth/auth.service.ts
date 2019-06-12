@@ -11,7 +11,7 @@ export class AuthService {
     clientID: 'jiyDt6vp21wmCl7WlnlLNhhPoAyMt41A',
     redirectUri: 'http://localhost:4200/callback',
     responseType: 'id_token',
-  });
+  }); // Todo: move to env file
 
   parseHash$ = bindNodeCallback(this.auth0.parseHash.bind(this.auth0));
   checkSession$ = bindNodeCallback(this.auth0.checkSession.bind(this.auth0));

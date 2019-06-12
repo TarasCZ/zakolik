@@ -14,10 +14,10 @@ export class TransactionCardComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
   dateFormat = 'dd. MM. yyyy'; // TODO: Move to settings
   currencyTag = 'Kč';
+  isSelected = false;
 
   @Input() transaction: Transaction;
 
-  @Output() select = new EventEmitter<{id: string, isSelected: boolean}>();
   @Output() edit = new EventEmitter<string>();
   @Output() remove = new EventEmitter<string>();
 
@@ -26,11 +26,8 @@ export class TransactionCardComponent implements OnInit {
   ngOnInit() {
   }
 
-  emitSelect() {
-    this.select.emit({
-      id: this.transaction.id,
-      isSelected: this.transaction.isSelected
-    });
+  toggleSelect() {
+    this.isSelected = !this.isSelected;
   }
 
   emitEditClick() {

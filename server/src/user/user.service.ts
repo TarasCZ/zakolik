@@ -1,28 +1,21 @@
 import {Injectable} from '@nestjs/common';
-import {Model} from 'mongoose';
-import {User, UserDocument} from './user.interface';
-import {InjectModel} from '@nestjs/mongoose';
+import {InjectRepository} from '@nestjs/typeorm';
+import {Repository} from 'typeorm';
+import {UserEntity} from './user.entity';
+import {User} from './user.interface';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectModel('User') private readonly userModel: Model<UserDocument>) {
+    constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>) {
     }
 
-    async getUser(token: any) {
-        const user = await this.findUser(token.sub);
+    async getUser(token: any): Promise<User> {
+        const { sub: id, email, nickname, name } = token;
+
+        const user = await this.userRepository.findOne(id);
 
         if (user) return user;
 
-        const { sub: id, email, nickname, name } = token;
-
-        return this.create({ id, email, nickname, name });
-    }
-
-    private async findUser(id: string): Promise<User> {
-        return this.userModel.findOne({ id }).exec();
-    }
-
-    private async create(newUser: User): Promise<User> {
-        return new this.userModel(newUser).save();
+        return this.userRepository.save({ id, email, nickname, name });
     }
 }

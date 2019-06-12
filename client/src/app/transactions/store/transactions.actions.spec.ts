@@ -11,8 +11,7 @@ describe('Books Actions', () => {
       value: 12000,
       description: '',
       type: 'OTHER',
-      date: 123,
-      isSelected: false
+      date: 123
     });
     expect(action.type).toEqual(TransactionActionTypes.UPSERT_ONE);
     expect(action.transaction).toEqual(

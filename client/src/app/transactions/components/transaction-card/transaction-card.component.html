@@ -1,12 +1,12 @@
 <mat-card [ngClass]="routeAnimationsElements"
-          (click)=emitSelect() data-testid="transaction-item">
+          (click)=toggleSelect() data-testid="transaction-item">
   <div class="row">
     <h2 class="col" data-testid="item-name">{{transaction.name}}</h2>
     <h2 class="col text-right">
       <zklk-transaction-amount [value]="transaction.value" [currency]="currencyTag"></zklk-transaction-amount>
     </h2>
   </div>
-  <div [@openClose]="transaction.isSelected ? 'open' : 'closed'">
+  <div [@openClose]="isSelected ? 'open' : 'closed'">
     <hr/>
     <div class="row">
       <p class="col">

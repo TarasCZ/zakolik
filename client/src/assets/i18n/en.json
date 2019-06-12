@@ -1,7 +1,10 @@
 {
   "zklk.about.change-theme": "Change Theme",
   "zklk.footer.changelog": "Show changelog",
+  "zklk.menu.dashboard": "Dashboard",
   "zklk.menu.transactions": "Transactions",
+  "zklk.menu.budgets": "Budgets",
+  "zklk.menu.goals": "Goals",
   "zklk.menu.login": "Sign in",
   "zklk.menu.logout": "Logout",
   "zklk.menu.settings": "Settings",

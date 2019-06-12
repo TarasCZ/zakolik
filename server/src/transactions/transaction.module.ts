@@ -2,12 +2,12 @@ import {Module} from '@nestjs/common';
 import {TransactionController} from './transaction.controller';
 import {TransactionService} from './transaction.service';
 import {AuthModule} from '../auth/auth.module';
-import {MongooseModule} from '@nestjs/mongoose';
-import {TransactionSchema} from './transaction.schema';
+import {TransactionEntity} from './transaction.entity';
+import {TypeOrmModule} from '@nestjs/typeorm';
 
 @Module({
     imports: [
-        MongooseModule.forFeature([{ name: 'Transaction', schema: TransactionSchema }]),
+        TypeOrmModule.forFeature([TransactionEntity]),
         AuthModule,
     ],
     controllers: [TransactionController],

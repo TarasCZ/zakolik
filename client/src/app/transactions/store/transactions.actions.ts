@@ -20,11 +20,6 @@ export class ActionDeleteOneTransaction implements Action {
   constructor(readonly id: string) {}
 }
 
-export class ActionSelectOneTransaction implements Action {
-  readonly type = TransactionActionTypes.SELECT_ONE;
-  constructor(readonly id: string, readonly isSelected: boolean) {}
-}
-
 export class ActionUpsertManyTransactions implements Action {
   readonly type = TransactionActionTypes.UPSERT_MANY;
   constructor(readonly transactions: Array<Transaction>) {}
@@ -37,6 +32,5 @@ export class ActionLoadAllTransactions implements Action {
 export type TransactionActions =
   ActionUpsertOneTransaction |
   ActionDeleteOneTransaction |
-  ActionSelectOneTransaction |
   ActionUpsertManyTransactions |
   ActionLoadAllTransactions;

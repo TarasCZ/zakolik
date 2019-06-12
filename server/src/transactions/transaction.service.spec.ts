@@ -1,7 +1,6 @@
 import {TransactionService} from './transaction.service';
 import {User} from '../user/user.interface';
 import {Test} from '@nestjs/testing';
-import {getModelToken} from '@nestjs/mongoose';
 import {MongoModelMock} from '../../test/mocks/mongo-model.mock';
 
 describe('Transaction Service', () => {

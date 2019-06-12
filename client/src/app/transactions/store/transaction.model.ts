@@ -20,7 +20,6 @@ export interface Transaction {
   type: string;
   description: string;
   date: number;
-  isSelected: boolean;
 }
 
 export interface TransactionState extends EntityState<Transaction> {}

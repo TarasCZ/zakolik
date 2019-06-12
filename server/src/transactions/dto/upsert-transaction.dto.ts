@@ -16,7 +16,7 @@ export class UpsertTransactionDto {
     readonly value: number;
 
     @IsNumber()
-    readonly date?: number;
+    readonly date: number;
 
     @IsString()
     readonly description?: string;

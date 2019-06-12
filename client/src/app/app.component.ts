@@ -34,7 +34,10 @@ export class AppComponent implements OnInit {
   logo = require('../assets/logo.png');
   languages = ['en', 'cz', 'sk'];
   navigation = [
-    { link: 'transactions', label: 'zklk.menu.transactions' },
+    { link: 'dashboard', label: 'zklk.menu.dashboard', disabled: true },
+    { link: 'transactions', label: 'zklk.menu.transactions', disabled: false },
+    { link: 'budgets', label: 'zklk.menu.budgets', disabled: true },
+    { link: 'goals', label: 'zklk.menu.goals', disabled: true }
   ];
   navigationSideMenu = [
     ...this.navigation,

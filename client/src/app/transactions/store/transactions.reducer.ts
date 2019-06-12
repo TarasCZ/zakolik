@@ -21,9 +21,6 @@ export function transactionReducer(
     case TransactionActionTypes.DELETE_ONE:
       return transactionAdapter.removeOne(action.id, state);
 
-    case TransactionActionTypes.SELECT_ONE:
-      return transactionAdapter.updateOne({ id: action.id, changes: { isSelected: action.isSelected } }, state);
-
     case TransactionActionTypes.UPSERT_MANY:
       return transactionAdapter.upsertMany(action.transactions, state);
 

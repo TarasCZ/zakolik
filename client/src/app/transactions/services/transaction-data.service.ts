@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Transaction} from '@app/transactions/store/transaction.model';
 import {HttpClient} from '@angular/common/http';
-import {tap} from 'rxjs/operators';
 
 const LOCAL_API_URL = 'http://localhost:4000';
 

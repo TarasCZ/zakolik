@@ -7,7 +7,7 @@ import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
 
 import {Transaction} from '../../store/transaction.model';
 import {selectAll} from '@app/transactions/store/transactions.selectors';
-import {ActionDeleteOneTransaction, ActionSelectOneTransaction, } from '@app/transactions/store/transactions.actions';
+import {ActionDeleteOneTransaction } from '@app/transactions/store/transactions.actions';
 import {removeTransactionAnimation} from '@app/core/animations/transaction-card.animations';
 
 @Component({
@@ -26,10 +26,6 @@ export class TransactionsContainerComponent {
     public store: Store<Transaction>,
     private router: Router
   ) {
-  }
-
-  selectTransaction({ id, isSelected }) {
-    this.store.dispatch(new ActionSelectOneTransaction(id, !isSelected));
   }
 
   addNewTransaction() {

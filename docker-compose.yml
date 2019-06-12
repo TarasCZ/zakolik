@@ -28,14 +28,19 @@ services:
     ports:
       - '4000:4000'
     links:
-      - mongo
+      - database
     environment:
       - NODE_ENV=development
 
-  mongo:
-    container_name: mongo
-    image: mongo:latest
+  database:
+    container_name: database
+    image: postgres:alpine
+    restart: always
     volumes:
-      - ./data:/data/db
+      - ./data:/var/lib/postgresql/data
     ports:
-      - "27017:27017"
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=zakolik
+      - POSTGRES_PASSWORD=development
+      - POSTGRES_DB=zakolik

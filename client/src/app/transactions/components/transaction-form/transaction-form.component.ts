@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {Transaction, TransactionTypes} from '@app/transactions/store/transaction.model';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -8,14 +8,15 @@ import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
 import {ActionUpsertOneTransaction} from '@app/transactions/store/transactions.actions';
 import {notZeroValidator} from '@app/shared/validators/not-zero.validator';
 import * as fromTransactions from '@app/transactions/store/transactions.selectors';
-import {take} from 'rxjs/operators';
+import {first} from 'rxjs/operators';
 import browser from 'browser-detect';
+import {isDefined} from '@app/shared/utils/helper-functions';
 
 @Component({
   selector: 'zklk-transaction-edit',
   templateUrl: './transaction-form.component.html',
   styleUrls: ['./transaction-form.component.scss'],
-
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TransactionFormComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
@@ -29,8 +30,7 @@ export class TransactionFormComponent implements OnInit {
     value: this.fb.control({ value: null }, [Validators.required, notZeroValidator]),
     type: 'Other',
     description: '',
-    date: { value: new Date(), disabled: true },
-    isSelected: false
+    date: { value: new Date(), disabled: true }
   });
 
   @Input()
@@ -48,9 +48,9 @@ export class TransactionFormComponent implements OnInit {
     this.id = this.route.params['value'].id;
     this.isTouchDevice = browser().mobile;
 
-    this.store.pipe(select(fromTransactions.selectTransaction(this.id))).pipe(take(1))
+    this.store.pipe(select(fromTransactions.selectTransaction(this.id))).pipe(first(isDefined))
       .subscribe((transaction) => {
-        if (transaction) this.transactionFormGroup.patchValue({
+        this.transactionFormGroup.patchValue({
           ...transaction,
           date: new Date(transaction.date)
         })

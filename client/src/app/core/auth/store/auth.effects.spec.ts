@@ -12,6 +12,7 @@ import {
 import { AuthEffects } from './auth.effects';
 
 describe('AuthEffects', () => {
+  const AUTH_KEY = '';
   let localStorageService: jasmine.SpyObj<LocalStorageService>;
   let router: jasmine.SpyObj<Router>;
   let authService: AuthService;
@@ -38,7 +39,7 @@ describe('AuthEffects', () => {
       const actions = new Actions(source);
       const effect = new AuthEffects(actions, router, authService);
 
-      effect.login.subscribe(() => {
+      effect.login$.subscribe(() => {
         expect(localStorageService.setItem).toHaveBeenCalledWith(AUTH_KEY, {
           isAuthenticated: true
         });
@@ -59,9 +60,9 @@ describe('AuthEffects', () => {
       const logoutAction = new ActionAuthLogout();
       const source = cold('a', { a: logoutAction });
       const actions = new Actions(source);
-      const effect = new AuthEffects(actions, localStorageService, router);
+      const effect = new AuthEffects(actions, router, authService);
 
-      effect.login.subscribe(() => {
+      effect.login$.subscribe(() => {
         expect(localStorageService.setItem).toHaveBeenCalledWith(AUTH_KEY, {
           isAuthenticated: false
         });

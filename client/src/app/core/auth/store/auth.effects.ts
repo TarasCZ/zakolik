@@ -99,7 +99,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions<Action>,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
   }
 }

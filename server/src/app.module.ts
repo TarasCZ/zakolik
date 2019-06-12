@@ -3,11 +3,11 @@ import {UserModule} from './user/user.module';
 import {AuthModule} from './auth/auth.module';
 import {TransactionModule} from './transactions/transaction.module';
 import {ConfigModule} from './config/config.module';
-import {MongooseModule} from '@nestjs/mongoose';
+import {TypeOrmModule} from '@nestjs/typeorm';
 
 @Module({
     imports: [
-        MongooseModule.forRoot('mongodb://mongo/zakolik'),
+        TypeOrmModule.forRoot(),
         UserModule,
         TransactionModule,
         AuthModule,
