@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Transaction} from '@app/transactions/store/transaction.model';
+import {Transaction} from '@app/transactions/model/transaction.model';
 import {HttpClient} from '@angular/common/http';
 
 const LOCAL_API_URL = 'http://localhost:4000';

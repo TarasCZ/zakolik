@@ -10,8 +10,7 @@
     <hr/>
     <div class="row">
       <p class="col">
-        {{transaction.description}}<br/>
-        {{transaction.date | date:dateFormat}}
+        {{transaction.description}}
       </p>
       <div class="col-auto text-right">
         <button stop-click-propagation type="button" mat-icon-button class="d-sm-inline" (click)=emitRemoveClick()>

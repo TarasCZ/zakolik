@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {Transaction, TransactionTypes} from '@app/transactions/store/transaction.model';
+import {Transaction, TransactionTypes} from '@app/transactions/model/transaction.model';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {v4 as uuid} from 'uuid';
 import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
-import {ActionUpsertOneTransaction} from '@app/transactions/store/transactions.actions';
+import {ActionUpsertOneTransaction} from '@app/transactions/store/actions/transactions.actions';
 import {notZeroValidator} from '@app/shared/validators/not-zero.validator';
 import * as fromTransactions from '@app/transactions/store/transactions.selectors';
 import {first} from 'rxjs/operators';

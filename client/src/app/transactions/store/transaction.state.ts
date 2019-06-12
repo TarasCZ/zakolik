@@ -1,7 +1,7 @@
 import { ActionReducerMap } from '@ngrx/store';
 
-import {TransactionState} from '@app/transactions/store/transaction.model';
-import {transactionReducer} from '@app/transactions/store/transactions.reducer';
+import {TransactionState} from '@app/transactions/model/transaction.model';
+import {transactionReducer} from '@app/transactions/store/reducers/transactions.reducer';
 
 export const FEATURE_NAME = 'transaction';
 

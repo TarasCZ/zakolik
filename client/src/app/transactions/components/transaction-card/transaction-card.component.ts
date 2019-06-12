@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Transaction} from '@app/transactions/store/transaction.model';
+import {Transaction} from '@app/transactions/model/transaction.model';
 import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
 import {openCloseAnimation} from '@app/core/animations/transaction-card.animations';
 

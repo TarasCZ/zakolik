@@ -5,9 +5,9 @@ import {select, Store} from '@ngrx/store';
 
 import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
 
-import {Transaction} from '../../store/transaction.model';
+import {Transaction} from '../../model/transaction.model';
 import {selectAll} from '@app/transactions/store/transactions.selectors';
-import {ActionDeleteOneTransaction } from '@app/transactions/store/transactions.actions';
+import {ActionDeleteOneTransaction } from '@app/transactions/store/actions/transactions.actions';
 import {removeTransactionAnimation} from '@app/core/animations/transaction-card.animations';
 
 @Component({
@@ -19,6 +19,7 @@ import {removeTransactionAnimation} from '@app/core/animations/transaction-card.
 })
 export class TransactionsContainerComponent {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
+  dateFormat = 'dd. MM. yyyy'; // TODO: Move to settings
 
   transactions$: Observable<Transaction[]> = this.store.pipe(select(selectAll));
 

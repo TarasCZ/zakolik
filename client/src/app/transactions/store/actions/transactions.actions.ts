@@ -1,13 +1,11 @@
 import { Action } from '@ngrx/store';
-import {Transaction} from '@app/transactions/store/transaction.model';
+import {Transaction} from '@app/transactions/model/transaction.model';
 
 export enum TransactionActionTypes {
   UPSERT_ONE = '[Transactions] Upsert One',
   DELETE_ONE = '[Transactions] Delete One',
-  SELECT_ONE = '[Transactions] Select One',
   UPSERT_MANY = '[Transactions] Upsert Many',
-  LOAD_ALL = '[Transactions] Load All'
-  // LOADED_ALL = '[Transactions] Loaded All'
+  LOAD_ALL = '[Transactions] Load All',
 }
 
 export class ActionUpsertOneTransaction implements Action {

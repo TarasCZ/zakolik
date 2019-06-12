@@ -14,7 +14,7 @@ import {
   ActionUpsertManyTransactions,
   ActionUpsertOneTransaction,
   TransactionActionTypes
-} from '@app/transactions/store/transactions.actions';
+} from '@app/transactions/store/actions/transactions.actions';
 
 @Injectable()
 export class TransactionEffects {

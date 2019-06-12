@@ -1,6 +1,6 @@
-import {initialState, transactionReducer} from '@app/transactions/store/transactions.reducer';
-import {TransactionState} from '@app/transactions/store/transaction.model';
-import {ActionDeleteOneTransaction, ActionUpsertOneTransaction} from '@app/transactions/store/transactions.actions';
+import {initialState, transactionReducer} from '@app/transactions/store/reducers/transactions.reducer';
+import {TransactionState} from '@app/transactions/model/transaction.model';
+import {ActionDeleteOneTransaction, ActionUpsertOneTransaction} from '@app/transactions/store/actions/transactions.actions';
 
 describe('TransactionReducer', () => {
   const TEST_INITIAL_STATE: TransactionState = {

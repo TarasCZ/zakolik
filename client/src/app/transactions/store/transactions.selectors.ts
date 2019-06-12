@@ -1,7 +1,7 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 
-import {transactionAdapter} from './transactions.reducer';
-import {TransactionState} from '@app/transactions/store/transaction.model';
+import {transactionAdapter} from './reducers/transactions.reducer';
+import {TransactionState} from '@app/transactions/model/transaction.model';
 
 export const selectTransactionState = createFeatureSelector<TransactionState>('transaction');
 

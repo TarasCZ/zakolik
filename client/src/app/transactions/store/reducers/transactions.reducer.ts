@@ -1,9 +1,11 @@
 import {createEntityAdapter, EntityAdapter} from '@ngrx/entity';
 
-import {Transaction, TransactionState} from './transaction.model';
-import {TransactionActions, TransactionActionTypes} from './transactions.actions';
+import {Transaction, TransactionState} from '../../model/transaction.model';
+import {TransactionActions, TransactionActionTypes} from '../actions/transactions.actions';
 
-export const transactionAdapter: EntityAdapter<Transaction> = createEntityAdapter<Transaction>();
+export const transactionAdapter: EntityAdapter<Transaction> = createEntityAdapter<Transaction>({
+  sortComparer: (a, b) => b.date - a.date
+});
 
 export const initialState: TransactionState = transactionAdapter.getInitialState({
   ids: [],

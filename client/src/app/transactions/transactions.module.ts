@@ -9,14 +9,14 @@ import {SharedModule} from '@app/shared';
 import {environment} from '@env/environment';
 
 import {TransactionsRoutingModule} from './transactions-routing.module';
-import {TransactionEffects} from './store/transactions.effects';
-import {transactionReducer} from '@app/transactions/store/transactions.reducer';
+import {TransactionEffects} from './store/effects/transactions.effects';
+import {transactionReducer} from '@app/transactions/store/reducers/transactions.reducer';
 import {TransactionsContainerComponent} from '@app/transactions/components/transactions-container/transactions-container.component';
 import {TransactionFormComponent} from '@app/transactions/components/transaction-form/transaction-form.component';
 import {TransactionCardComponent} from './components/transaction-card/transaction-card.component';
 import {TransactionDataService} from '@app/transactions/services/transaction-data.service';
-import {Transaction} from '@app/transactions/store/transaction.model';
-import {ActionLoadAllTransactions} from '@app/transactions/store/transactions.actions';
+import {Transaction} from '@app/transactions/model/transaction.model';
+import {ActionLoadAllTransactions} from '@app/transactions/store/actions/transactions.actions';
 import { TransactionAmountComponent } from './components/transaction-amount/transaction-amount.component';
 
 @NgModule({
