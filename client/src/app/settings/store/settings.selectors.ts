@@ -25,3 +25,8 @@ export const selectTheme = createSelector(
   selectSettings,
   settings => settings.theme.toLowerCase()
 );
+
+export const selectPicture = createSelector(
+  selectSettings,
+  settings => settings.picture
+);

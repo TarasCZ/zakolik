@@ -1,4 +1,4 @@
-import {User, UserToken} from './user.interface';
+import {User, UserToken} from './user.model';
 import {RepositoryMock} from '../../test/mocks/repository.mock';
 import {UserTestFactory} from '../../test/test-factory/user-test.factory';
 import {Test} from '@nestjs/testing';

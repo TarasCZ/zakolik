@@ -5,8 +5,8 @@ import {getRepositoryToken} from '@nestjs/typeorm';
 import {TransactionEntity} from './transaction.entity';
 import {TransactionTestFactory} from '../../test/test-factory/transaction-test.factory';
 import {UserTestFactory} from '../../test/test-factory/user-test.factory';
-import {Transaction} from './transaction.interface';
-import {User} from '../user/user.interface';
+import {Transaction} from './transaction.model';
+import {User} from '../user/user.model';
 
 describe('Transaction Service', () => {
 

@@ -28,33 +28,25 @@ import {MatNativeDateModule} from '@angular/material';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
-  faBars,
-  faBook,
+  faBars, faCalendar, faCalendarAlt,
   faCar,
-  faCaretDown,
-  faCaretUp,
   faCheck,
   faCog,
   faConciergeBell,
   faEdit,
-  faExclamationTriangle,
   faFilter,
   faHome,
   faHouseDamage,
   faLanguage,
   faLaughBeam,
-  faLightbulb,
   faMoneyBillWave,
   faPaintBrush,
   faPhone,
-  faPlayCircle,
   faPlus,
   faPowerOff,
   faRocket,
   faShoppingCart,
-  faSquare,
   faStream,
-  faTasks,
   faTimes,
   faTrash,
   faUserCircle,
@@ -62,7 +54,6 @@ import {
   faWallet,
   faWindowMaximize
 } from '@fortawesome/free-solid-svg-icons';
-import {faGithub, faInstagram, faMediumM, faTwitter, faYoutube} from '@fortawesome/free-brands-svg-icons';
 import {StopClickPropagationDirective} from '@app/shared/directives/stop-click-propagation.directive';
 
 library.add(
@@ -71,29 +62,16 @@ library.add(
   faPowerOff,
   faCog,
   faRocket,
-  faPlayCircle,
-  faGithub,
-  faMediumM,
-  faTwitter,
-  faInstagram,
-  faYoutube,
   faPlus,
   faEdit,
   faTrash,
   faTimes,
-  faCaretUp,
-  faCaretDown,
-  faExclamationTriangle,
   faFilter,
-  faTasks,
   faCheck,
-  faSquare,
   faLanguage,
   faPaintBrush,
-  faLightbulb,
   faWindowMaximize,
   faStream,
-  faBook,
   faPhone,
   faCar,
   faWallet,
@@ -103,7 +81,8 @@ library.add(
   faHouseDamage,
   faConciergeBell,
   faMoneyBillWave,
-  faLaughBeam
+  faLaughBeam,
+  faCalendarAlt
 );
 
 @NgModule({

@@ -8,7 +8,9 @@ export enum SettingsActionTypes {
   CHANGE_STICKY_HEADER = '[Settings] Change Sticky Header',
   CHANGE_ANIMATIONS_PAGE = '[Settings] Change Animations Page',
   CHANGE_ANIMATIONS_PAGE_DISABLED = '[Settings] Change Animations Page Disabled',
-  CHANGE_ANIMATIONS_ELEMENTS = '[Settings] Change Animations Elements'
+  CHANGE_ANIMATIONS_ELEMENTS = '[Settings] Change Animations Elements',
+  LOAD_ALL_SETTINGS = '[Settings] Load All',
+  SAVE_ALL_SETTINGS = '[Settings] Save All'
 }
 
 export class ActionSettingsChangeLanguage implements Action {
@@ -47,10 +49,22 @@ export class ActionSettingsChangeAnimationsElements implements Action {
   constructor(readonly payload: { elementsAnimations: boolean }) {}
 }
 
+export class ActionSettingsLoadAll implements Action {
+  readonly type = SettingsActionTypes.LOAD_ALL_SETTINGS;
+
+  constructor(readonly payload: { elementsAnimations: boolean }) {}
+}
+
+export class ActionSettingsSaveAll implements Action {
+  readonly type = SettingsActionTypes.SAVE_ALL_SETTINGS;
+}
+
 export type SettingsActions =
   | ActionSettingsChangeLanguage
   | ActionSettingsChangeTheme
   | ActionSettingsChangeAnimationsPage
   | ActionSettingsChangeAnimationsPageDisabled
   | ActionSettingsChangeAnimationsElements
-  | ActionSettingsChangeStickyHeader;
+  | ActionSettingsChangeStickyHeader
+  | ActionSettingsLoadAll
+  | ActionSettingsSaveAll;

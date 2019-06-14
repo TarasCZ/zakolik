@@ -1,14 +1,15 @@
-import {Column, Entity, OneToMany, PrimaryColumn} from 'typeorm';
-import {User} from './user.interface';
-import {Transaction} from '../transactions/transaction.interface';
+import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn} from 'typeorm';
+import {User} from './user.model';
+import {Transaction} from '../transactions/transaction.model';
 import {TransactionEntity} from '../transactions/transaction.entity';
+import {UserSettingsEntity} from './user-settings/user-settings.entity';
 
 @Entity()
 export class UserEntity implements User {
     @PrimaryColumn()
     id: string;
 
-    @Column({ length: 500 })
+    @Column()
     name: string;
 
     @Column()
@@ -16,6 +17,10 @@ export class UserEntity implements User {
 
     @Column()
     email: string;
+
+    @OneToOne(type => UserSettingsEntity, settings => settings.user)
+    @JoinColumn()
+    settings?: UserSettingsEntity;
 
     @OneToMany(type => TransactionEntity, transaction => transaction.user, {eager: false})
     transactions?: Transaction[];

@@ -41,11 +41,15 @@
         a {
           color: mat-color($primary, lighter);
           &:hover {
-            color: mat-color($accent);
+            color: mat-color($warn);
           }
         }
       }
     }
+  }
+
+  .mat-option.mat-selected.mat-active {
+    color: mat-color($accent) !important;
   }
 
   .error-notification-overlay {

@@ -10,10 +10,9 @@ import {openCloseAnimation} from '@app/core/animations/transaction-card.animatio
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [openCloseAnimation]
 })
-export class TransactionCardComponent implements OnInit {
+export class TransactionCardComponent {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
   TransactionTypeIcons = TransactionTypeIcons;
-  dateFormat = 'dd. MM. yyyy'; // TODO: Move to settings
   currencyTag = 'Kč';
   isSelected = false;
 
@@ -23,9 +22,6 @@ export class TransactionCardComponent implements OnInit {
   @Output() remove = new EventEmitter<string>();
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   toggleSelect() {
     this.isSelected = !this.isSelected;

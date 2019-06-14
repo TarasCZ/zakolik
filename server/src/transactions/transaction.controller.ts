@@ -1,7 +1,7 @@
 import {Controller, Get, Post, Body, UseGuards, Delete, Param} from '@nestjs/common';
 import {TransactionService} from './transaction.service';
 import {UpsertTransactionDto} from './dto/upsert-transaction.dto';
-import {Transaction} from './transaction.interface';
+import {Transaction} from './transaction.model';
 import {AuthGuard} from '../auth/auth.guard';
 import {User} from '../user/user.decorator';
 import {UserEntity} from '../user/user.entity';

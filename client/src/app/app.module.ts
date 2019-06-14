@@ -14,6 +14,7 @@ import {CallbackComponent} from './static/callback/callback.component';
 import {registerLocaleData} from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import {LoginComponent} from './static/login/login.component';
+import {MAT_DATE_LOCALE} from '@angular/material';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -39,7 +40,7 @@ registerLocaleData(localeFr, 'fr');
     CallbackComponent,
     LoginComponent
   ],
-  providers: [],
+  providers: [{provide: MAT_DATE_LOCALE, useValue: 'fr'}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

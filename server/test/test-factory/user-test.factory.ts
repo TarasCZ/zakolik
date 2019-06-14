@@ -1,4 +1,4 @@
-import {User, UserToken} from '../../src/user/user.interface';
+import {User, UserToken} from '../../src/user/user.model';
 
 export class UserTestFactory {
     static createUser(partialUser?: Partial<User>): User {

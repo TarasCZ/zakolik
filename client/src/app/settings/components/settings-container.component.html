@@ -5,6 +5,7 @@
   <br>
   <ng-container *ngIf="settings$ | async as settings">
     <div class="row">
+
       <div class="col-md-6 group" [ngClass]="routeAnimationsElements">
         <h2>{{ 'zklk.settings.general.title' | translate }}</h2>
         <div class="icon-form-field">
@@ -30,49 +31,7 @@
            </mat-slide-toggle>
          </div>
       </div>
-      <div class="col-md-6 group" [ngClass]="routeAnimationsElements">
-        <h2>{{ 'zklk.settings.general.title' | translate }}</h2>
-        <div class="icon-form-field">
-          <mat-icon color="accent"><fa-icon icon="language" color="accent"></fa-icon></mat-icon>
-          <mat-form-field>
-            <mat-select [placeholder]="'zklk.settings.general.placeholder' | translate"
-                        [ngModel]="settings.language"
-                        (selectionChange)="onLanguageSelect($event)"
-                        name="language">
-              <mat-option *ngFor="let l of languages" [value]="l.value">
-                {{ 'zklk.settings.general.language.' + l.label | translate }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="icon-form-field">
-          <mat-icon color="accent"><fa-icon icon="bars" color="accent"></fa-icon></mat-icon>
-          <mat-placeholder>{{ 'zklk.settings.themes.sticky-header' | translate }}
-          </mat-placeholder>
-          <mat-slide-toggle
-            [checked]="settings.stickyHeader"
-            (change)="onStickyHeaderToggle($event)">
-          </mat-slide-toggle>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 group" [ngClass]="routeAnimationsElements">
-        <h2>{{ 'zklk.settings.themes.title' | translate }}</h2>
-        <div class="icon-form-field">
-          <mat-icon color="accent"><fa-icon icon="paint-brush" color="accent"></fa-icon></mat-icon>
-          <mat-form-field>
-            <mat-select [placeholder]="'zklk.settings.themes.placeholder' | translate"
-                        [ngModel]="settings.theme"
-                        (selectionChange)="onThemeSelect($event)"
-                        name="themes">
-              <mat-option *ngFor="let t of themes" [value]="t.value">
-                {{ 'zklk.settings.themes.' + t.label | translate }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
+
       <div class="col-md-6 group" [ngClass]="routeAnimationsElements">
         <h2>{{ 'zklk.settings.animations.title' | translate }}</h2>
         <div class="icon-form-field">
@@ -99,6 +58,25 @@
             [checked]="settings.elementsAnimations"
             (change)="onElementsAnimationsToggle($event)">
           </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 group" [ngClass]="routeAnimationsElements">
+        <h2>{{ 'zklk.settings.themes.title' | translate }}</h2>
+        <div class="icon-form-field">
+          <mat-icon color="accent"><fa-icon icon="paint-brush" color="accent"></fa-icon></mat-icon>
+          <mat-form-field>
+            <mat-select [placeholder]="'zklk.settings.themes.placeholder' | translate"
+                        [ngModel]="settings.theme"
+                        (selectionChange)="onThemeSelect($event)"
+                        name="themes">
+              <mat-option *ngFor="let t of themes" [value]="t.value">
+                {{ 'zklk.settings.themes.' + t.label | translate }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
     </div>

@@ -59,14 +59,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.localStorageService.testLocalStorage();
-    if (AppComponent.isIEorEdgeOrSafari()) {
-      console.log('WTf?', browser().name);
-      this.store.dispatch(
-        new ActionSettingsChangeAnimationsPageDisabled({
-          pageAnimationsDisabled: true
-        })
-      );
-    }
+
+    const pageAnimationsDisabled = AppComponent.isIEorEdgeOrSafari();
+    this.store.dispatch(new ActionSettingsChangeAnimationsPageDisabled({ pageAnimationsDisabled }));
 
     this.store.dispatch(new ActionAuthCheckLogin({ redirectUrl: window.location.pathname }));
     this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));

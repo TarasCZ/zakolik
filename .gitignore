@@ -17,6 +17,7 @@
 
 #data
 data/
+server/test/scripts/random-transactions.ts
 
 # TEMPORARY
 client-old/

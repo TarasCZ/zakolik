@@ -20,7 +20,7 @@ export const reducers: ActionReducerMap<AppState> = {
 };
 
 export const metaReducers: MetaReducer<AppState>[] = [
-  initStateFromLocalStorage
+  // initStateFromLocalStorage
 ];
 if (!environment.production) {
   metaReducers.unshift(storeFreeze);

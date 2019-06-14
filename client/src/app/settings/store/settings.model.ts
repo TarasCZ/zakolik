@@ -9,6 +9,7 @@ export interface SettingsState {
   pageAnimations: boolean;
   pageAnimationsDisabled: boolean;
   elementsAnimations: boolean;
+  picture: string;
 }
 
 export interface State extends AppState {

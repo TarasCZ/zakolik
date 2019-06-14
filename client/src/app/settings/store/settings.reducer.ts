@@ -3,11 +3,12 @@ import { SettingsActions, SettingsActionTypes } from './settings.actions';
 
 export const initialState: SettingsState = {
   language: 'en',
-  theme: 'DARK-THEME',
+  theme: 'LIGHT-THEME',
   stickyHeader: true,
   pageAnimations: true,
   pageAnimationsDisabled: false,
   elementsAnimations: true,
+  picture: ''
 };
 
 export function settingsReducer(
@@ -20,6 +21,7 @@ export function settingsReducer(
     case SettingsActionTypes.CHANGE_STICKY_HEADER:
     case SettingsActionTypes.CHANGE_ANIMATIONS_PAGE:
     case SettingsActionTypes.CHANGE_ANIMATIONS_ELEMENTS:
+    case SettingsActionTypes.LOAD_ALL_SETTINGS:
       return { ...state, ...action.payload };
 
     case SettingsActionTypes.CHANGE_ANIMATIONS_PAGE_DISABLED:

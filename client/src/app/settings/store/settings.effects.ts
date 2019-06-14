@@ -5,34 +5,40 @@ import {select, Store} from '@ngrx/store';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {TranslateService} from '@ngx-translate/core';
 import {merge, of} from 'rxjs';
-import {distinctUntilChanged, filter, map, tap, withLatestFrom} from 'rxjs/operators';
+import {distinctUntilChanged, exhaustMap, filter, map, tap, withLatestFrom} from 'rxjs/operators';
 
-import {AnimationsService, LocalStorageService, TitleService} from '@app/core';
+import {AnimationsService, AuthActionTypes, TitleService} from '@app/core';
 
-import {SettingsActions, SettingsActionTypes} from './settings.actions';
+import {ActionSettingsLoadAll, SettingsActions, SettingsActionTypes} from './settings.actions';
 import {selectSettingsState, selectTheme} from './settings.selectors';
-import {State} from './settings.model';
-
-export const SETTINGS_KEY = 'SETTINGS';
+import {SettingsState, State} from '@app/settings';
+import {SettingsDataService} from '@app/settings/services/settings-data.service';
 
 const INIT = of('zklk-init-effect-trigger');
 
 @Injectable()
 export class SettingsEffects {
 
+  @Effect()
+  loadSettings = this.actions$.pipe(
+    ofType(AuthActionTypes.LOGIN_SUCCESS),
+    exhaustMap(() => this.settingsDataService.getAllSettings().pipe(
+      map((settings: SettingsState) => new ActionSettingsLoadAll(settings))
+    ))
+  );
+
   @Effect({ dispatch: false })
   persistSettings = this.actions$.pipe(
     ofType(
       SettingsActionTypes.CHANGE_ANIMATIONS_ELEMENTS,
       SettingsActionTypes.CHANGE_ANIMATIONS_PAGE,
-      SettingsActionTypes.CHANGE_ANIMATIONS_PAGE_DISABLED,
       SettingsActionTypes.CHANGE_LANGUAGE,
       SettingsActionTypes.CHANGE_STICKY_HEADER,
       SettingsActionTypes.CHANGE_THEME
     ),
     withLatestFrom(this.store.pipe(select(selectSettingsState))),
-    tap(([action, settings]) =>
-      this.localStorageService.setItem(SETTINGS_KEY, settings)
+    exhaustMap(([action, settings]) =>
+      this.settingsDataService.updateAllSettings(settings)
     )
   );
 
@@ -62,7 +68,6 @@ export class SettingsEffects {
   ).pipe(
     withLatestFrom(this.store.pipe(select(selectTheme))),
     tap(([action, theme]) => {
-      console.log('Theme', theme);
       const classList = this.overlayContainer.getContainerElement().classList;
       const toRemove = Array.from(classList).filter((item: string) =>
         item.includes('-theme')
@@ -100,7 +105,7 @@ export class SettingsEffects {
     private store: Store<State>,
     private router: Router,
     private overlayContainer: OverlayContainer,
-    private localStorageService: LocalStorageService,
+    private settingsDataService: SettingsDataService,
     private titleService: TitleService,
     private animationsService: AnimationsService,
     private translateService: TranslateService

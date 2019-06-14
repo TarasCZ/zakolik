@@ -1,9 +1,9 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
-import {Transaction} from './transaction.interface';
+import {Transaction} from './transaction.model';
 import {InjectRepository} from '@nestjs/typeorm';
 import {TransactionEntity} from './transaction.entity';
 import {Repository} from 'typeorm';
-import {User} from '../user/user.interface';
+import {User} from '../user/user.model';
 
 export const UnauthorizedTransactionUpdateException = new HttpException(
     'You are not authorize to update this transaction',

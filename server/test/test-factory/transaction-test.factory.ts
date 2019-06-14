@@ -1,5 +1,5 @@
 import {TransactionEntity} from '../../src/transactions/transaction.entity';
-import {Transaction} from '../../src/transactions/transaction.interface';
+import {Transaction} from '../../src/transactions/transaction.model';
 
 export class TransactionTestFactory {
     static createTransaction(partialTransaction?: Partial<TransactionEntity>): Transaction {

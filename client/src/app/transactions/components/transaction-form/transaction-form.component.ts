@@ -53,7 +53,6 @@ export class TransactionFormComponent implements OnInit {
 
     this.store.pipe(select(fromTransactions.selectTransaction(this.id))).pipe(first(isDefined))
       .subscribe((transaction) => {
-        console.log(transaction);
         this.transactionFormGroup.patchValue({
           ...transaction,
           date: new Date(transaction.date)
