@@ -1,18 +1,24 @@
-<div class="container" rtl>
-  <h1>{{ 'zklk.menu.transactions' | translate }}</h1>
+<div class="container">
+  <div class="row title-row">
+    <h1 class="col">{{ 'zklk.menu.transactions' | translate }}</h1>
+    <button type="button" mat-fab color="primary" class="add col-auto"
+            (click)="addNewTransaction()" data-testid="add-transaction">
+      <fa-icon icon="plus"></fa-icon>
+    </button>
+  </div>
   <div class="row">
     <div class="col-md">
-
-      <ng-container *ngFor="let transaction of transactions$ | async as transactions; let i = index; trackBy: trackByFn">
-          <h3 *ngIf="i==0 || ((transaction.date | date:dateFormat) !== (transactions[i-1].date | date:dateFormat))"
-              [ngClass]="routeAnimationsElements">{{transaction.date | date:dateFormat}}</h3>
+      <div *ngFor="let transaction of transactions$ | async as transactions; let i = index; trackBy: trackByFn" [ngClass]="routeAnimationsElements">
+          <h3 *ngIf="i==0 || ((transaction.date | date:dateFormat) !== (transactions[i-1].date | date:dateFormat))">
+            {{transaction.date | date:dateFormat}}
+          </h3>
           <zklk-transaction-card
             [transaction]="transaction"
             [@removeTransactionCard]
             (edit)="editTransaction($event)"
             (remove)="removeTransaction($event)"
           ></zklk-transaction-card>
-      </ng-container>
+      </div>
 
       <p *ngIf="(transactions$ | async)?.length === 0">
         {{'zklk.transaction.empty' | translate}}

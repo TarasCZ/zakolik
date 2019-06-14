@@ -4,10 +4,26 @@ mat-card {
   border-radius: 10px;
 }
 
+p {
+  margin: auto;
+  overflow: hidden;
+  overflow-wrap: break-spaces;
+}
+
 .mat-icon-button {
   font-size: 20px;
   width: 50px;
   height: 50px;
+}
+
+mat-icon {
+  fa-icon {
+    font-size: 25px;
+  }
+}
+
+.row {
+  margin-left: 5px;
 }
 
 .mat-fab {
@@ -21,6 +37,10 @@ mat-card {
   text-align: right;
 }
 
+h2 {
+  margin-block-end: 0;
+}
+
 @media (max-width: 767px) {
   h2 {
     font-size: 100%;
@@ -28,5 +48,11 @@ mat-card {
 
   p {
     font-size: 70%;
+  }
+
+  mat-icon {
+    fa-icon {
+      font-size: 15px;
+    }
   }
 }

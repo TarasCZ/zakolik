@@ -13,7 +13,7 @@ export class TransactionEntity implements Transaction {
     @PrimaryColumn()
     id: string;
 
-    @Column({ length: 15 })
+    @Column({ length: 20 })
     name: string;
 
     @Column({ type: 'decimal', transformer: numericTransformer })

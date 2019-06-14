@@ -34,9 +34,14 @@
 
           <mat-form-field class="col">
             <mat-label>Transaction type</mat-label>
-            <mat-select formControlName="type">
+            <mat-select [formControl]="selectTypeFormControl">
+              <mat-select-trigger>
+                <mat-icon><fa-icon [icon]="TransactionTypeIcons[selectTypeFormControl.value]?.icon"></fa-icon></mat-icon>
+                {{selectTypeFormControl.value | titlecase}}
+              </mat-select-trigger>
               <mat-option *ngFor="let type of types" [value]="type">
-                {{type}}
+                <mat-icon><fa-icon [icon]="TransactionTypeIcons[type].icon"></fa-icon></mat-icon>
+                {{type | titlecase}}
               </mat-option>
             </mat-select>
           </mat-form-field>

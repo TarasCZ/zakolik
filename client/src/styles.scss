@@ -8,24 +8,16 @@
 
 @include mat-core();
 
-@import 'themes/default-theme.scss';
 @import 'themes/light-theme.scss';
 @import 'themes/black-theme.scss';
 @import 'themes/nature-theme.scss';
 
 @import 'styles-reset.scss-theme';
 @import 'app/app.component.scss-theme';
-@import 'app/shared/big-input/big-input.component.scss-theme';
 
 @mixin custom-components-theme($theme) {
   @include zklk-styles-reset-theme($theme);
   @include zklk-app-component-theme($theme);
-  @include zklk-big-input-component-theme($theme);
-}
-
-.default-theme {
-  @include angular-material-theme($zklk-theme);
-  @include custom-components-theme($zklk-theme);
 }
 
 .light-theme {

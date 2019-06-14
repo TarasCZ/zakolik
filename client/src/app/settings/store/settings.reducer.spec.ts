@@ -4,11 +4,9 @@ import {
   ActionSettingsChangeAnimationsElements,
   ActionSettingsChangeAnimationsPage,
   ActionSettingsChangeAnimationsPageDisabled,
-  ActionSettingsChangeAutoNightMode,
   ActionSettingsChangeLanguage,
   ActionSettingsChangeTheme,
   ActionSettingsChangeStickyHeader,
-  ActionSettingsChangeHour
 } from './settings.actions';
 
 describe('SettingsReducer', () => {
@@ -55,27 +53,11 @@ describe('SettingsReducer', () => {
     expect(state.elementsAnimations).toEqual(false);
   });
 
-  it('should update autoNightMode', () => {
-    const action = new ActionSettingsChangeAutoNightMode({
-      autoNightMode: true
-    });
-    const state = settingsReducer(undefined, action);
-    expect(state.autoNightMode).toEqual(true);
-  });
-
   it('should update stickyHeader', () => {
     const action = new ActionSettingsChangeStickyHeader({
       stickyHeader: false
     });
     const state = settingsReducer(undefined, action);
     expect(state.stickyHeader).toEqual(false);
-  });
-
-  it('should update hour', () => {
-    const action = new ActionSettingsChangeHour({
-      hour: 7
-    });
-    const state = settingsReducer(undefined, action);
-    expect(state.hour).toEqual(7);
   });
 });

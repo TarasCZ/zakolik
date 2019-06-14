@@ -2,23 +2,20 @@ import {
   ActionSettingsChangeAnimationsElements,
   ActionSettingsChangeAnimationsPage,
   ActionSettingsChangeAnimationsPageDisabled,
-  ActionSettingsChangeAutoNightMode,
-  ActionSettingsChangeHour,
   ActionSettingsChangeLanguage,
   ActionSettingsChangeStickyHeader,
   ActionSettingsChangeTheme,
   SettingsActionTypes
 } from './settings.actions';
-import { NIGHT_MODE_THEME } from './settings.model';
 
 describe('Settings Actions', () => {
   it('should upsert ActionSettingsChangeTheme action', () => {
     const action = new ActionSettingsChangeTheme({
-      theme: NIGHT_MODE_THEME
+      theme: 'DARK_THEME'
     });
 
     expect(action.type).toEqual(SettingsActionTypes.CHANGE_THEME);
-    expect(action.payload.theme).toEqual(NIGHT_MODE_THEME);
+    expect(action.payload.theme).toEqual('DARK_THEME');
   });
 
   it('should upsert ActionSettingsChangeAnimationsElements action', () => {
@@ -50,17 +47,6 @@ describe('Settings Actions', () => {
     expect(action.payload.pageAnimationsDisabled).toEqual(true);
   });
 
-  it('should upsert ActionSettingsChangeAutoNightMode action', () => {
-    const action = new ActionSettingsChangeAutoNightMode({
-      autoNightMode: true
-    });
-
-    expect(action.type).toEqual(
-      SettingsActionTypes.CHANGE_AUTO_NIGHT_AUTO_MODE
-    );
-    expect(action.payload.autoNightMode).toEqual(true);
-  });
-
   it('should upsert ActionSettingsChangeLanguage action', () => {
     const action = new ActionSettingsChangeLanguage({
       language: 'en'
@@ -77,14 +63,5 @@ describe('Settings Actions', () => {
 
     expect(action.type).toEqual(SettingsActionTypes.CHANGE_STICKY_HEADER);
     expect(action.payload.stickyHeader).toEqual(true);
-  });
-
-  it('should upsert ActionSettingsChangeHour action', () => {
-    const action = new ActionSettingsChangeHour({
-      hour: 7
-    });
-
-    expect(action.type).toEqual(SettingsActionTypes.CHANGE_HOUR);
-    expect(action.payload.hour).toEqual(7);
   });
 });

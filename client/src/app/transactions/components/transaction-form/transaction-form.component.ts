@@ -11,6 +11,7 @@ import * as fromTransactions from '@app/transactions/store/transactions.selector
 import {first} from 'rxjs/operators';
 import browser from 'browser-detect';
 import {isDefined} from '@app/shared/utils/helper-functions';
+import {TransactionTypeIcons} from '@app/transactions/model/transaction.model';
 
 @Component({
   selector: 'zklk-transaction-edit',
@@ -20,16 +21,18 @@ import {isDefined} from '@app/shared/utils/helper-functions';
 })
 export class TransactionFormComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
+  TransactionTypeIcons = TransactionTypeIcons;
 
   isTouchDevice: boolean;
   maxDate = new Date();
-  types = Object.keys(TransactionTypes);
+  types = Object.values(TransactionTypes);
+  selectTypeFormControl = this.fb.control('OTHER');
   transactionFormGroup = this.fb.group({
     id: uuid(),
-    name: '',
-    value: this.fb.control({ value: null }, [Validators.required, notZeroValidator]),
-    type: 'Other',
-    description: '',
+    name: this.fb.control('', [Validators.maxLength(20)]),
+    value: this.fb.control(null, [Validators.required, notZeroValidator]),
+    type: this.selectTypeFormControl,
+    description: this.fb.control('', [Validators.maxLength(50)]),
     date: { value: new Date(), disabled: true }
   });
 
@@ -50,6 +53,7 @@ export class TransactionFormComponent implements OnInit {
 
     this.store.pipe(select(fromTransactions.selectTransaction(this.id))).pipe(first(isDefined))
       .subscribe((transaction) => {
+        console.log(transaction);
         this.transactionFormGroup.patchValue({
           ...transaction,
           date: new Date(transaction.date)

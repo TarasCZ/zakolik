@@ -14,11 +14,9 @@ import {environment as env} from '@env/environment';
 import {
   ActionSettingsChangeLanguage,
   ActionSettingsChangeAnimationsPageDisabled,
-  selectEffectiveTheme,
   selectSettingsLanguage,
-  selectSettingsStickyHeader
+  selectSettingsStickyHeader, selectTheme
 } from './settings';
-import {Local} from 'protractor/built/driverProviders';
 
 @Component({
   selector: 'zklk-root',
@@ -62,6 +60,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.localStorageService.testLocalStorage();
     if (AppComponent.isIEorEdgeOrSafari()) {
+      console.log('WTf?', browser().name);
       this.store.dispatch(
         new ActionSettingsChangeAnimationsPageDisabled({
           pageAnimationsDisabled: true
@@ -73,7 +72,7 @@ export class AppComponent implements OnInit {
     this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
     this.stickyHeader$ = this.store.pipe(select(selectSettingsStickyHeader));
     this.language$ = this.store.pipe(select(selectSettingsLanguage));
-    this.theme$ = this.store.pipe(select(selectEffectiveTheme));
+    this.theme$ = this.store.pipe(select(selectTheme));
   }
 
   onLogoutClick() {

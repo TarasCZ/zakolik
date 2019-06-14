@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Transaction} from '@app/transactions/model/transaction.model';
+import {Transaction, TransactionTypeIcons} from '@app/transactions/model/transaction.model';
 import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
 import {openCloseAnimation} from '@app/core/animations/transaction-card.animations';
 
@@ -12,6 +12,7 @@ import {openCloseAnimation} from '@app/core/animations/transaction-card.animatio
 })
 export class TransactionCardComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
+  TransactionTypeIcons = TransactionTypeIcons;
   dateFormat = 'dd. MM. yyyy'; // TODO: Move to settings
   currencyTag = 'Kč';
   isSelected = false;

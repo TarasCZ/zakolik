@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef
 } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -12,7 +11,6 @@ import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 import {
   ActionSettingsChangeAnimationsElements,
   ActionSettingsChangeAnimationsPage,
-  ActionSettingsChangeAutoNightMode,
   ActionSettingsChangeLanguage,
   ActionSettingsChangeTheme,
   ActionSettingsChangeStickyHeader
@@ -31,7 +29,6 @@ export class SettingsContainerComponent implements OnInit {
   settings$: Observable<SettingsState>;
 
   themes = [
-    { value: 'DEFAULT-THEME', label: 'blue' },
     { value: 'LIGHT-THEME', label: 'light' },
     { value: 'NATURE-THEME', label: 'nature' },
     { value: 'BLACK-THEME', label: 'dark' }
@@ -39,13 +36,8 @@ export class SettingsContainerComponent implements OnInit {
 
   languages = [
     { value: 'en', label: 'en' },
-    { value: 'de', label: 'de' },
+    { value: 'cz', label: 'cz' },
     { value: 'sk', label: 'sk' },
-    { value: 'fr', label: 'fr' },
-    { value: 'es', label: 'es' },
-    { value: 'pt-br', label: 'pt-br' },
-    { value: 'zh-cn', label: 'zh-cn' },
-    { value: 'he', label: 'he' }
   ];
 
   constructor(private store: Store<State>) {}
@@ -60,12 +52,6 @@ export class SettingsContainerComponent implements OnInit {
 
   onThemeSelect({ value: theme }) {
     this.store.dispatch(new ActionSettingsChangeTheme({ theme }));
-  }
-
-  onAutoNightModeToggle({ checked: autoNightMode }) {
-    this.store.dispatch(
-      new ActionSettingsChangeAutoNightMode({ autoNightMode })
-    );
   }
 
   onStickyHeaderToggle({ checked: stickyHeader }) {

@@ -1,13 +1,13 @@
 <mat-card [ngClass]="routeAnimationsElements"
           (click)=toggleSelect() data-testid="transaction-item">
   <div class="row">
+    <mat-icon class="col-autol"><fa-icon [icon]="TransactionTypeIcons[transaction.type]?.icon"></fa-icon></mat-icon>
     <h2 class="col" data-testid="item-name">{{transaction.name}}</h2>
     <h2 class="col text-right">
       <zklk-transaction-amount [value]="transaction.value" [currency]="currencyTag"></zklk-transaction-amount>
     </h2>
   </div>
   <div [@openClose]="isSelected ? 'open' : 'closed'">
-    <hr/>
     <div class="row">
       <p class="col">
         {{transaction.description}}

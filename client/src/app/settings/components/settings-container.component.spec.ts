@@ -34,7 +34,7 @@ describe('SettingsComponent', () => {
     store = TestBed.get(Store);
     store.setState({
       settings: {
-        theme: 'DEFAULT-THEME',
+        theme: 'DARK-THEME',
         autoNightMode: true,
         stickyHeader: true,
         pageAnimations: true,
@@ -123,7 +123,7 @@ describe('SettingsComponent', () => {
   it('should disable change animations page when disabled is set in state', () => {
     store.setState({
       settings: {
-        theme: 'DEFAULT-THEME',
+        theme: 'DARK-THEME',
         autoNightMode: true,
         pageAnimations: true,
         pageAnimationsDisabled: true, // change animations disabled

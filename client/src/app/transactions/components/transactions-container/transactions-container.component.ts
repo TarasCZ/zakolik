@@ -19,7 +19,7 @@ import {removeTransactionAnimation} from '@app/core/animations/transaction-card.
 })
 export class TransactionsContainerComponent {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
-  dateFormat = 'dd. MM. yyyy'; // TODO: Move to settings
+  dateFormat = 'd. M. yyyy'; // TODO: Move to settings
 
   transactions$: Observable<Transaction[]> = this.store.pipe(select(selectAll));
 

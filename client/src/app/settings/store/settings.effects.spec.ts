@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { TranslateService } from '@ngx-translate/core';
 import { Actions, getEffectsMetadata } from '@ngrx/effects';
@@ -73,12 +72,9 @@ describe('SettingsEffects', () => {
       language: 'en',
       pageAnimations: true,
       elementsAnimations: true,
-      theme: 'default',
-      nightTheme: 'default',
-      autoNightMode: false,
+      theme: 'dark',
       stickyHeader: false,
-      pageAnimationsDisabled: true,
-      hour: 12
+      pageAnimationsDisabled: true
     };
     store.pipe.and.returnValue(of(settings));
     const persistAction = new ActionSettingsChangeTheme({ theme: 'DEFAULT' });

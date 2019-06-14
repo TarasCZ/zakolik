@@ -1,35 +1,17 @@
-import { ActivationEnd, Router } from '@angular/router';
-import { Injectable } from '@angular/core';
-import { OverlayContainer } from '@angular/cdk/overlay';
-import { select, Store } from '@ngrx/store';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { TranslateService } from '@ngx-translate/core';
-import { interval, merge, of } from 'rxjs';
-import {
-  tap,
-  withLatestFrom,
-  map,
-  distinctUntilChanged,
-  mapTo,
-  filter
-} from 'rxjs/operators';
+import {ActivationEnd, Router} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {OverlayContainer} from '@angular/cdk/overlay';
+import {select, Store} from '@ngrx/store';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {TranslateService} from '@ngx-translate/core';
+import {merge, of} from 'rxjs';
+import {distinctUntilChanged, filter, map, tap, withLatestFrom} from 'rxjs/operators';
 
-import {
-  LocalStorageService,
-  AnimationsService,
-  TitleService
-} from '@app/core';
+import {AnimationsService, LocalStorageService, TitleService} from '@app/core';
 
-import {
-  SettingsActionTypes,
-  SettingsActions,
-  ActionSettingsChangeHour
-} from './settings.actions';
-import {
-  selectEffectiveTheme,
-  selectSettingsState
-} from './settings.selectors';
-import { State } from './settings.model';
+import {SettingsActions, SettingsActionTypes} from './settings.actions';
+import {selectSettingsState, selectTheme} from './settings.selectors';
+import {State} from './settings.model';
 
 export const SETTINGS_KEY = 'SETTINGS';
 
@@ -38,20 +20,12 @@ const INIT = of('zklk-init-effect-trigger');
 @Injectable()
 export class SettingsEffects {
 
-  @Effect()
-  changeHour = interval(60_000).pipe(
-    mapTo(new Date().getHours()),
-    distinctUntilChanged(),
-    map(hour => new ActionSettingsChangeHour({ hour }))
-  );
-
   @Effect({ dispatch: false })
   persistSettings = this.actions$.pipe(
     ofType(
       SettingsActionTypes.CHANGE_ANIMATIONS_ELEMENTS,
       SettingsActionTypes.CHANGE_ANIMATIONS_PAGE,
       SettingsActionTypes.CHANGE_ANIMATIONS_PAGE_DISABLED,
-      SettingsActionTypes.CHANGE_AUTO_NIGHT_AUTO_MODE,
       SettingsActionTypes.CHANGE_LANGUAGE,
       SettingsActionTypes.CHANGE_STICKY_HEADER,
       SettingsActionTypes.CHANGE_THEME
@@ -86,8 +60,9 @@ export class SettingsEffects {
     INIT,
     this.actions$.pipe(ofType(SettingsActionTypes.CHANGE_THEME))
   ).pipe(
-    withLatestFrom(this.store.pipe(select(selectEffectiveTheme))),
-    tap(([action, effectiveTheme]) => {
+    withLatestFrom(this.store.pipe(select(selectTheme))),
+    tap(([action, theme]) => {
+      console.log('Theme', theme);
       const classList = this.overlayContainer.getContainerElement().classList;
       const toRemove = Array.from(classList).filter((item: string) =>
         item.includes('-theme')
@@ -95,7 +70,7 @@ export class SettingsEffects {
       if (toRemove.length) {
         classList.remove(...toRemove);
       }
-      classList.add(effectiveTheme);
+      classList.add(theme);
     })
   );
 
