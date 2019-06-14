@@ -29,13 +29,13 @@
 
         <div class="row">
           <mat-form-field class="col" color="accent">
-            <input matInput [matDatepicker]="datePicker" lang="fr" [max]="maxDate" formControlName="date" placeholder="Transaction date">
+            <input matInput [matDatepicker]="datePicker" lang="fr" [max]="maxDate" formControlName="date" placeholder="{{ 'zklk.transaction.form.date.placeholder' | translate }}">
             <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
             <mat-datepicker #datePicker [touchUi]="isTouchDevice" [disabled]="false"></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field class="col" color="accent">
-            <mat-label>Transaction type</mat-label>
+            <mat-label>{{ 'zklk.transaction.form.type.placeholder' | translate }}</mat-label>
             <mat-select [formControl]="selectTypeFormControl">
               <mat-select-trigger>
                 <mat-icon><fa-icon [icon]="TransactionTypeIcons[selectTypeFormControl.value]?.icon"></fa-icon></mat-icon>
