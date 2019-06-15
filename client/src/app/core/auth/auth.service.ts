@@ -16,7 +16,6 @@ export class AuthService {
   parseHash$ = bindNodeCallback(this.auth0.parseHash.bind(this.auth0));
   checkSession$ = bindNodeCallback(this.auth0.checkSession.bind(this.auth0));
 
-
   constructor(private localStorageService: LocalStorageService) {
   }
 
