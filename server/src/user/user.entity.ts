@@ -2,7 +2,7 @@ import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn} from 'ty
 import {User} from './user.model';
 import {Transaction} from '../transactions/transaction.model';
 import {TransactionEntity} from '../transactions/transaction.entity';
-import {UserSettingsEntity} from './user-settings/user-settings.entity';
+import {UserSettingsEntity} from '../user-settings/user-settings.entity';
 
 @Entity()
 export class UserEntity implements User {

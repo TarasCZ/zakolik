@@ -3,7 +3,7 @@ import {UserSettingsEntity} from './user-settings.entity';
 import {UserSettingsController} from './user-settings.controller';
 import {UserSettingsService} from './user-settings.service';
 import {Module} from '@nestjs/common';
-import {AuthModule} from '../../auth/auth.module';
+import {AuthModule} from '../auth/auth.module';
 
 @Module({
     imports: [TypeOrmModule.forFeature([UserSettingsEntity]), AuthModule],

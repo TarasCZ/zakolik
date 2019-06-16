@@ -1,9 +1,9 @@
-import {RepositoryMock} from '../../../test/mocks/repository.mock';
-import {UserTestFactory} from '../../../test/test-factory/user-test.factory';
+import {RepositoryMock} from '../../test/mocks/repository.mock';
+import {UserTestFactory} from '../../test/test-factory/user-test.factory';
 import {Test} from '@nestjs/testing';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {UserSettingsEntity} from './user-settings.entity';
-import {UserEntity} from '../user.entity';
+import {UserEntity} from '../user/user.entity';
 import {UserSettingsService} from './user-settings.service';
 
 describe('User Service', () => {
