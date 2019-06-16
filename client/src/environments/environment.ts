@@ -5,23 +5,23 @@
 
 const packageJson = require('../../package.json');
 
+const appUrl = 'http://localhost:4200';
+
 export const environment = {
   appName: 'Zakolik',
   envName: 'DEV',
+  appUrl,
+  apiUrl: 'http://localhost:4000',
   production: false,
   test: false,
   i18nPrefix: '',
+  auth0Config: {
+    domain: 'dev-l2w-mks0.eu.auth0.com',
+    clientID: 'jiyDt6vp21wmCl7WlnlLNhhPoAyMt41A',
+    redirectUri: `${appUrl}/callback`,
+    responseType: 'id_token',
+  },
   versions: {
-    app: packageJson.version,
-    angular: packageJson.dependencies['@angular/core'],
-    ngrx: packageJson.dependencies['@ngrx/store'],
-    material: packageJson.dependencies['@angular/material'],
-    bootstrap: packageJson.dependencies.bootstrap,
-    rxjs: packageJson.dependencies.rxjs,
-    ngxtranslate: packageJson.dependencies['@ngx-translate/core'],
-    fontAwesome: packageJson.dependencies['@fortawesome/fontawesome-free'],
-    angularCli: packageJson.devDependencies['@angular/cli'],
-    typescript: packageJson.devDependencies['typescript'],
-    cypress: packageJson.devDependencies['cypress']
+    app: packageJson.version
   }
 };

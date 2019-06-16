@@ -12,7 +12,7 @@ import {
   TitleService
 } from '@app/core';
 
-import { SettingsEffects, SETTINGS_KEY } from './settings.effects';
+import { SettingsEffects } from './settings.effects';
 import { SettingsState } from './settings.model';
 import { ActionSettingsChangeTheme, SettingsActions } from './settings.actions';
 

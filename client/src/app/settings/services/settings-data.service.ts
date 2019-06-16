@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {SettingsState} from '@app/settings';
-
-const LOCAL_API_URL = 'http://localhost:4000'; // TODO: MAKE ENVIROMENTAL VARIABLE
+import {environment} from '@env/environment'
 
 @Injectable()
 export class SettingsDataService {
@@ -11,10 +10,10 @@ export class SettingsDataService {
   }
 
   getAllSettings(): Observable<SettingsState> {
-    return this.http.get<SettingsState>(`${LOCAL_API_URL}/user/settings`)
+    return this.http.get<SettingsState>(`${environment.apiUrl}/user/settings`)
   }
 
   updateAllSettings(settings: SettingsState): Observable<unknown> {
-    return this.http.post(`${LOCAL_API_URL}/user/settings`, settings)
+    return this.http.post(`${environment.apiUrl}/user/settings`, settings)
   }
 }
