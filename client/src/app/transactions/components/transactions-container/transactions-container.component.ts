@@ -1,14 +1,14 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
-import {select, Store} from '@ngrx/store';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
 
-import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
+import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 
-import {Transaction} from '../../model/transaction.model';
-import {selectAll} from '@app/transactions/store/transactions.selectors';
-import {ActionDeleteOneTransaction } from '@app/transactions/store/actions/transactions.actions';
-import {removeTransactionAnimation} from '@app/core/animations/transaction-card.animations';
+import { Transaction } from '../../model/transaction.model';
+import { selectAll } from '@app/transactions/store/transactions.selectors';
+import { ActionDeleteOneTransaction } from '@app/transactions/store/actions/transactions.actions';
+import { removeTransactionAnimation } from '@app/core/animations/transaction-card.animations';
 
 @Component({
   selector: 'zklk-transactions',
@@ -23,22 +23,18 @@ export class TransactionsContainerComponent {
 
   transactions$: Observable<Transaction[]> = this.store.pipe(select(selectAll));
 
-  constructor(
-    public store: Store<Transaction>,
-    private router: Router
-  ) {
-  }
+  constructor(private store: Store<Transaction>, private router: Router) {}
 
   addNewTransaction() {
-    this.router.navigate(['transactions/new'])
+    this.router.navigate(['transactions/new']);
   }
 
   editTransaction(id: string) {
-    this.router.navigate([`transactions/${id}`])
+    this.router.navigate([`transactions/${id}`]);
   }
 
   removeTransaction(id: string) {
-    this.store.dispatch(new ActionDeleteOneTransaction(id))
+    this.store.dispatch(new ActionDeleteOneTransaction(id));
   }
 
   trackByFn(index, item) {

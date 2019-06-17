@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, UseGuards, Delete, Param} from '@nestjs/common';
+import {Controller, Get, Post, Body, UseGuards, Delete, Param, ParseUUIDPipe, UsePipes} from '@nestjs/common';
 import {TransactionService} from './transaction.service';
 import {UpsertTransactionDto} from './dto/upsert-transaction.dto';
 import {Transaction} from './transaction.model';
@@ -22,6 +22,7 @@ export class TransactionController {
         return this.transactionService.create(upsertTransactionDto, user);
     }
 
+    @UsePipes(new ParseUUIDPipe())
     @Delete(':id')
     async delete(@Param('id') id: string, @User() user: UserEntity) {
         return this.transactionService.delete(id, user);
