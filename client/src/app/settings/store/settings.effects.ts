@@ -17,6 +17,7 @@ import {
 import {
   AnimationsService,
   AuthActionTypes,
+  LocalStorageService,
   selectIsAuthenticated,
   TitleService
 } from '@app/core';
@@ -30,6 +31,8 @@ import { selectSettingsState, selectTheme } from './settings.selectors';
 import { SettingsState, State } from '@app/settings';
 import { SettingsDataService } from '@app/settings/services/settings-data.service';
 
+export const SETTINGS_KEY = 'SETTINGS';
+
 const INIT = of('zklk-init-effect-trigger');
 
 @Injectable()
@@ -38,11 +41,12 @@ export class SettingsEffects {
   loadSettings = this.actions$.pipe(
     ofType(AuthActionTypes.LOGIN_SUCCESS),
     exhaustMap(() =>
-      this.settingsDataService
-        .getAllSettings()
-        .pipe(
-          map((settings: SettingsState) => new ActionSettingsLoadAll(settings))
-        )
+      this.settingsDataService.getAllSettings().pipe(
+        tap((settings: SettingsState) =>
+          this.localStorageService.setItem(SETTINGS_KEY, settings)
+        ),
+        map((settings: SettingsState) => new ActionSettingsLoadAll(settings))
+      )
     )
   );
 
@@ -59,8 +63,11 @@ export class SettingsEffects {
       this.store.pipe(select(selectSettingsState)),
       this.store.pipe(select(selectIsAuthenticated))
     ),
+    tap(([action, settings]) =>
+      this.localStorageService.setItem(SETTINGS_KEY, settings)
+    ),
     filter(([action, settings, isAuthenticated]) => isAuthenticated),
-    exhaustMap(([action, settings, isAuthenticated]) =>
+    exhaustMap(([action, settings]) =>
       this.settingsDataService.updateAllSettings(settings)
     )
   );
@@ -131,6 +138,7 @@ export class SettingsEffects {
     private settingsDataService: SettingsDataService,
     private titleService: TitleService,
     private animationsService: AnimationsService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private localStorageService: LocalStorageService
   ) {}
 }
