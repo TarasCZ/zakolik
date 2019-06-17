@@ -1,30 +1,49 @@
-import {ActivationEnd, Router} from '@angular/router';
-import {Injectable} from '@angular/core';
-import {OverlayContainer} from '@angular/cdk/overlay';
-import {select, Store} from '@ngrx/store';
-import {Actions, Effect, ofType} from '@ngrx/effects';
-import {TranslateService} from '@ngx-translate/core';
-import {merge, of} from 'rxjs';
-import {distinctUntilChanged, exhaustMap, filter, map, tap, withLatestFrom} from 'rxjs/operators';
+import { ActivationEnd, Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { select, Store } from '@ngrx/store';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { TranslateService } from '@ngx-translate/core';
+import { merge, of } from 'rxjs';
+import {
+  distinctUntilChanged,
+  exhaustMap,
+  filter,
+  map,
+  tap,
+  withLatestFrom
+} from 'rxjs/operators';
 
-import {AnimationsService, AuthActionTypes, TitleService} from '@app/core';
+import {
+  AnimationsService,
+  AuthActionTypes,
+  selectIsAuthenticated,
+  TitleService
+} from '@app/core';
 
-import {ActionSettingsLoadAll, SettingsActions, SettingsActionTypes} from './settings.actions';
-import {selectSettingsState, selectTheme} from './settings.selectors';
-import {SettingsState, State} from '@app/settings';
-import {SettingsDataService} from '@app/settings/services/settings-data.service';
+import {
+  ActionSettingsLoadAll,
+  SettingsActions,
+  SettingsActionTypes
+} from './settings.actions';
+import { selectSettingsState, selectTheme } from './settings.selectors';
+import { SettingsState, State } from '@app/settings';
+import { SettingsDataService } from '@app/settings/services/settings-data.service';
 
 const INIT = of('zklk-init-effect-trigger');
 
 @Injectable()
 export class SettingsEffects {
-
   @Effect()
   loadSettings = this.actions$.pipe(
     ofType(AuthActionTypes.LOGIN_SUCCESS),
-    exhaustMap(() => this.settingsDataService.getAllSettings().pipe(
-      map((settings: SettingsState) => new ActionSettingsLoadAll(settings))
-    ))
+    exhaustMap(() =>
+      this.settingsDataService
+        .getAllSettings()
+        .pipe(
+          map((settings: SettingsState) => new ActionSettingsLoadAll(settings))
+        )
+    )
   );
 
   @Effect({ dispatch: false })
@@ -36,8 +55,12 @@ export class SettingsEffects {
       SettingsActionTypes.CHANGE_STICKY_HEADER,
       SettingsActionTypes.CHANGE_THEME
     ),
-    withLatestFrom(this.store.pipe(select(selectSettingsState))),
-    exhaustMap(([action, settings]) =>
+    withLatestFrom(
+      this.store.pipe(select(selectSettingsState)),
+      this.store.pipe(select(selectIsAuthenticated))
+    ),
+    filter(([action, settings, isAuthenticated]) => isAuthenticated),
+    exhaustMap(([action, settings, isAuthenticated]) =>
       this.settingsDataService.updateAllSettings(settings)
     )
   );

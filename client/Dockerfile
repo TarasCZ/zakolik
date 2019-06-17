@@ -1,5 +1,5 @@
 # base image
-FROM node:9.6.1
+FROM node:11.6
 
 # set working directory (also creates two folders needed for cypress)
 RUN mkdir /usr/src/app
@@ -11,8 +11,9 @@ WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install app and cache app dependencies
-COPY . /usr/src/app
+COPY . .
 RUN npm install
+
 
 # start app
 CMD ["npm", "run", "docker-start"]

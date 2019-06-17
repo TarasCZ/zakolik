@@ -1,40 +1,43 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import {TranslateModule} from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
-import {MatButtonModule} from '@angular/material/button';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatSelectModule} from '@angular/material/select';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatInputModule} from '@angular/material/input';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatCardModule} from '@angular/material/card';
-import {MatListModule} from '@angular/material/list';
-import {MatIconModule} from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatSliderModule} from '@angular/material/';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSliderModule } from '@angular/material/';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material';
 
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {library} from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faBars, faCalendar, faCalendarAlt,
+  faBars,
+  faCalendarAlt,
   faCar,
+  faChartPie,
   faCheck,
   faCog,
   faConciergeBell,
   faEdit,
   faFilter,
+  faFlagCheckered,
   faHome,
   faHouseDamage,
   faLanguage,
@@ -47,6 +50,7 @@ import {
   faRocket,
   faShoppingCart,
   faStream,
+  faTachometerAlt,
   faTimes,
   faTrash,
   faUserCircle,
@@ -54,7 +58,7 @@ import {
   faWallet,
   faWindowMaximize
 } from '@fortawesome/free-solid-svg-icons';
-import {StopClickPropagationDirective} from '@app/shared/directives/stop-click-propagation.directive';
+import { StopClickPropagationDirective } from '@app/shared/directives/stop-click-propagation.directive';
 
 library.add(
   faBars,
@@ -82,7 +86,10 @@ library.add(
   faConciergeBell,
   faMoneyBillWave,
   faLaughBeam,
-  faCalendarAlt
+  faCalendarAlt,
+  faFlagCheckered,
+  faChartPie,
+  faTachometerAlt
 );
 
 @NgModule({
@@ -112,9 +119,7 @@ library.add(
 
     FontAwesomeModule
   ],
-  declarations: [
-    StopClickPropagationDirective
-  ],
+  declarations: [StopClickPropagationDirective],
   exports: [
     CommonModule,
     FormsModule,
