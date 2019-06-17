@@ -1,4 +1,4 @@
-import {Column, Entity, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {UserEntity} from '../user/user.entity';
 import {UserSettings} from './user-settings.model';
 
@@ -8,6 +8,7 @@ export class UserSettingsEntity implements UserSettings {
     id?: string;
 
     @OneToOne(type => UserEntity, user => user.settings, { eager: false })
+    @JoinColumn()
     user: UserEntity;
 
     @Column('varchar')

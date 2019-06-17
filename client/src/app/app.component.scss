@@ -1,5 +1,11 @@
 @import '../styles-variables';
 
+.profile-pic {
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+}
+
 .theme-wrapper {
   height: 100%;
   width: 100%;

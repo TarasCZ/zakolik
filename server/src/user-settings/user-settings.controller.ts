@@ -13,7 +13,7 @@ export class UserSettingsController {
     }
 
     @Get('/settings')
-    async findAll(@User() user: UserEntity): Promise<UserSettings> {
+    async find(@User() user: UserEntity): Promise<UserSettings> {
         return this.userSettingsService.getSettings(user);
     }
 

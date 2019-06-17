@@ -37,11 +37,18 @@
             </button>
           </span>
 
-          <button *ngIf="isAuthenticated$ | async"
+          <ng-container *ngIf="isAuthenticated$ | async">
+            <button *ngIf="(profile$ | async) as profileUrl"
+                    mat-icon-button
+                    [matMenuTriggerFor]="toolbarUserMenu">
+              <img class="profile-pic" [src]="profileUrl">
+            </button>
+          <button *ngIf="!(profile$ | async)"
                   mat-icon-button
                   [matMenuTriggerFor]="toolbarUserMenu">
             <fa-icon icon="user-circle"></fa-icon>
           </button>
+          </ng-container>
           <mat-menu #toolbarUserMenu="matMenu">
             <button mat-menu-item (click)="onLogoutClick()">
               <mat-icon>

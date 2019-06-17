@@ -19,7 +19,6 @@ export class UserEntity implements User {
     email: string;
 
     @OneToOne(type => UserSettingsEntity, settings => settings.user)
-    @JoinColumn()
     settings?: UserSettingsEntity;
 
     @OneToMany(type => TransactionEntity, transaction => transaction.user, {eager: false})
