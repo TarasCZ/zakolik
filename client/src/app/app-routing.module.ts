@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { SettingsContainerComponent } from './settings';
 import { AuthGuardService } from '@app/core';
 import { HomeComponent } from '@app/static/home/home.component';
 import { CallbackComponent } from '@app/static/callback/callback.component';
 import { LoginComponent } from '@app/static/login/login.component';
-import { LogoutComponent } from '@app/static/logout/logout.component';
 
 const routes: Routes = [
   {
@@ -38,10 +37,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
-  },
-  {
-    path: 'logout',
-    component: LogoutComponent
   },
   {
     path: '**',

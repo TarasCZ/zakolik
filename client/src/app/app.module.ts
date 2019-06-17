@@ -15,7 +15,6 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { LoginComponent } from './static/login/login.component';
 import { MAT_DATE_LOCALE } from '@angular/material';
-import { LogoutComponent } from './static/logout/logout.component';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -39,8 +38,7 @@ registerLocaleData(localeFr, 'fr');
     AppComponent,
     HomeComponent,
     CallbackComponent,
-    LoginComponent,
-    LogoutComponent
+    LoginComponent
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'fr' }],
   bootstrap: [AppComponent]
