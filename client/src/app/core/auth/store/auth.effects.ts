@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {Action} from '@ngrx/store';
-import {Actions, Effect, ofType} from '@ngrx/effects';
-import {catchError, exhaustMap, map, tap} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Action } from '@ngrx/store';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 
 import {
   ActionAuthCheckLogin,
@@ -13,12 +13,11 @@ import {
   ActionAuthLogout,
   AuthActionTypes
 } from './auth.actions';
-import {empty, Observable, of} from 'rxjs';
-import {AuthService} from '@app/core/auth/auth.service';
+import { empty, Observable, of } from 'rxjs';
+import { AuthService } from '@app/core/auth/auth.service';
 
 @Injectable()
 export class AuthEffects {
-
   @Effect({ dispatch: false })
   login$ = this.actions$.pipe(
     ofType<ActionAuthLogin>(AuthActionTypes.LOGIN),
@@ -28,7 +27,9 @@ export class AuthEffects {
   );
 
   @Effect()
-  loginComplete$: Observable<ActionAuthLoginSuccess | ActionAuthLoginFailure> = this.actions$.pipe(
+  loginComplete$: Observable<
+    ActionAuthLoginSuccess | ActionAuthLoginFailure
+  > = this.actions$.pipe(
     ofType<ActionAuthLoginComplete>(AuthActionTypes.LOGIN_COMPLETE),
     exhaustMap(() => {
       return this.authService.parseHash$().pipe(
@@ -48,7 +49,7 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   loginRedirect$ = this.actions$.pipe(
     ofType<ActionAuthLoginSuccess>(AuthActionTypes.LOGIN_SUCCESS),
-    tap(({payload}) => this.router.navigate([payload.redirectUrl]))
+    tap(({ payload }) => this.router.navigate([payload.redirectUrl]))
   );
 
   @Effect({ dispatch: false })
@@ -76,20 +77,22 @@ export class AuthEffects {
   @Effect()
   checkLogin$ = this.actions$.pipe(
     ofType<ActionAuthCheckLogin>(AuthActionTypes.CHECK_LOGIN),
-    exhaustMap(({payload}) => {
+    exhaustMap(({ payload }) => {
       if (this.authService.authenticated) {
-        return of(new ActionAuthLoginSuccess(payload));
-        // return this.authService.checkSession$({}).pipe(
-        //   map((authResult: any) => {
-        //     if (authResult && authResult.idToken) {
-        //       this.authService.setAuth(authResult.idToken);
-        //       return new ActionAuthLoginSuccess(payload);
-        //     } else {
-        //       return new ActionAuthLoginFailure('Missing Access Token');
-        //     }
-        //   }),
-        //   catchError(error => of(new ActionAuthLoginFailure({ error })))
-        // );
+        // return of(new ActionAuthLoginSuccess(payload));
+        return this.authService.checkSession$({}).pipe(
+          map((authResult: any) => {
+            if (authResult && authResult.idToken) {
+              this.authService.setAuth(authResult.idToken);
+              return new ActionAuthLoginSuccess(payload);
+            } else {
+              return new ActionAuthLoginFailure('Missing Access Token');
+            }
+          }),
+          catchError(error => {
+            return of(new ActionAuthLoginFailure({ error }));
+          })
+        );
       } else {
         return empty();
       }
@@ -99,7 +102,6 @@ export class AuthEffects {
   constructor(
     private actions$: Actions<Action>,
     private router: Router,
-    private authService: AuthService,
-  ) {
-  }
+    private authService: AuthService
+  ) {}
 }

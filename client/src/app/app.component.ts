@@ -46,28 +46,24 @@ export class AppComponent implements OnInit {
       link: 'dashboard',
       label: 'zklk.menu.dashboard',
       disabled: true,
-      protected: this.isAuthenticated$,
       icon: 'tachometer-alt'
     },
     {
       link: 'transactions',
       label: 'zklk.menu.transactions',
       disabled: false,
-      protected: this.isAuthenticated$,
       icon: 'bars'
     },
     {
       link: 'budgets',
       label: 'zklk.menu.budgets',
       disabled: true,
-      protected: this.isAuthenticated$,
       icon: 'chart-pie'
     },
     {
       link: 'goals',
       label: 'zklk.menu.goals',
       disabled: true,
-      protected: this.isAuthenticated$,
       icon: 'flag-checkered'
     }
   ];
