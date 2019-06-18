@@ -22,9 +22,9 @@ export class TransactionController {
         return this.transactionService.create(upsertTransactionDto, user);
     }
 
-    @UsePipes(new ParseUUIDPipe())
     @Delete(':id')
-    async delete(@Param('id') id: string, @User() user: UserEntity) {
+    async delete(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+                 @User() user: UserEntity) {
         return this.transactionService.delete(id, user);
     }
 }
