@@ -17,11 +17,12 @@ export class UserTestFactory {
             name: 'name',
             nickname: 'nickname',
             email: 'email',
+            picture: 'picture',
             ...partialUserToken,
         };
     }
 
-    static createPairUserAndToken(partialUser?: Partial<User>, partialUserToken?: Partial<UserToken>): [User, UserToken] {
+    static createUserAndTokenPair(partialUser?: Partial<User>, partialUserToken?: Partial<UserToken>): [User, UserToken] {
         return [
             this.createUser(partialUser),
             this.createUserToken(partialUserToken),

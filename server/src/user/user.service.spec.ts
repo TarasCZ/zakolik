@@ -5,6 +5,8 @@ import {Test} from '@nestjs/testing';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {UserEntity} from './user.entity';
 import {UserService} from './user.service';
+import {UserSettingsEntity} from '../user-settings/user-settings.entity';
+import {UserSettingsService} from '../user-settings/user-settings.service';
 
 describe('User Service', () => {
 
@@ -13,22 +15,28 @@ describe('User Service', () => {
     let userToken2: UserToken;
     let user: User;
     let user2: User;
-    let repositoryMock: RepositoryMock<UserEntity>;
+    let repositoryUserMock: RepositoryMock<UserEntity>;
+    let repositoryUserSettingsMock: RepositoryMock<UserSettingsEntity>;
 
     let userService: UserService;
 
     beforeEach(async () => {
         userId = '000';
-        [user, userToken] = UserTestFactory.createPairUserAndToken({ id: userId }, { sub: userId });
-        [user2, userToken2] = UserTestFactory.createPairUserAndToken();
-        repositoryMock = new RepositoryMock();
+        [user, userToken] = UserTestFactory.createUserAndTokenPair({ id: userId }, { sub: userId });
+        [user2, userToken2] = UserTestFactory.createUserAndTokenPair();
+        repositoryUserMock = new RepositoryMock();
+        repositoryUserSettingsMock = new RepositoryMock();
 
         const testingModule = await Test.createTestingModule({
             providers: [
                 UserService,
                 {
                     provide: getRepositoryToken(UserEntity),
-                    useValue: repositoryMock,
+                    useValue: repositoryUserMock,
+                },
+                {
+                    provide: getRepositoryToken(UserSettingsEntity),
+                    useValue: repositoryUserSettingsMock,
                 },
             ],
         }).compile();
@@ -37,17 +45,25 @@ describe('User Service', () => {
     });
 
     describe('when user is fetched', () => {
-        it('should create new one when not present', async () => {
-            await userService.getUser(userToken2);
-
-            expect(repositoryMock.save).toHaveBeenCalledWith(user2);
-        });
-
         it('should return user from database when present', async () => {
-            repositoryMock.findOneResult = user;
+            repositoryUserMock.findOneResult = user;
             const returnedUser = await userService.getUser(userToken);
 
             expect(returnedUser).toEqual(user);
+        });
+    });
+
+    describe('when user is fetched', () => {
+        it('should create new one when not present', async () => {
+            repositoryUserMock.findOneResult = user2;
+            await userService.createNewUser(userToken2);
+
+            expect(repositoryUserSettingsMock.save).toHaveBeenCalledWith({
+                ...UserSettingsService.createInitialSettings(),
+                picture: userToken2.picture,
+                user: user2,
+            });
+            expect(repositoryUserMock.save).toHaveBeenCalledWith(user2);
         });
     });
 });

@@ -5,15 +5,18 @@ import {getRepositoryToken} from '@nestjs/typeorm';
 import {UserSettingsEntity} from './user-settings.entity';
 import {UserEntity} from '../user/user.entity';
 import {UserSettingsService} from './user-settings.service';
+import {UserSettings} from './user-settings.model';
 
-describe('User Service', () => {
+describe('User Settings Service', () => {
 
     let user: UserEntity;
+    let userSettings: UserSettings;
     let userSettingsService: UserSettingsService;
     let repositoryMock: RepositoryMock<UserSettingsEntity>;
 
     beforeEach(async () => {
         user = UserTestFactory.createUser();
+        userSettings = UserSettingsService.createInitialSettings();
         repositoryMock = new RepositoryMock();
 
         const testingModule = await Test.createTestingModule({
@@ -36,9 +39,13 @@ describe('User Service', () => {
 
             expect(repositoryMock.findOne).toHaveBeenCalledWith(expectedQuery);
         });
+    });
 
+    describe('when settings are saved', () => {
         it('should call save with correct parameters', async () => {
-            expect(repositoryMock.save).toHaveBeenCalledWith({});
+            const expectedQuery = {...userSettings, user};
+            await userSettingsService.saveSettings(user, userSettings);
+            expect(repositoryMock.save).toHaveBeenCalledWith(expectedQuery);
         });
     });
 });

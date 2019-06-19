@@ -26,7 +26,7 @@ export class UserSettingsService {
     }
 
     async saveSettings(user: User, settings: UserSettings): Promise<UserSettings> {
-        const userSettingsEntity: UserSettingsEntity = { ...settings, picture: user.picture, user };
+        const userSettingsEntity: UserSettingsEntity = { ...settings, user };
         return this.userSettingsRepository.save(userSettingsEntity);
     }
 }

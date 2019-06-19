@@ -12,17 +12,13 @@ export class UserService {
                 @InjectRepository(UserSettingsEntity) private readonly userSettingsRepository: Repository<UserSettingsEntity>) {
     }
 
-    async getUser(token: UserToken): Promise<User> {
-        const user = await this.userRepository.findOne(token.sub);
-
-        if (user) return user;
-
-        return this.createNewUser(token);
+    async getUser(token: UserToken): Promise<UserEntity> {
+        return this.userRepository.findOne(token.sub);
     }
 
-    private async createNewUser(userToken: UserToken): Promise<UserEntity> {
+    async createNewUser(userToken: UserToken): Promise<UserEntity> {
         const { sub: id, email, name, nickname, picture } = userToken;
-        const user: User = {id, email, name, nickname};
+        const user: User = { id, email, name, nickname };
 
         const newUser = await this.userRepository.save(user);
 
@@ -31,10 +27,8 @@ export class UserService {
             picture,
             user: newUser,
         };
-        console.log(userSettingsEntity);
+        await this.userSettingsRepository.save(userSettingsEntity);
 
-        const what = await this.userSettingsRepository.save(userSettingsEntity);
-        console.log(what);
         return newUser;
     }
 }

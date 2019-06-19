@@ -5,6 +5,6 @@ export class RepositoryMock<T> {
 
     find = jasmine.createSpy('findSpy');
     findOne = jasmine.createSpy('findOneSpy');
-    save = jasmine.createSpy('saveSpy');
+    save = jasmine.createSpy('saveSpy').and.callFake((param) => param);
     delete = jasmine.createSpy('deleteSpy');
 }
