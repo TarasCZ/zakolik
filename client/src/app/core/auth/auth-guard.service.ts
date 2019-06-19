@@ -1,17 +1,20 @@
-import {Injectable} from '@angular/core';
-import {CanLoad, Router} from '@angular/router';
-import {Store} from '@ngrx/store';
-import {of} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { CanLoad, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
 
 import * as fromAuth from './store/auth.selectors';
-import {AppState} from '../core.state';
-import {map, mergeMap, take} from 'rxjs/operators';
-import {AuthService} from '@app/core/auth/auth.service';
+import { AppState } from '../core.state';
+import { first, map, mergeMap, take } from 'rxjs/operators';
+import { AuthService } from '@app/core/auth/auth.service';
 
 @Injectable()
 export class AuthGuardService implements CanLoad {
-  constructor(private store: Store<AppState>, private authService: AuthService, private router: Router) {
-  }
+  constructor(
+    private store: Store<AppState>,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   canLoad() {
     return this.checkStoreAuthentication().pipe(
@@ -34,11 +37,10 @@ export class AuthGuardService implements CanLoad {
   }
 
   checkStoreAuthentication() {
-    return this.store.select(fromAuth.selectIsAuthenticated).pipe(take(1));
+    return this.store.select(fromAuth.selectIsAuthenticated).pipe(first());
   }
 
   checkApiAuthentication() {
     return of(this.authService.authenticated);
   }
 }
-

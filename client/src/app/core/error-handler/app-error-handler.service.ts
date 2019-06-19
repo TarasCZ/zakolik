@@ -15,8 +15,12 @@ export class AppErrorHandler extends ErrorHandler {
   handleError(error: Error | HttpErrorResponse) {
     let displayMessage = 'An error occurred.';
 
+    console.log(error);
+
     if (!environment.production) {
       displayMessage += ' See console for details.';
+    } else {
+      displayMessage += ' Please refresh the page.';
     }
 
     this.notificationsService.error(displayMessage);
