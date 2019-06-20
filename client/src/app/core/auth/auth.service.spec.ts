@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { WebAuth } from 'auth0-js';
 import { AuthService, LocalStorageService } from '@app/core';
-import { identity } from 'rxjs';
 
 describe('Auth Service', () => {
   const IS_AUTHENTICATED_KEY = 'isAuthenticated';
@@ -10,8 +9,8 @@ describe('Auth Service', () => {
   const webAuthMock = {
     authorize: jest.fn(),
     logout: jest.fn(),
-    parseHash: jest.fn().mockImplementation(val => val),
-    checkSession: jest.fn().mockImplementation(identity)
+    parseHash: jest.fn().mockImplementation((value, cb) => cb(null, value)),
+    checkSession: jest.fn().mockImplementation((value, cb) => cb(null, value))
   };
   const localStorageServiceMock = {
     getItem: jest.fn().mockReturnValue(authenticatedTrue),
@@ -48,6 +47,16 @@ describe('Auth Service', () => {
   it('should call authenticate when login', () => {
     authService.login();
     expect(webAuth.authorize).toHaveBeenCalledTimes(1);
+  });
+
+  it('should parseHash', async () => {
+    const value = 'hash';
+    expect(await authService.parseHash$(value).toPromise()).toEqual(value);
+  });
+
+  it('should checkSession', async () => {
+    const value = 'session';
+    expect(await authService.checkSession$(value).toPromise()).toEqual(value);
   });
 
   describe('when logout', () => {

@@ -41,7 +41,7 @@ export class AuthEffects {
             return new ActionAuthLoginFailure('Missing Access Token');
           }
         }),
-        catchError(error => of(new ActionAuthLoginFailure(error)))
+        catchError(error => of(new ActionAuthLoginFailure({ error })))
       );
     })
   );
@@ -67,7 +67,7 @@ export class AuthEffects {
   );
 
   @Effect({ dispatch: false })
-  logout = this.actions$.pipe(
+  logout$ = this.actions$.pipe(
     ofType<ActionAuthLogout>(AuthActionTypes.LOGOUT),
     tap(() => {
       this.authService.logout();

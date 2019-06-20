@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppState, AuthService } from '@app/core';
 import { Store, StoreModule } from '@ngrx/store';
-import { MockStore, provideMockStore } from '@testing/utils';
+import { MockStore, provideMockStore } from '@testing/utils.spec';
 import { AuthGuardService } from './auth-guard.service';
 import { AuthState } from './store/auth.models';
 import { Router } from '@angular/router';
@@ -66,8 +66,8 @@ describe('AuthGuardService', () => {
       expect(canLoadResult).toBeFalsy();
     });
 
-    it('should call redirect', () => {
-      expect(routerMock.navigate).toHaveBeenCalledWith(['']);
+    it('should redirect to home', () => {
+      expect(routerMock.navigate).toHaveBeenCalledWith(['/home']);
       expect(routerMock.navigate).toHaveBeenCalledTimes(1);
     });
   });

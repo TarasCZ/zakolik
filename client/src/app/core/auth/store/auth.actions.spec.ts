@@ -1,7 +1,11 @@
 import {
   AuthActionTypes,
   ActionAuthLogin,
-  ActionAuthLogout, ActionAuthCheckLogin, ActionAuthLoginComplete, ActionAuthLoginFailure, ActionAuthLoginSuccess
+  ActionAuthLogout,
+  ActionAuthCheckLogin,
+  ActionAuthLoginComplete,
+  ActionAuthLoginFailure,
+  ActionAuthLoginSuccess
 } from './auth.actions';
 
 describe('Auth Actions', () => {
@@ -25,9 +29,10 @@ describe('Auth Actions', () => {
   });
 
   it('should upsert ActionAuthLoginFailure action', () => {
-    const action = new ActionAuthLoginFailure({});
+    const error = { errorMessage: 'Error' };
+    const action = new ActionAuthLoginFailure(error);
     expect(action.type).toEqual(AuthActionTypes.LOGIN_FAILURE);
-    expect(action.payload).toBeFalsy();
+    expect(action.payload).toEqual(error);
   });
 
   it('should upsert ActionAuthLoginComplete action', () => {

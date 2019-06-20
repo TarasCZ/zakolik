@@ -2,7 +2,7 @@ import { Store } from '@ngrx/store';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoreModule } from '@app/core';
-import { MockStore, TestingModule } from '@testing/utils';
+import { MockStore, TestingModule } from '@testing/utils.spec';
 
 import { State } from '../../examples.state';
 import { BookState } from '../../model/transaction.model';

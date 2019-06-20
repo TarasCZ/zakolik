@@ -8,5 +8,6 @@ module.exports = {
     '@env': '<rootDir>/src/environments/environment',
     '@testing/(.*)': '<rootDir>/src/testing/$1'
   },
-  transformIgnorePatterns: ['node_modules/(?!(jest-test))']
+  transformIgnorePatterns: ['node_modules/(?!(jest-test))'],
+  testMatch: ['**/*.spec.ts']
 };

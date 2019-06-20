@@ -9,8 +9,10 @@ import {
   ReducerManager,
   StoreModule
 } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, empty, Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import Mock = jest.Mock;
+import { Actions } from '@ngrx/effects';
 
 @Injectable()
 export class MockStore<T> extends Store<T> {
@@ -55,4 +57,34 @@ export function provideMockStore() {
 })
 export class TestingModule {
   constructor() {}
+}
+
+export const createSpyObj = (
+  baseName: string,
+  methodNames: string[]
+): { [key: string]: Mock<any> } => {
+  const obj: any = {};
+
+  for (let i = 0; i < methodNames.length; i++) {
+    obj[methodNames[i]] = jest.fn();
+  }
+
+  return obj;
+};
+
+export class TestActions extends Actions {
+  constructor() {
+    super(empty());
+  }
+
+  set stream(source: Observable<any>) {
+    this.source = source;
+  }
+}
+
+export function provideTestActions() {
+  return {
+    provide: Actions,
+    useClass: TestActions
+  };
 }
