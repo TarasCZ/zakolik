@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { Language } from './settings.model';
+import { Language, SettingsState } from './settings.model';
 
 export enum SettingsActionTypes {
   CHANGE_LANGUAGE = '[Settings] Change Language',
@@ -52,7 +52,7 @@ export class ActionSettingsChangeAnimationsElements implements Action {
 export class ActionSettingsLoadAll implements Action {
   readonly type = SettingsActionTypes.LOAD_ALL_SETTINGS;
 
-  constructor(readonly payload: { elementsAnimations: boolean }) {}
+  constructor(readonly payload: SettingsState) {}
 }
 
 export class ActionSettingsSaveAll implements Action {

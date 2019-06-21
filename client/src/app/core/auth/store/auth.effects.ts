@@ -13,7 +13,7 @@ import {
   ActionAuthLogout,
   AuthActionTypes
 } from './auth.actions';
-import { empty, Observable, of } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { AuthService } from '@app/core/auth/auth.service';
 
 @Injectable()
@@ -94,7 +94,7 @@ export class AuthEffects {
           })
         );
       } else {
-        return empty();
+        return of({});
       }
     })
   );

@@ -19,7 +19,8 @@ import {
   AuthActionTypes,
   LocalStorageService,
   selectIsAuthenticated,
-  TitleService
+  TitleService,
+  UpdateRouteAnimationTypeProps
 } from '@app/core';
 
 import {
@@ -33,12 +34,12 @@ import { SettingsDataService } from '@app/settings/services/settings-data.servic
 
 export const SETTINGS_KEY = 'SETTINGS';
 
-const INIT = of('zklk-init-effect-trigger');
+const INIT = of({ type: 'zklk-init-effect-trigger', payload: {} });
 
 @Injectable()
 export class SettingsEffects {
   @Effect()
-  loadSettings = this.actions$.pipe(
+  loadSettings$ = this.actions$.pipe(
     ofType(AuthActionTypes.LOGIN_SUCCESS),
     exhaustMap(() =>
       this.settingsDataService.getAllSettings().pipe(
@@ -51,7 +52,7 @@ export class SettingsEffects {
   );
 
   @Effect({ dispatch: false })
-  persistSettings = this.actions$.pipe(
+  persistSettings$ = this.actions$.pipe(
     ofType(
       SettingsActionTypes.CHANGE_ANIMATIONS_ELEMENTS,
       SettingsActionTypes.CHANGE_ANIMATIONS_PAGE,
@@ -63,17 +64,24 @@ export class SettingsEffects {
       this.store.pipe(select(selectSettingsState)),
       this.store.pipe(select(selectIsAuthenticated))
     ),
-    tap(([action, settings]) =>
-      this.localStorageService.setItem(SETTINGS_KEY, settings)
-    ),
-    filter(([action, settings, isAuthenticated]) => isAuthenticated),
-    exhaustMap(([action, settings]) =>
-      this.settingsDataService.updateAllSettings(settings)
-    )
+    map(([action, settings, isAuthenticated]) => {
+      return [{ ...settings, ...action.payload }, isAuthenticated];
+    }),
+    tap(([newSettings]) => {
+      console.log('setting', newSettings);
+      this.localStorageService.setItem(SETTINGS_KEY, newSettings);
+    }),
+    exhaustMap(([newSettings, isAuthenticated]: [SettingsState, boolean]) => {
+      if (isAuthenticated) {
+        return this.settingsDataService.updateAllSettings(newSettings);
+      } else {
+        return of({});
+      }
+    })
   );
 
   @Effect({ dispatch: false })
-  updateRouteAnimationType = merge(
+  updateRouteAnimationType$ = merge(
     INIT,
     this.actions$.pipe(
       ofType(
@@ -83,21 +91,25 @@ export class SettingsEffects {
     )
   ).pipe(
     withLatestFrom(this.store.pipe(select(selectSettingsState))),
-    tap(([action, settings]) =>
-      this.animationsService.updateRouteAnimationType(
-        settings.pageAnimations,
-        settings.elementsAnimations
-      )
-    )
+    tap(([action, { pageAnimations, elementsAnimations }]) => {
+      const routeAnimationProps: UpdateRouteAnimationTypeProps = {
+        pageAnimations,
+        elementsAnimations,
+        ...action.payload
+      };
+
+      this.animationsService.updateRouteAnimationType(routeAnimationProps);
+    })
   );
 
   @Effect({ dispatch: false })
-  updateTheme = merge(
+  updateTheme$ = merge(
     INIT,
     this.actions$.pipe(ofType(SettingsActionTypes.CHANGE_THEME))
   ).pipe(
     withLatestFrom(this.store.pipe(select(selectTheme))),
-    tap(([action, theme]) => {
+    tap(([{ payload }, stateTheme]) => {
+      const { theme } = { theme: stateTheme, ...payload };
       const classList = this.overlayContainer.getContainerElement().classList;
       const toRemove = Array.from(classList).filter((item: string) =>
         item.includes('-theme')
@@ -105,12 +117,12 @@ export class SettingsEffects {
       if (toRemove.length) {
         classList.remove(...toRemove);
       }
-      classList.add(theme);
+      classList.add(theme.toLowerCase());
     })
   );
 
   @Effect({ dispatch: false })
-  setTranslateServiceLanguage = this.store.pipe(
+  setTranslateServiceLanguage$ = this.store.pipe(
     select(selectSettingsState),
     map(settings => settings.language),
     distinctUntilChanged(),
@@ -118,7 +130,7 @@ export class SettingsEffects {
   );
 
   @Effect({ dispatch: false })
-  setTitle = merge(
+  setTitle$ = merge(
     this.actions$.pipe(ofType(SettingsActionTypes.CHANGE_LANGUAGE)),
     this.router.events.pipe(filter(event => event instanceof ActivationEnd))
   ).pipe(

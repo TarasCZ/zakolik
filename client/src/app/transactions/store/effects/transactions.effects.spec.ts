@@ -35,7 +35,7 @@ describe('SettingsEffects', () => {
     store = jasmine.createSpyObj('store', ['pipe']);
   });
 
-  describe('setTranslateServiceLanguage', () => {
+  describe('setTranslateServiceLanguage$', () => {
     it('should not dispatch action', function() {
       const actions = new Actions<SettingsActions>();
       const effect = new TransactionEffects(

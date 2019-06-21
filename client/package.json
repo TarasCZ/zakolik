@@ -11,7 +11,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "test:watch": "jest --watch",
-    "watch": "ng test --configuration=test --browsers ChromeHeadless --watch",
     "build:prod": "ng build --prod --vendor-chunk",
     "clean": "rimraf ./dist/",
     "server": "node ./server.js",

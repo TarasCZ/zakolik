@@ -1,22 +1,22 @@
-import { NgModule, Injectable } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { SharedModule } from '@app/shared';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import {
-  Store,
-  StateObservable,
   ActionsSubject,
   ReducerManager,
+  StateObservable,
+  Store,
   StoreModule
 } from '@ngrx/store';
-import { BehaviorSubject, empty, Observable } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
-import Mock = jest.Mock;
 import { Actions } from '@ngrx/effects';
+import Mock = jest.Mock;
 
 @Injectable()
 export class MockStore<T> extends Store<T> {
-  private stateSubject = new BehaviorSubject<T>({} as T);
+  private stateSubject = new BehaviorSubject<Partial<T>>({} as Partial<T>);
 
   constructor(
     state$: StateObservable,
@@ -27,7 +27,7 @@ export class MockStore<T> extends Store<T> {
     this.source = this.stateSubject.asObservable();
   }
 
-  setState(nextState: T) {
+  setState(nextState: Partial<T>) {
     this.stateSubject.next(nextState);
   }
 }
@@ -74,7 +74,7 @@ export const createSpyObj = (
 
 export class TestActions extends Actions {
   constructor() {
-    super(empty());
+    super(EMPTY);
   }
 
   set stream(source: Observable<any>) {

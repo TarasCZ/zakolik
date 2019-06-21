@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { MatSlideToggle } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestingModule, MockStore } from '@testing/utils';
+import { TestingModule, MockStore } from '@testing/utils.spec';
 
 import { SettingsContainerComponent } from './settings-container.component';
 import {
