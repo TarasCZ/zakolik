@@ -12,10 +12,13 @@ import { debug } from './meta-reducers/debug.reducer';
 import { AuthState } from './auth/store/auth.models';
 import { authReducer } from './auth/store/auth.reducer';
 import { RouterStateUrl } from './router/router.state';
+import { UiState } from '@app/core/ui/ui.state';
+import { uiReducer } from '@app/core/ui/ui.reducer';
 
 export const reducers: ActionReducerMap<AppState> = {
   auth: authReducer,
-  router: routerReducer
+  router: routerReducer,
+  ui: uiReducer
 };
 
 export const metaReducers: MetaReducer<AppState>[] = [
@@ -29,6 +32,8 @@ export const selectAuthState = createFeatureSelector<AppState, AuthState>(
   'auth'
 );
 
+export const selectUiState = createFeatureSelector<AppState, UiState>('ui');
+
 export const selectRouterState = createFeatureSelector<
   AppState,
   RouterReducerState<RouterStateUrl>
@@ -37,4 +42,5 @@ export const selectRouterState = createFeatureSelector<
 export interface AppState {
   auth: AuthState;
   router: RouterReducerState<RouterStateUrl>;
+  ui: UiState;
 }
