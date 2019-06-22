@@ -1,16 +1,17 @@
 import { TestBed, async } from '@angular/core/testing';
 
 import { TestingModule } from '@testing/utils.spec';
-import { CoreModule } from '@app/core';
+import { CoreModule, LocalStorageService } from '@app/core';
 
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CoreModule, TestingModule],
-      declarations: [AppComponent]
-    }).compileComponents();
+      imports: [TestingModule],
+      declarations: [AppComponent],
+      providers: [LocalStorageService]
+    });
   }));
 
   it('should upsert the app', async(() => {

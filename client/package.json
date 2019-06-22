@@ -2,6 +2,7 @@
   "name": "zakolik-client",
   "version": "0.0.1",
   "license": "MIT",
+  "engines" : { "node" : "11.4.0" },
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open",
