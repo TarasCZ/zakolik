@@ -1,70 +1,40 @@
-import { Action } from '@ngrx/store';
+import { Action, createAction, props } from '@ngrx/store';
 
 import { Language, SettingsState } from './settings.model';
 
-export enum SettingsActionTypes {
-  CHANGE_LANGUAGE = '[Settings] Change Language',
-  CHANGE_THEME = '[Settings] Change Theme',
-  CHANGE_STICKY_HEADER = '[Settings] Change Sticky Header',
-  CHANGE_ANIMATIONS_PAGE = '[Settings] Change Animations Page',
-  CHANGE_ANIMATIONS_PAGE_DISABLED = '[Settings] Change Animations Page Disabled',
-  CHANGE_ANIMATIONS_ELEMENTS = '[Settings] Change Animations Elements',
-  LOAD_ALL_SETTINGS = '[Settings] Load All',
-  SAVE_ALL_SETTINGS = '[Settings] Save All'
-}
+export const changeLanguage = createAction(
+  '[Settings] Change Language',
+  props<{ language: Language }>()
+);
 
-export class ActionSettingsChangeLanguage implements Action {
-  readonly type = SettingsActionTypes.CHANGE_LANGUAGE;
+export const changeTheme = createAction(
+  '[Settings] Change Theme',
+  props<{ theme: string }>()
+);
 
-  constructor(readonly payload: { language: Language }) {}
-}
+export const changeStickyHeader = createAction(
+  '[Settings] Change Sticky Header',
+  props<{ stickyHeader: boolean }>()
+);
 
-export class ActionSettingsChangeTheme implements Action {
-  readonly type = SettingsActionTypes.CHANGE_THEME;
+export const changeAnimationsPage = createAction(
+  '[Settings] Change Animations Page',
+  props<{ pageAnimations: boolean }>()
+);
 
-  constructor(readonly payload: { theme: string }) {}
-}
+export const changeAnimationsPageDisabled = createAction(
+  '[Settings] Change Animations Page Disabled',
+  props<{ pageAnimationsDisabled: boolean }>()
+);
 
-export class ActionSettingsChangeStickyHeader implements Action {
-  readonly type = SettingsActionTypes.CHANGE_STICKY_HEADER;
+export const changeAnimationsElements = createAction(
+  '[Settings] Change Animations Elements',
+  props<{ elementsAnimations: boolean }>()
+);
 
-  constructor(readonly payload: { stickyHeader: boolean }) {}
-}
+export const loadAll = createAction(
+  '[Settings] Load All',
+  props<SettingsState>()
+);
 
-export class ActionSettingsChangeAnimationsPage implements Action {
-  readonly type = SettingsActionTypes.CHANGE_ANIMATIONS_PAGE;
-
-  constructor(readonly payload: { pageAnimations: boolean }) {}
-}
-
-export class ActionSettingsChangeAnimationsPageDisabled implements Action {
-  readonly type = SettingsActionTypes.CHANGE_ANIMATIONS_PAGE_DISABLED;
-
-  constructor(readonly payload: { pageAnimationsDisabled: boolean }) {}
-}
-
-export class ActionSettingsChangeAnimationsElements implements Action {
-  readonly type = SettingsActionTypes.CHANGE_ANIMATIONS_ELEMENTS;
-
-  constructor(readonly payload: { elementsAnimations: boolean }) {}
-}
-
-export class ActionSettingsLoadAll implements Action {
-  readonly type = SettingsActionTypes.LOAD_ALL_SETTINGS;
-
-  constructor(readonly payload: SettingsState) {}
-}
-
-export class ActionSettingsSaveAll implements Action {
-  readonly type = SettingsActionTypes.SAVE_ALL_SETTINGS;
-}
-
-export type SettingsActions =
-  | ActionSettingsChangeLanguage
-  | ActionSettingsChangeTheme
-  | ActionSettingsChangeAnimationsPage
-  | ActionSettingsChangeAnimationsPageDisabled
-  | ActionSettingsChangeAnimationsElements
-  | ActionSettingsChangeStickyHeader
-  | ActionSettingsLoadAll
-  | ActionSettingsSaveAll;
+export const saveAll = createAction('[Settings] Save All');

@@ -1,19 +1,15 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 
 import {
-  ActionSettingsChangeAnimationsElements,
-  ActionSettingsChangeAnimationsPage,
-  ActionSettingsChangeLanguage,
-  ActionSettingsChangeTheme,
-  ActionSettingsChangeStickyHeader
+  changeAnimationsElements,
+  changeAnimationsPage,
+  changeLanguage,
+  changeTheme,
+  changeStickyHeader
 } from '../store/settings.actions';
 import { SettingsState, State } from '../store/settings.model';
 import { selectSettings } from '../store/settings.selectors';
@@ -37,7 +33,7 @@ export class SettingsContainerComponent implements OnInit {
   languages = [
     { value: 'en', label: 'en' },
     { value: 'cz', label: 'cz' },
-    { value: 'sk', label: 'sk' },
+    { value: 'sk', label: 'sk' }
   ];
 
   constructor(private store: Store<State>) {}
@@ -47,26 +43,22 @@ export class SettingsContainerComponent implements OnInit {
   }
 
   onLanguageSelect({ value: language }) {
-    this.store.dispatch(new ActionSettingsChangeLanguage({ language }));
+    this.store.dispatch(changeLanguage({ language }));
   }
 
   onThemeSelect({ value: theme }) {
-    this.store.dispatch(new ActionSettingsChangeTheme({ theme }));
+    this.store.dispatch(changeTheme({ theme }));
   }
 
   onStickyHeaderToggle({ checked: stickyHeader }) {
-    this.store.dispatch(new ActionSettingsChangeStickyHeader({ stickyHeader }));
+    this.store.dispatch(changeStickyHeader({ stickyHeader }));
   }
 
   onPageAnimationsToggle({ checked: pageAnimations }) {
-    this.store.dispatch(
-      new ActionSettingsChangeAnimationsPage({ pageAnimations })
-    );
+    this.store.dispatch(changeAnimationsPage({ pageAnimations }));
   }
 
   onElementsAnimationsToggle({ checked: elementsAnimations }) {
-    this.store.dispatch(
-      new ActionSettingsChangeAnimationsElements({ elementsAnimations })
-    );
+    this.store.dispatch(changeAnimationsElements({ elementsAnimations }));
   }
 }

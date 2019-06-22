@@ -7,6 +7,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import {
+  RouterState,
   RouterStateSerializer,
   StoreRouterConnectingModule
 } from '@ngrx/router-store';
@@ -34,8 +35,18 @@ import { WebAuth } from 'auth0-js';
     HttpClientModule,
 
     // ngrx
-    StoreModule.forRoot(reducers, { metaReducers }),
-    StoreRouterConnectingModule.forRoot(),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictStateSerializability: true,
+        strictActionImmutability: true,
+        strictActionSerializability: true
+      }
+    }),
+    StoreRouterConnectingModule.forRoot({
+      routerState: RouterState.Minimal
+    }),
     EffectsModule.forRoot([AuthEffects, GoogleAnalyticsEffects]),
     environment.production
       ? []

@@ -3,11 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { cold, hot } from 'jasmine-marbles';
 
-import {
-  ActionSettingsChangeLanguage,
-  SettingsActions,
-  State
-} from '@app/settings';
+import { changeLanguage, SettingsActions, State } from '@app/settings';
 import { ActivationEnd } from '@angular/router';
 import { TitleService } from '@app/core';
 import { TransactionEffects } from './transactions.effects';
@@ -67,7 +63,7 @@ describe('SettingsEffects', () => {
     });
 
     it('should setTitle', function() {
-      const action = new ActionSettingsChangeLanguage({ language: 'en' });
+      const action = changeLanguage({ language: 'en' });
       const actions = hot('-a', { a: action });
 
       const routerEvent = new ActivationEnd(router.routerState.snapshot);

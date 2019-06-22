@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 
 import * as fromAuth from './store/auth.selectors';
 import { AppState } from '../core.state';
-import { first, map, mergeMap, take } from 'rxjs/operators';
+import { first, map, mergeMap } from 'rxjs/operators';
 import { AuthService } from '@app/core/auth/auth.service';
 
 @Injectable()

@@ -1,67 +1,58 @@
 import {
-  ActionSettingsChangeAnimationsElements,
-  ActionSettingsChangeAnimationsPage,
-  ActionSettingsChangeAnimationsPageDisabled,
-  ActionSettingsChangeLanguage,
-  ActionSettingsChangeStickyHeader,
-  ActionSettingsChangeTheme,
-  SettingsActionTypes
+  changeAnimationsElements,
+  changeAnimationsPage,
+  changeAnimationsPageDisabled,
+  changeLanguage,
+  changeStickyHeader,
+  changeTheme
 } from './settings.actions';
 
 describe('Settings Actions', () => {
-  it('should upsert ActionSettingsChangeTheme action', () => {
-    const action = new ActionSettingsChangeTheme({
+  it('should upsert changeTheme action', () => {
+    const action = changeTheme({
       theme: 'DARK_THEME'
     });
 
-    expect(action.type).toEqual(SettingsActionTypes.CHANGE_THEME);
-    expect(action.payload.theme).toEqual('DARK_THEME');
+    expect(action.theme).toEqual('DARK_THEME');
   });
 
-  it('should upsert ActionSettingsChangeAnimationsElements action', () => {
-    const action = new ActionSettingsChangeAnimationsElements({
+  it('should upsert changeAnimationsElements action', () => {
+    const action = changeAnimationsElements({
       elementsAnimations: true
     });
 
-    expect(action.type).toEqual(SettingsActionTypes.CHANGE_ANIMATIONS_ELEMENTS);
-    expect(action.payload.elementsAnimations).toEqual(true);
+    expect(action.elementsAnimations).toEqual(true);
   });
 
-  it('should upsert ActionSettingsChangeAnimationsPage action', () => {
-    const action = new ActionSettingsChangeAnimationsPage({
+  it('should upsert changeAnimationsPage action', () => {
+    const action = changeAnimationsPage({
       pageAnimations: true
     });
 
-    expect(action.type).toEqual(SettingsActionTypes.CHANGE_ANIMATIONS_PAGE);
-    expect(action.payload.pageAnimations).toEqual(true);
+    expect(action.pageAnimations).toEqual(true);
   });
 
-  it('should upsert ActionSettingsChangeAnimationsPageDisabled action', () => {
-    const action = new ActionSettingsChangeAnimationsPageDisabled({
+  it('should upsert changeAnimationsPageDisabled action', () => {
+    const action = changeAnimationsPageDisabled({
       pageAnimationsDisabled: true
     });
 
-    expect(action.type).toEqual(
-      SettingsActionTypes.CHANGE_ANIMATIONS_PAGE_DISABLED
-    );
-    expect(action.payload.pageAnimationsDisabled).toEqual(true);
+    expect(action.pageAnimationsDisabled).toEqual(true);
   });
 
-  it('should upsert ActionSettingsChangeLanguage action', () => {
-    const action = new ActionSettingsChangeLanguage({
+  it('should upsert changeLanguage action', () => {
+    const action = changeLanguage({
       language: 'en'
     });
 
-    expect(action.type).toEqual(SettingsActionTypes.CHANGE_LANGUAGE);
-    expect(action.payload.language).toEqual('en');
+    expect(action.language).toEqual('en');
   });
 
-  it('should upsert ActionSettingsChangeStickyHeader action', () => {
-    const action = new ActionSettingsChangeStickyHeader({
+  it('should upsert changeStickyHeader action', () => {
+    const action = changeStickyHeader({
       stickyHeader: true
     });
 
-    expect(action.type).toEqual(SettingsActionTypes.CHANGE_STICKY_HEADER);
-    expect(action.payload.stickyHeader).toEqual(true);
+    expect(action.stickyHeader).toEqual(true);
   });
 });

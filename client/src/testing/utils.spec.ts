@@ -1,41 +1,17 @@
-import { Injectable, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { SharedModule } from '@app/shared';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  ActionsSubject,
-  ReducerManager,
-  StateObservable,
-  Store,
-  StoreModule
-} from '@ngrx/store';
-import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { StoreModule } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Actions } from '@ngrx/effects';
+import { HAMMER_LOADER } from '@angular/platform-browser';
+import { provideMockStore } from '@ngrx/store/testing';
 import Mock = jest.Mock;
 
-@Injectable()
-export class MockStore<T> extends Store<T> {
-  private stateSubject = new BehaviorSubject<Partial<T>>({} as Partial<T>);
-
-  constructor(
-    state$: StateObservable,
-    actionsObserver: ActionsSubject,
-    reducerManager: ReducerManager
-  ) {
-    super(state$, actionsObserver, reducerManager);
-    this.source = this.stateSubject.asObservable();
-  }
-
-  setState(nextState: Partial<T>) {
-    this.stateSubject.next(nextState);
-  }
-}
-
-export function provideMockStore() {
+export function provideDummyHammerLoader() {
   return {
-    provide: Store,
-    useClass: MockStore
+    provide: HAMMER_LOADER,
+    useValue: () => new Promise(() => {})
   };
 }
 
@@ -53,7 +29,7 @@ export function provideMockStore() {
     SharedModule,
     TranslateModule
   ],
-  providers: [provideMockStore()]
+  providers: [provideMockStore(), provideDummyHammerLoader()]
 })
 export class TestingModule {
   constructor() {}
@@ -71,20 +47,3 @@ export const createSpyObj = (
 
   return obj;
 };
-
-export class TestActions extends Actions {
-  constructor() {
-    super(EMPTY);
-  }
-
-  set stream(source: Observable<any>) {
-    this.source = source;
-  }
-}
-
-export function provideTestActions() {
-  return {
-    provide: Actions,
-    useClass: TestActions
-  };
-}

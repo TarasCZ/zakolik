@@ -5,27 +5,28 @@ import { Store, StoreModule } from '@ngrx/store';
 import { of, ReplaySubject } from 'rxjs';
 
 import {
-  ActionAuthLoginSuccess,
   AnimationsService,
   LocalStorageService,
+  loginSuccess,
   TitleService
 } from '@app/core';
 
 import { SETTINGS_KEY, SettingsEffects } from './settings.effects';
 import { SettingsState, State } from './settings.model';
 import {
-  ActionSettingsChangeAnimationsElements,
-  ActionSettingsChangeAnimationsPage,
-  ActionSettingsChangeLanguage,
-  ActionSettingsChangeStickyHeader,
-  ActionSettingsChangeTheme,
-  ActionSettingsLoadAll
+  changeAnimationsElements,
+  changeAnimationsPage,
+  changeLanguage,
+  changeStickyHeader,
+  changeTheme,
+  loadAll
 } from './settings.actions';
-import { createSpyObj, MockStore, provideMockStore } from '@testing/utils.spec';
+import { createSpyObj } from '@testing/utils.spec';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { SettingsDataService } from '@app/settings/services/settings-data.service';
 import { first } from 'rxjs/operators';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('SettingsEffects', () => {
   const isNotInitTrigger = val => val[0].type !== 'zklk-init-effect-trigger';
@@ -48,7 +49,8 @@ describe('SettingsEffects', () => {
   let titleService;
   let animationsService;
   let translateService;
-  let store: MockStore<State>;
+  let store: MockStore<Partial<State>>;
+  let metadata;
 
   beforeEach(() => {
     actions = new ReplaySubject(2);
@@ -98,19 +100,19 @@ describe('SettingsEffects', () => {
       settings: { ...settings }
     });
     settingsEffects = TestBed.get<SettingsEffects>(SettingsEffects);
+    metadata = getEffectsMetadata(settingsEffects);
   });
 
   describe('loadSettings', () => {
     beforeEach(() => {
       settingsDataService.getAllSettings.mockReturnValue(of(settings));
-      actions.next(new ActionAuthLoginSuccess());
+      actions.next(loginSuccess({ redirectUrl: '' }));
     });
 
-    it('should be able to dispatch any action', () => {
-      const metadata = getEffectsMetadata(settingsEffects);
-
-      expect(metadata.loadSettings$).toEqual({ dispatch: true });
-    });
+    it(
+      'should be able to dispatch any action',
+      expectEffect('loadSettings$').toBeAbleToDispatchAction
+    );
 
     it('should setItem on localStorageService', done => {
       settingsEffects.loadSettings$.subscribe(() => {
@@ -124,7 +126,7 @@ describe('SettingsEffects', () => {
 
     it('should return LoadAll Action', done => {
       settingsEffects.loadSettings$.subscribe(action => {
-        expect(action).toEqual(new ActionSettingsLoadAll(settings));
+        expect(action).toEqual(loadAll(settings));
         done();
       });
     });
@@ -132,22 +134,21 @@ describe('SettingsEffects', () => {
 
   describe('persistSettings', () => {
     const possibleChangeActions = [
-      new ActionSettingsChangeAnimationsElements({ elementsAnimations: true }),
-      new ActionSettingsChangeAnimationsPage({ pageAnimations: true }),
-      new ActionSettingsChangeLanguage({ language: 'cz' }),
-      new ActionSettingsChangeStickyHeader({ stickyHeader: true }),
-      new ActionSettingsChangeTheme({ theme: 'dark' })
+      changeAnimationsElements({ elementsAnimations: true }),
+      changeAnimationsPage({ pageAnimations: true }),
+      changeLanguage({ language: 'cz' }),
+      changeStickyHeader({ stickyHeader: true }),
+      changeTheme({ theme: 'dark' })
     ];
 
     beforeEach(() =>
       settingsDataService.updateAllSettings.mockReturnValue(of({}))
     );
 
-    it('should not dispatch any action', () => {
-      const metadata = getEffectsMetadata(settingsEffects);
-
-      expect(metadata.persistSettings$).toEqual({ dispatch: false });
-    });
+    it(
+      'should not dispatch any action',
+      expectEffect('persistSettings$').not.toBeAbleToDispatchAction
+    );
 
     describe('for every possible action when not authenticated', () => {
       possibleChangeActions.forEach(action => {
@@ -155,10 +156,11 @@ describe('SettingsEffects', () => {
           beforeEach(() => actions.next(action));
 
           it('should save settings to local storage', done => {
+            const { type, ...payload } = action;
             settingsEffects.persistSettings$.subscribe(() => {
               expect(localStorageService.setItem).toHaveBeenCalledWith(
                 SETTINGS_KEY,
-                { ...settings, ...action.payload }
+                { ...settings, ...payload }
               );
               done();
             });
@@ -188,20 +190,22 @@ describe('SettingsEffects', () => {
           });
 
           it('should save settings to local storage', done => {
+            const { type, ...payload } = action;
             settingsEffects.persistSettings$.subscribe(() => {
               expect(localStorageService.setItem).toHaveBeenCalledWith(
                 SETTINGS_KEY,
-                { ...settings, ...action.payload }
+                { ...settings, ...payload }
               );
               done();
             });
           });
 
           it('should not pass settings to the data service', done => {
+            const { type, ...payload } = action;
             settingsEffects.persistSettings$.subscribe(() => {
               expect(
                 settingsDataService.updateAllSettings
-              ).toHaveBeenCalledWith({ ...settings, ...action.payload });
+              ).toHaveBeenCalledWith({ ...settings, ...payload });
               done();
             });
           });
@@ -211,11 +215,10 @@ describe('SettingsEffects', () => {
   });
 
   describe('updateRouteAnimationType', () => {
-    it('should not dispatch any action', () => {
-      const metadata = getEffectsMetadata(settingsEffects);
-
-      expect(metadata.updateRouteAnimationType$).toEqual({ dispatch: false });
-    });
+    it(
+      'should not dispatch any action',
+      expectEffect('updateRouteAnimationType$').not.toBeAbleToDispatchAction
+    );
 
     describe('when effect is initialized', () => {
       it('should pass state to updateRouteAnimationType on animationsService', done => {
@@ -235,7 +238,7 @@ describe('SettingsEffects', () => {
     describe('when change animations elements action is dispatched', () => {
       it('should updateRouteAnimationType on animationsService', done => {
         const actionPayload = { elementsAnimations: true };
-        actions.next(new ActionSettingsChangeAnimationsElements(actionPayload));
+        actions.next(changeAnimationsElements(actionPayload));
 
         settingsEffects.updateRouteAnimationType$
           .pipe(first(isNotInitTrigger))
@@ -254,7 +257,7 @@ describe('SettingsEffects', () => {
     describe('when change animations page action is dispatched', () => {
       it('should updateRouteAnimationType on animationsService', done => {
         const actionPayload = { pageAnimations: true };
-        actions.next(new ActionSettingsChangeAnimationsPage(actionPayload));
+        actions.next(changeAnimationsPage(actionPayload));
 
         settingsEffects.updateRouteAnimationType$
           .pipe(first(isNotInitTrigger))
@@ -285,14 +288,13 @@ describe('SettingsEffects', () => {
       };
 
       overlayContainer.getContainerElement.mockReturnValue({ classList });
-      actions.next(new ActionSettingsChangeTheme(actionPayload));
+      actions.next(changeTheme(actionPayload));
     });
 
-    it('should not dispatch any action', () => {
-      const metadata = getEffectsMetadata(settingsEffects);
-
-      expect(metadata.updateTheme$).toEqual({ dispatch: false });
-    });
+    it(
+      'should not dispatch any action',
+      expectEffect('updateTheme$').not.toBeAbleToDispatchAction
+    );
 
     describe('when effect is initialized', () => {
       it('should only remove theme from classList', done => {
@@ -326,7 +328,6 @@ describe('SettingsEffects', () => {
         settingsEffects.updateTheme$
           .pipe(first(isNotInitTrigger))
           .subscribe(() => {
-            console.log(settings.theme);
             expect(classList.add.mock.calls[1][0]).toEqual(actionPayload.theme);
             done();
           });
@@ -335,13 +336,10 @@ describe('SettingsEffects', () => {
   });
 
   describe('setTranslateServiceLanguage', () => {
-    it('should not dispatch any action', () => {
-      const metadata = getEffectsMetadata(settingsEffects);
-
-      expect(metadata.setTranslateServiceLanguage$).toEqual({
-        dispatch: false
-      });
-    });
+    it(
+      'should not dispatch any action',
+      expectEffect('setTranslateServiceLanguage$').not.toBeAbleToDispatchAction
+    );
 
     it('should use language on translateService from the store', done => {
       settingsEffects.setTranslateServiceLanguage$.subscribe(() => {
@@ -350,4 +348,21 @@ describe('SettingsEffects', () => {
       });
     });
   });
+
+  function expectEffect(effect: string) {
+    return {
+      toBeAbleToDispatchAction: () =>
+        expect(metadata[effect]).toEqual({
+          dispatch: true,
+          resubscribeOnError: true
+        }),
+      not: {
+        toBeAbleToDispatchAction: () =>
+          expect(metadata[effect]).toEqual({
+            dispatch: false,
+            resubscribeOnError: true
+          })
+      }
+    };
+  }
 });

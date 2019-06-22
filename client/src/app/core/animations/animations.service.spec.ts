@@ -12,17 +12,26 @@ describe('AnimationsService', () => {
   });
 
   it('should set route animation type to "ALL"', () => {
-    service.updateRouteAnimationType(true, true);
+    service.updateRouteAnimationType({
+      pageAnimations: true,
+      elementsAnimations: true
+    });
     expect(AnimationsService.isRouteAnimationsType('ALL')).toBe(true);
   });
 
   it('should set route animation type to "PAGE"', () => {
-    service.updateRouteAnimationType(true, false);
+    service.updateRouteAnimationType({
+      pageAnimations: true,
+      elementsAnimations: false
+    });
     expect(AnimationsService.isRouteAnimationsType('PAGE')).toBe(true);
   });
 
   it('should set route animation type to "ELEMENTS"', () => {
-    service.updateRouteAnimationType(false, true);
+    service.updateRouteAnimationType({
+      pageAnimations: false,
+      elementsAnimations: true
+    });
     expect(AnimationsService.isRouteAnimationsType('ELEMENTS')).toBe(true);
   });
 });

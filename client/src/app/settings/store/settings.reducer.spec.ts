@@ -1,12 +1,12 @@
 import { initialState, settingsReducer } from './settings.reducer';
 
 import {
-  ActionSettingsChangeAnimationsElements,
-  ActionSettingsChangeAnimationsPage,
-  ActionSettingsChangeAnimationsPageDisabled,
-  ActionSettingsChangeLanguage,
-  ActionSettingsChangeTheme,
-  ActionSettingsChangeStickyHeader,
+  changeAnimationsElements,
+  changeAnimationsPage,
+  changeAnimationsPageDisabled,
+  changeLanguage,
+  changeTheme,
+  changeStickyHeader
 } from './settings.actions';
 
 describe('SettingsReducer', () => {
@@ -17,19 +17,19 @@ describe('SettingsReducer', () => {
   });
 
   it('should update language', () => {
-    const action = new ActionSettingsChangeLanguage({ language: 'sk' });
+    const action = changeLanguage({ language: 'sk' });
     const state = settingsReducer(undefined, action);
     expect(state.language).toEqual('sk');
   });
 
   it('should update theme', () => {
-    const action = new ActionSettingsChangeTheme({ theme: 'dark' });
+    const action = changeTheme({ theme: 'dark' });
     const state = settingsReducer(undefined, action);
     expect(state.theme).toEqual('dark');
   });
 
   it('should update pageAnimations', () => {
-    const action = new ActionSettingsChangeAnimationsPage({
+    const action = changeAnimationsPage({
       pageAnimations: false
     });
     const state = settingsReducer(undefined, action);
@@ -37,7 +37,7 @@ describe('SettingsReducer', () => {
   });
 
   it('should update pageAnimationsDisabled and pageAnimations', () => {
-    const action = new ActionSettingsChangeAnimationsPageDisabled({
+    const action = changeAnimationsPageDisabled({
       pageAnimationsDisabled: true
     });
     const state = settingsReducer(undefined, action);
@@ -46,7 +46,7 @@ describe('SettingsReducer', () => {
   });
 
   it('should update elementsAnimations', () => {
-    const action = new ActionSettingsChangeAnimationsElements({
+    const action = changeAnimationsElements({
       elementsAnimations: false
     });
     const state = settingsReducer(undefined, action);
@@ -54,7 +54,7 @@ describe('SettingsReducer', () => {
   });
 
   it('should update stickyHeader', () => {
-    const action = new ActionSettingsChangeStickyHeader({
+    const action = changeStickyHeader({
       stickyHeader: false
     });
     const state = settingsReducer(undefined, action);

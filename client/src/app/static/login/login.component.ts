@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import {ActionAuthLogin, AppState, AuthService} from '@app/core';
-import {Store} from '@ngrx/store';
+import { AppState, login } from '@app/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'zklk-login',
@@ -9,11 +9,9 @@ import {Store} from '@ngrx/store';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
-
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.store.dispatch(new ActionAuthLogin())
+    this.store.dispatch(login());
   }
-
 }

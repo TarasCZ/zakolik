@@ -3,18 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 
 import {
-  ActionAuthCheckLogin,
-  ActionAuthLogout,
   AppState,
+  checkLogin,
   LocalStorageService,
+  logout,
   routeAnimations,
   selectIsAuthenticated
 } from '@app/core';
 import { environment as env } from '@env/environment';
 
 import {
-  ActionSettingsChangeAnimationsPageDisabled,
-  ActionSettingsChangeLanguage,
+  changeAnimationsPageDisabled,
+  changeLanguage,
   selectPicture,
   selectSettingsLanguage,
   selectSettingsStickyHeader,
@@ -91,12 +91,10 @@ export class AppComponent implements OnInit {
 
     const pageAnimationsDisabled = AppComponent.isIEorEdgeOrSafari();
     this.store.dispatch(
-      new ActionSettingsChangeAnimationsPageDisabled({ pageAnimationsDisabled })
+      changeAnimationsPageDisabled({ pageAnimationsDisabled })
     );
 
-    this.store.dispatch(
-      new ActionAuthCheckLogin({ redirectUrl: window.location.pathname })
-    );
+    this.store.dispatch(checkLogin({ redirectUrl: window.location.pathname }));
     this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
     this.stickyHeader$ = this.store.pipe(select(selectSettingsStickyHeader));
     this.language$ = this.store.pipe(select(selectSettingsLanguage));
@@ -105,10 +103,10 @@ export class AppComponent implements OnInit {
   }
 
   onLogoutClick() {
-    this.store.dispatch(new ActionAuthLogout());
+    this.store.dispatch(logout());
   }
 
   onLanguageSelect({ value: language }) {
-    this.store.dispatch(new ActionSettingsChangeLanguage({ language }));
+    this.store.dispatch(changeLanguage({ language }));
   }
 }

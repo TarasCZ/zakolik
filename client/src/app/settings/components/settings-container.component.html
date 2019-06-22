@@ -14,6 +14,7 @@
             <mat-select [placeholder]="'zklk.settings.general.placeholder' | translate"
                         [ngModel]="settings.language"
                         (selectionChange)="onLanguageSelect($event)"
+                        data-testid="language-select"
                         name="language">
               <mat-option *ngFor="let l of languages" [value]="l.value">
                 {{ 'zklk.settings.general.language.' + l.label | translate }}
@@ -25,7 +26,7 @@
            <mat-icon color="accent"><fa-icon icon="bars" color="accent"></fa-icon></mat-icon>
            <mat-placeholder>{{ 'zklk.settings.themes.sticky-header' | translate }}
            </mat-placeholder>
-           <mat-slide-toggle
+           <mat-slide-toggle data-testid="sticky-header-toggle"
              [checked]="settings.stickyHeader"
              (change)="onStickyHeaderToggle($event)">
            </mat-slide-toggle>
@@ -42,12 +43,14 @@
             matTooltip="Sorry, this feature is disabled in IE, EDGE and Safari"
             matTooltipPosition="before"
             *ngIf="settings.pageAnimationsDisabled"
+            data-testid="animations-page-toggle-disabled"
             disabled>
           </mat-slide-toggle>
           <mat-slide-toggle
             *ngIf="!settings.pageAnimationsDisabled"
             [checked]="settings.pageAnimations"
-            (change)="onPageAnimationsToggle($event)">
+            (change)="onPageAnimationsToggle($event)"
+            data-testid="animations-page-toggle">
           </mat-slide-toggle>
         </div>
         <div class="icon-form-field">
@@ -56,7 +59,8 @@
           </mat-placeholder>
           <mat-slide-toggle
             [checked]="settings.elementsAnimations"
-            (change)="onElementsAnimationsToggle($event)">
+            (change)="onElementsAnimationsToggle($event)"
+            data-testid="animations-elements-toggle">
           </mat-slide-toggle>
         </div>
       </div>
@@ -71,7 +75,8 @@
             <mat-select [placeholder]="'zklk.settings.themes.placeholder' | translate"
                         [ngModel]="settings.theme"
                         (selectionChange)="onThemeSelect($event)"
-                        name="themes">
+                        name="themes"
+                        data-testid="theme-select">
               <mat-option *ngFor="let t of themes" [value]="t.value">
                 {{ 'zklk.settings.themes.' + t.label | translate }}
               </mat-option>

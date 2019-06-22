@@ -1,20 +1,13 @@
 import { Router } from '@angular/router';
 
-import {
-  ActionAuthCheckLogin,
-  ActionAuthLogin,
-  ActionAuthLoginComplete,
-  ActionAuthLoginFailure,
-  ActionAuthLoginSuccess,
-  ActionAuthLogout,
-  AuthService
-} from '@app/core';
+import * as AuthActions from './auth.actions';
 
 import { AuthEffects } from './auth.effects';
 import { TestBed } from '@angular/core/testing';
 import { createSpyObj } from '@testing/utils.spec';
 import { of, ReplaySubject, throwError } from 'rxjs';
 import { Actions, getEffectsMetadata } from '@ngrx/effects';
+import { AuthService } from '@app/core';
 
 describe('AuthEffects', () => {
   const routerMock = createSpyObj('Router', ['navigate']);
@@ -30,6 +23,7 @@ describe('AuthEffects', () => {
   let router;
   let authService;
   let authEffects;
+  let metadata;
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
@@ -46,6 +40,7 @@ describe('AuthEffects', () => {
     router = TestBed.get<Router>(Router);
     authService = TestBed.get<AuthService>(AuthService);
     authEffects = TestBed.get<AuthEffects>(AuthEffects);
+    metadata = getEffectsMetadata(authEffects);
   });
 
   it('should be created', () => {
@@ -53,14 +48,13 @@ describe('AuthEffects', () => {
   });
 
   describe('login', () => {
-    it('should not dispatch any action', () => {
-      const metadata = getEffectsMetadata(authEffects);
-
-      expect(metadata.login$).toEqual({ dispatch: false });
-    });
+    it(
+      'should not be able to dispatch any action',
+      expectEffect('login$').not.toBeAbleToDispatchAction
+    );
 
     it('should call login on AuthService', done => {
-      actions$.next(new ActionAuthLogin());
+      actions$.next(AuthActions.login());
 
       authEffects.login$.subscribe(() => {
         expect(authService.login).toHaveBeenCalledTimes(1);
@@ -70,19 +64,18 @@ describe('AuthEffects', () => {
   });
 
   describe('loginComplete', () => {
-    it('should be able to dispatch any action', () => {
-      const metadata = getEffectsMetadata(authEffects);
-
-      expect(metadata.loginComplete$).toEqual({ dispatch: true });
-    });
+    it(
+      'should be able to dispatch any action',
+      expectEffect('loginComplete$').toBeAbleToDispatchAction
+    );
 
     it('should dispatch LoginSuccess Action', done => {
       authService.parseHash$.mockReturnValue(of({ idToken: 'idToken' }));
 
-      actions$.next(new ActionAuthLoginComplete());
+      actions$.next(AuthActions.loginComplete());
 
       authEffects.loginComplete$.subscribe(action => {
-        expect(action).toEqual(new ActionAuthLoginSuccess());
+        expect(action).toEqual(AuthActions.loginSuccess({ redirectUrl: '' }));
         done();
       });
     });
@@ -90,11 +83,11 @@ describe('AuthEffects', () => {
     it('should dispatch LoginFailure Action when token is missing', done => {
       authService.parseHash$.mockReturnValue(of({}));
 
-      actions$.next(new ActionAuthLoginComplete());
+      actions$.next(AuthActions.loginComplete());
 
       authEffects.loginComplete$.subscribe(action => {
         expect(action).toEqual(
-          new ActionAuthLoginFailure('Missing Access Token')
+          AuthActions.loginFailure('Missing Access Token')
         );
         done();
       });
@@ -104,11 +97,11 @@ describe('AuthEffects', () => {
       const expectedError = new Error('Expected error');
       authService.parseHash$.mockReturnValue(throwError(expectedError));
 
-      actions$.next(new ActionAuthLoginComplete());
+      actions$.next(AuthActions.loginComplete());
 
       authEffects.loginComplete$.subscribe(action => {
         expect(action).toEqual(
-          new ActionAuthLoginFailure({ error: expectedError })
+          AuthActions.loginFailure({ error: expectedError })
         );
         done();
       });
@@ -116,15 +109,14 @@ describe('AuthEffects', () => {
   });
 
   describe('loginRedirect', () => {
-    it('should not dispatch any action', () => {
-      const metadata = getEffectsMetadata(authEffects);
-
-      expect(metadata.loginRedirect$).toEqual({ dispatch: false });
-    });
+    it(
+      'should not be able to dispatch any action',
+      expectEffect('loginRedirect$').not.toBeAbleToDispatchAction
+    );
 
     it('should call login on AuthService', done => {
       const redirectUrl = 'redirectUrl';
-      actions$.next(new ActionAuthLoginSuccess({ redirectUrl }));
+      actions$.next(AuthActions.loginSuccess({ redirectUrl }));
 
       authEffects.loginRedirect$.subscribe(() => {
         expect(router.navigate).toHaveBeenCalledWith([redirectUrl]);
@@ -134,15 +126,14 @@ describe('AuthEffects', () => {
   });
 
   describe('loginErrorRedirect', () => {
-    it('should not dispatch any action', () => {
-      const metadata = getEffectsMetadata(authEffects);
-
-      expect(metadata.loginErrorRedirect$).toEqual({ dispatch: false });
-    });
+    it(
+      'should not be able to dispatch any action',
+      expectEffect('loginErrorRedirect$').not.toBeAbleToDispatchAction
+    );
 
     it('should navigate to root', done => {
       const redirectUrl = '';
-      actions$.next(new ActionAuthLoginFailure('testing error'));
+      actions$.next(AuthActions.loginFailure('testing error'));
 
       authEffects.loginErrorRedirect$.subscribe(() => {
         expect(router.navigate).toHaveBeenCalledWith([redirectUrl]);
@@ -152,14 +143,13 @@ describe('AuthEffects', () => {
   });
 
   describe('logout', () => {
-    it('should not dispatch any action', () => {
-      const metadata = getEffectsMetadata(authEffects);
-
-      expect(metadata.logout$).toEqual({ dispatch: false });
-    });
+    it(
+      'should not be able to dispatch any action',
+      expectEffect('logout$').not.toBeAbleToDispatchAction
+    );
 
     it('should call setItem on LocalStorageService and navigate to about', done => {
-      actions$.next(new ActionAuthLogout());
+      actions$.next(AuthActions.logout());
 
       authEffects.logout$.subscribe(() => {
         expect(authService.logout).toHaveBeenCalledTimes(1);
@@ -173,19 +163,18 @@ describe('AuthEffects', () => {
 
     beforeEach(() => (authService.authenticated = true));
 
-    it('should be able to dispatch any action', () => {
-      const metadata = getEffectsMetadata(authEffects);
-
-      expect(metadata.checkLogin$).toEqual({ dispatch: true });
-    });
+    it(
+      'should be able to dispatch any action',
+      expectEffect('checkLogin$').toBeAbleToDispatchAction
+    );
 
     it('should dispatch LoginSuccess Action with redirectUrl', done => {
       authService.checkSession$.mockReturnValue(of({ idToken: 'idToken' }));
 
-      actions$.next(new ActionAuthCheckLogin({ redirectUrl }));
+      actions$.next(AuthActions.checkLogin({ redirectUrl }));
 
       authEffects.checkLogin$.subscribe(action => {
-        expect(action).toEqual(new ActionAuthLoginSuccess({ redirectUrl }));
+        expect(action).toEqual(AuthActions.loginSuccess({ redirectUrl }));
         done();
       });
     });
@@ -194,7 +183,7 @@ describe('AuthEffects', () => {
       const idToken = 'idToken';
       authService.checkSession$.mockReturnValue(of({ idToken }));
 
-      actions$.next(new ActionAuthCheckLogin({ redirectUrl }));
+      actions$.next(AuthActions.checkLogin({ redirectUrl }));
 
       authEffects.checkLogin$.subscribe(() => {
         expect(authService.setAuth).toHaveBeenCalledWith(idToken);
@@ -205,11 +194,11 @@ describe('AuthEffects', () => {
     it('should dispatch LoginFailure Action when token is missing', done => {
       authService.checkSession$.mockReturnValue(of({}));
 
-      actions$.next(new ActionAuthCheckLogin({ redirectUrl }));
+      actions$.next(AuthActions.checkLogin({ redirectUrl }));
 
       authEffects.checkLogin$.subscribe(action => {
         expect(action).toEqual(
-          new ActionAuthLoginFailure('Missing Access Token')
+          AuthActions.loginFailure('Missing Access Token')
         );
         done();
       });
@@ -219,14 +208,31 @@ describe('AuthEffects', () => {
       const expectedError = new Error('Expected error');
       authService.checkSession$.mockReturnValue(throwError(expectedError));
 
-      actions$.next(new ActionAuthCheckLogin({ redirectUrl }));
+      actions$.next(AuthActions.checkLogin({ redirectUrl }));
 
       authEffects.checkLogin$.subscribe(action => {
         expect(action).toEqual(
-          new ActionAuthLoginFailure({ error: expectedError })
+          AuthActions.loginFailure({ error: expectedError })
         );
         done();
       });
     });
   });
+
+  function expectEffect(effect: string) {
+    return {
+      toBeAbleToDispatchAction: () =>
+        expect(metadata[effect]).toEqual({
+          dispatch: true,
+          resubscribeOnError: true
+        }),
+      not: {
+        toBeAbleToDispatchAction: () =>
+          expect(metadata[effect]).toEqual({
+            dispatch: false,
+            resubscribeOnError: true
+          })
+      }
+    };
+  }
 });

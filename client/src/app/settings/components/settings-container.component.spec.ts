@@ -1,18 +1,12 @@
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { MatSlideToggle } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestingModule, MockStore } from '@testing/utils.spec';
+import { TestingModule } from '@testing/utils.spec';
 
 import { SettingsContainerComponent } from './settings-container.component';
-import {
-  ActionSettingsChangeAnimationsElements,
-  ActionSettingsChangeAnimationsPage,
-  ActionSettingsChangeAutoNightMode,
-  ActionSettingsChangeTheme,
-  ActionSettingsChangeStickyHeader
-} from '../store/settings.actions';
+import * as SettingsActions from '../store/settings.actions';
+import { MockStore } from '@ngrx/store/testing';
 
 describe('SettingsComponent', () => {
   let component: SettingsContainerComponent;
@@ -29,7 +23,7 @@ describe('SettingsComponent', () => {
     TestBed.configureTestingModule({
       imports: [TestingModule],
       declarations: [SettingsContainerComponent]
-    }).compileComponents();
+    });
 
     store = TestBed.get(Store);
     store.setState({
@@ -48,17 +42,42 @@ describe('SettingsComponent', () => {
     fixture.detectChanges();
   }));
 
+  it('should dispatch change language action on language selection', () => {
+    dispatchSpy = spyOn(store, 'dispatch');
+
+    const languageSelect = fixture.debugElement.query(
+      By.css('[data-testid="language-select"]')
+    );
+    const languageSelectArrow = languageSelect.query(
+      By.css('.mat-select-trigger')
+    );
+    languageSelectArrow.triggerEventHandler('click', {});
+
+    fixture.detectChanges();
+
+    getSelectOptions()[1].triggerEventHandler('click', {});
+
+    fixture.detectChanges();
+
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      SettingsActions.changeLanguage({ language: 'cz' })
+    );
+  });
+
   it('should dispatch change sticky header on sticky header toggle', () => {
     dispatchSpy = spyOn(store, 'dispatch');
     const componentDebug = fixture.debugElement;
-    const slider = componentDebug.queryAll(By.directive(MatSlideToggle))[0];
+    const slider = componentDebug.query(
+      By.css('[data-testid="sticky-header-toggle"]')
+    );
 
     slider.triggerEventHandler('change', { checked: false });
     fixture.detectChanges();
 
     expect(dispatchSpy).toHaveBeenCalledTimes(1);
     expect(dispatchSpy).toHaveBeenCalledWith(
-      new ActionSettingsChangeStickyHeader({ stickyHeader: false })
+      SettingsActions.changeStickyHeader({ stickyHeader: false })
     );
   });
 
@@ -74,49 +93,39 @@ describe('SettingsComponent', () => {
 
     expect(dispatchSpy).toHaveBeenCalledTimes(1);
     expect(dispatchSpy).toHaveBeenCalledWith(
-      new ActionSettingsChangeTheme({ theme: 'LIGHT-THEME' })
-    );
-  });
-
-  it('should dispatch change auto night mode on night mode toggle', () => {
-    dispatchSpy = spyOn(store, 'dispatch');
-    const componentDebug = fixture.debugElement;
-    const slider = componentDebug.queryAll(By.directive(MatSlideToggle))[1];
-
-    slider.triggerEventHandler('change', { checked: false });
-    fixture.detectChanges();
-
-    expect(dispatchSpy).toHaveBeenCalledTimes(1);
-    expect(dispatchSpy).toHaveBeenCalledWith(
-      new ActionSettingsChangeAutoNightMode({ autoNightMode: false })
+      SettingsActions.changeTheme({ theme: 'NATURE-THEME' })
     );
   });
 
   it('should dispatch change animations page', () => {
     dispatchSpy = spyOn(store, 'dispatch');
     const componentDebug = fixture.debugElement;
-    const slider = componentDebug.queryAll(By.directive(MatSlideToggle))[2];
+    const slider = componentDebug.query(
+      By.css('[data-testid="animations-page-toggle"]')
+    );
 
     slider.triggerEventHandler('change', { checked: false });
     fixture.detectChanges();
 
     expect(dispatchSpy).toHaveBeenCalledTimes(1);
     expect(dispatchSpy).toHaveBeenCalledWith(
-      new ActionSettingsChangeAnimationsPage({ pageAnimations: false })
+      SettingsActions.changeAnimationsPage({ pageAnimations: false })
     );
   });
 
   it('should dispatch change animations elements', () => {
     dispatchSpy = spyOn(store, 'dispatch');
     const componentDebug = fixture.debugElement;
-    const slider = componentDebug.queryAll(By.directive(MatSlideToggle))[3];
+    const slider = componentDebug.query(
+      By.css('[data-testid="animations-elements-toggle"]')
+    );
 
     slider.triggerEventHandler('change', { checked: false });
     fixture.detectChanges();
 
     expect(dispatchSpy).toHaveBeenCalledTimes(1);
     expect(dispatchSpy).toHaveBeenCalledWith(
-      new ActionSettingsChangeAnimationsElements({ elementsAnimations: false })
+      SettingsActions.changeAnimationsElements({ elementsAnimations: false })
     );
   });
 
@@ -135,7 +144,9 @@ describe('SettingsComponent', () => {
 
     dispatchSpy = spyOn(store, 'dispatch');
     const componentDebug = fixture.debugElement;
-    const slider = componentDebug.queryAll(By.directive(MatSlideToggle))[2];
+    const slider = componentDebug.query(
+      By.css('[data-testid="animations-page-toggle-disabled"]')
+    );
 
     slider.triggerEventHandler('change', { checked: false });
     fixture.detectChanges();

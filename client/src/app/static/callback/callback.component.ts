@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {ActionAuthLoginComplete, AppState} from '@app/core';
-import {Store} from '@ngrx/store';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AppState, loginComplete } from '@app/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'zklk-callback',
@@ -9,12 +9,9 @@ import {Store} from '@ngrx/store';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CallbackComponent implements OnInit {
-
-  constructor(private store: Store<AppState>) {
-  }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.store.dispatch(new ActionAuthLoginComplete());
+    this.store.dispatch(loginComplete());
   }
 }
-

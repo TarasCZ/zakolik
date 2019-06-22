@@ -4,7 +4,6 @@ import {
   createFeatureSelector
 } from '@ngrx/store';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
-import { storeFreeze } from 'ngrx-store-freeze';
 
 import { environment } from '@env/environment';
 
@@ -22,11 +21,8 @@ export const reducers: ActionReducerMap<AppState> = {
 export const metaReducers: MetaReducer<AppState>[] = [
   initStateFromLocalStorage
 ];
-if (!environment.production) {
-  metaReducers.unshift(storeFreeze);
-  if (!environment.test) {
-    metaReducers.unshift(debug);
-  }
+if (!environment.test) {
+  metaReducers.unshift(debug);
 }
 
 export const selectAuthState = createFeatureSelector<AppState, AuthState>(
