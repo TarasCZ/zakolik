@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { merge } from 'rxjs';
 import {
@@ -15,60 +15,72 @@ import {
 import { TitleService } from '@app/core';
 import { changeLanguage, selectSettingsState, State } from '@app/settings';
 import { TransactionDataService } from '@app/transactions/services/transaction-data.service';
-import {
-  ActionDeleteOneTransaction,
-  ActionUpsertManyTransactions,
-  ActionUpsertOneTransaction,
-  TransactionActionTypes
-} from '@app/transactions/store/actions/transactions.actions';
+import * as TransactionActions from '../actions/transactions.actions';
 
 @Injectable()
 export class TransactionEffects {
-  @Effect()
-  loadAllTransactions = this.actions$.pipe(
-    ofType(TransactionActionTypes.LOAD_ALL),
-    exhaustMap(() => {
-      return this.transactionDataService
-        .getAllTransactions()
-        .pipe(
-          map(transactions => new ActionUpsertManyTransactions(transactions))
-        );
-    })
-  );
-
-  @Effect({ dispatch: false })
-  postTransaction = this.actions$.pipe(
-    ofType<ActionUpsertOneTransaction>(TransactionActionTypes.UPSERT_ONE),
-    exhaustMap(({ transaction }) =>
-      this.transactionDataService.postTransaction(transaction)
+  loadAllTransactions$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TransactionActions.loadAllTransactions),
+      exhaustMap(() => {
+        return this.transactionDataService
+          .getAllTransactions()
+          .pipe(
+            map(transactions =>
+              TransactionActions.upsertManyTransactions({ transactions })
+            )
+          );
+      })
     )
   );
 
-  @Effect({ dispatch: false })
-  deleteTransaction = this.actions$.pipe(
-    ofType<ActionDeleteOneTransaction>(TransactionActionTypes.DELETE_ONE),
-    exhaustMap(({ id }) => this.transactionDataService.deleteTransaction(id))
+  postTransaction$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TransactionActions.upsertTransaction),
+        exhaustMap(({ transaction }) =>
+          this.transactionDataService.postTransaction(transaction)
+        )
+      ),
+    { dispatch: false }
   );
 
-  @Effect({ dispatch: false })
-  setTranslateServiceLanguage = this.store.pipe(
-    select(selectSettingsState),
-    map(settings => settings.language),
-    distinctUntilChanged(),
-    tap(language => this.translateService.use(language))
+  deleteTransaction$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TransactionActions.deleteTransaction),
+        exhaustMap(({ id }) =>
+          this.transactionDataService.deleteTransaction(id)
+        )
+      ),
+    { dispatch: false }
   );
 
-  @Effect({ dispatch: false })
-  setTitle = merge(
-    this.actions$.pipe(ofType(changeLanguage)),
-    this.router.events.pipe(filter(event => event instanceof ActivationEnd))
-  ).pipe(
-    tap(() => {
-      this.titleService.setTitle(
-        this.router.routerState.snapshot.root,
-        this.translateService
-      );
-    })
+  setTranslateServiceLanguage$ = createEffect(
+    () =>
+      this.store.pipe(
+        select(selectSettingsState),
+        map(settings => settings.language),
+        distinctUntilChanged(),
+        tap(language => this.translateService.use(language))
+      ),
+    { dispatch: false }
+  );
+
+  setTitle$ = createEffect(
+    () =>
+      merge(
+        this.actions$.pipe(ofType(changeLanguage)),
+        this.router.events.pipe(filter(event => event instanceof ActivationEnd))
+      ).pipe(
+        tap(() => {
+          this.titleService.setTitle(
+            this.router.routerState.snapshot.root,
+            this.translateService
+          );
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

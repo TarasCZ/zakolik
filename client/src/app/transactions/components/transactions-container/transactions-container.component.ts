@@ -7,8 +7,8 @@ import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 
 import { Transaction } from '../../model/transaction.model';
 import { selectAll } from '@app/transactions/store/transactions.selectors';
-import { ActionDeleteOneTransaction } from '@app/transactions/store/actions/transactions.actions';
 import { removeTransactionAnimation } from '@app/core/animations/transaction-card.animations';
+import { deleteTransaction } from '@app/transactions/store/actions/transactions.actions';
 
 @Component({
   selector: 'zklk-transactions',
@@ -34,7 +34,7 @@ export class TransactionsContainerComponent {
   }
 
   removeTransaction(id: string) {
-    this.store.dispatch(new ActionDeleteOneTransaction(id));
+    this.store.dispatch(deleteTransaction({ id }));
   }
 
   trackByFn(index, item) {

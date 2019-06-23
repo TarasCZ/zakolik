@@ -1,6 +1,9 @@
-import {initialState, transactionReducer} from '@app/transactions/store/reducers/transactions.reducer';
-import {TransactionState} from '@app/transactions/model/transaction.model';
-import {ActionDeleteOneTransaction, ActionUpsertOneTransaction} from '@app/transactions/store/actions/transactions.actions';
+import {
+  initialState,
+  transactionReducer
+} from '@app/transactions/store/reducers/transactions.reducer';
+import { TransactionState } from '@app/transactions/model/transaction.model';
+import * as TransactionActions from '../actions/transactions.actions';
 
 describe('TransactionReducer', () => {
   const TEST_INITIAL_STATE: TransactionState = {
@@ -12,7 +15,7 @@ describe('TransactionReducer', () => {
         value: 12000,
         type: 'OTHER',
         description: 'Vyplata od meho zamestnavatele',
-        date: Date.now(),
+        date: Date.now()
       }
     }
   };
@@ -25,25 +28,25 @@ describe('TransactionReducer', () => {
   });
 
   it('should add a transaction', () => {
-    const action = new ActionUpsertOneTransaction({
+    const action = TransactionActions.upsertTransaction({
       transaction: {
         id: '1234',
         name: 'test',
         value: 123,
         type: 'OTHER',
         description: 'test',
-        date: 123,
+        date: 123
       }
     });
     const state = transactionReducer(TEST_INITIAL_STATE, action);
 
-    expect(state.ids.length).toEqual(1);
+    expect(state.ids.length).toEqual(2);
     expect(state.entities['1234'].name).toEqual('test');
   });
 
   it('should update a transaction', () => {
     const id = TEST_INITIAL_STATE.ids[0] as string;
-    const action = new ActionUpsertOneTransaction({
+    const action = TransactionActions.upsertTransaction({
       transaction: {
         id: id,
         value: 12000,
@@ -66,7 +69,7 @@ describe('TransactionReducer', () => {
 
   it('should remove a transaction', () => {
     const id = TEST_INITIAL_STATE.ids[0] as string;
-    const action = new ActionDeleteOneTransaction({ id });
+    const action = TransactionActions.deleteTransaction({ id });
     const state = transactionReducer(TEST_INITIAL_STATE, action);
     expect(state.entities[id]).toBe(undefined);
   });

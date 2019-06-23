@@ -1,7 +1,16 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Transaction, TransactionTypeIcons} from '@app/transactions/model/transaction.model';
-import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
-import {openCloseAnimation} from '@app/core/animations/transaction-card.animations';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
+import {
+  Transaction,
+  TransactionTypeIcons
+} from '@app/transactions/model/transaction.model';
+import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
+import { openCloseAnimation } from '@app/core/animations/transaction-card.animations';
 
 @Component({
   selector: 'zklk-transaction-card',
@@ -21,7 +30,7 @@ export class TransactionCardComponent {
   @Output() edit = new EventEmitter<string>();
   @Output() remove = new EventEmitter<string>();
 
-  constructor() { }
+  constructor() {}
 
   toggleSelect() {
     this.isSelected = !this.isSelected;
@@ -32,6 +41,6 @@ export class TransactionCardComponent {
   }
 
   emitRemoveClick() {
-    this.remove.emit(this.transaction.id)
+    this.remove.emit(this.transaction.id);
   }
 }

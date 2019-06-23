@@ -43,7 +43,9 @@ describe('SettingsEffects', () => {
       );
       const metadata = getEffectsMetadata(effect);
 
-      expect(metadata.setTranslateServiceLanguage).toEqual({ dispatch: false });
+      expect(metadata.setTranslateServiceLanguage$).toEqual({
+        dispatch: false
+      });
     });
   });
 
@@ -59,7 +61,7 @@ describe('SettingsEffects', () => {
       );
       const metadata = getEffectsMetadata(effect);
 
-      expect(metadata.setTitle).toEqual({ dispatch: false });
+      expect(metadata.setTitle$).toEqual({ dispatch: false });
     });
 
     it('should setTitle', function() {
@@ -77,7 +79,7 @@ describe('SettingsEffects', () => {
         titleService
       );
 
-      effect.setTitle.subscribe(() => {
+      effect.setTitle$.subscribe(() => {
         expect(titleService.setTitle).toHaveBeenCalled();
         expect(titleService.setTitle).toHaveBeenCalledWith(
           router.routerState.snapshot.root,

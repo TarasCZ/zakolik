@@ -1,34 +1,21 @@
-import {
-  ActionUpsertOneTransaction, ActionDeleteOneTransaction,
-  TransactionActionTypes,
-} from './transactions.actions';
+import * as TransactionActions from './transactions.actions';
 
 describe('Books Actions', () => {
   it('should upsert ActionUpsertOneTransaction action', () => {
-    const action = new ActionUpsertOneTransaction({
+    const transaction = {
       id: '1',
       name: 'test',
       value: 12000,
       description: '',
       type: 'OTHER',
       date: 123
-    });
-    expect(action.type).toEqual(TransactionActionTypes.UPSERT_ONE);
-    expect(action.transaction).toEqual(
-      jasmine.objectContaining({
-        id: '1',
-        name: 'test',
-        value: 12000,
-        description: '',
-        type: 'OTHER',
-        date: 123
-      })
-    );
+    };
+    const action = TransactionActions.upsertTransaction({ transaction });
+    expect(action.transaction).toEqual(transaction);
   });
 
   it('should upsert ActionDeleteOneTransaction action', () => {
-    const action = new ActionDeleteOneTransaction('1' );
-    expect(action.type).toEqual(TransactionActionTypes.DELETE_ONE);
+    const action = TransactionActions.deleteTransaction({ id: '1' });
     expect(action.id).toEqual('1');
   });
 });

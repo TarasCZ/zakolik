@@ -1,34 +1,19 @@
-import { Action } from '@ngrx/store';
-import {Transaction} from '@app/transactions/model/transaction.model';
+import { createAction, props } from '@ngrx/store';
+import { Transaction } from '@app/transactions/model/transaction.model';
 
-export enum TransactionActionTypes {
-  UPSERT_ONE = '[Transactions] Upsert One',
-  DELETE_ONE = '[Transactions] Delete One',
-  UPSERT_MANY = '[Transactions] Upsert Many',
-  LOAD_ALL = '[Transactions] Load All',
-}
+export const upsertTransaction = createAction(
+  '[Transactions] Upsert One',
+  props<{ transaction: Transaction }>()
+);
 
-export class ActionUpsertOneTransaction implements Action {
-  readonly type = TransactionActionTypes.UPSERT_ONE;
-  constructor(readonly transaction: Transaction) {}
-}
+export const deleteTransaction = createAction(
+  '[Transactions] Delete One',
+  props<{ id: string }>()
+);
 
-export class ActionDeleteOneTransaction implements Action {
-  readonly type = TransactionActionTypes.DELETE_ONE;
-  constructor(readonly id: string) {}
-}
+export const upsertManyTransactions = createAction(
+  '[Transactions] Upsert Many',
+  props<{ transactions: Array<Transaction> }>()
+);
 
-export class ActionUpsertManyTransactions implements Action {
-  readonly type = TransactionActionTypes.UPSERT_MANY;
-  constructor(readonly transactions: Array<Transaction>) {}
-}
-
-export class ActionLoadAllTransactions implements Action {
-  readonly type = TransactionActionTypes.LOAD_ALL;
-}
-
-export type TransactionActions =
-  ActionUpsertOneTransaction |
-  ActionDeleteOneTransaction |
-  ActionUpsertManyTransactions |
-  ActionLoadAllTransactions;
+export const loadAllTransactions = createAction('[Transactions] Load All');
