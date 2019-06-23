@@ -46,12 +46,12 @@
             <button *ngIf="(profile$ | async) as profileUrl"
                     mat-icon-button
                     [matMenuTriggerFor]="toolbarUserMenu">
-              <img class="profile-pic" [src]="profileUrl">
-            </button>
-            <button *ngIf="!(profile$ | async)"
-                    mat-icon-button
-                    [matMenuTriggerFor]="toolbarUserMenu">
-              <fa-icon icon="user-circle"></fa-icon>
+              <img [hidden]="!isProfilePicLoaded"
+                   class="profile-pic"
+                   [src]="profileUrl"
+                   (load)="isProfilePicLoaded = true">
+              <fa-icon *ngIf="!isProfilePicLoaded"
+                       icon="user-circle"></fa-icon>
             </button>
           </ng-container>
           <mat-menu #toolbarUserMenu="matMenu">

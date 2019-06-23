@@ -39,6 +39,7 @@ export class AppComponent implements OnInit {
   profile$: Observable<string>;
   theme$: Observable<string>;
 
+  isProfilePicLoaded = false;
   isProd = env.production;
   envName = env.envName;
   version = env.versions.app;
@@ -107,6 +108,7 @@ export class AppComponent implements OnInit {
     this.language$ = this.store.pipe(select(selectSettingsLanguage));
     this.profile$ = this.store.pipe(select(selectPicture));
     this.theme$ = this.store.pipe(select(selectTheme));
+    this.profile$.subscribe(console.log);
   }
 
   onLogoutClick() {
