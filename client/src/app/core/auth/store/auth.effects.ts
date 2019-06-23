@@ -6,6 +6,7 @@ import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import * as AuthActions from './auth.actions';
 import { of } from 'rxjs';
 import { AuthService } from '@app/core/auth/auth.service';
+import { hideSpinner } from '@app/core/ui/ui.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -80,24 +81,19 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.checkLogin),
       exhaustMap(({ redirectUrl }) => {
-        if (this.authService.authenticated) {
-          // return of(new ActionAuthLoginSuccess(payload));
-          return this.authService.checkSession$({}).pipe(
-            map((authResult: any) => {
-              if (authResult && authResult.idToken) {
-                this.authService.setAuth(authResult.idToken);
-                return AuthActions.loginSuccess({ redirectUrl });
-              } else {
-                return AuthActions.loginFailure('Missing Access Token');
-              }
-            }),
-            catchError(error => {
-              return of(AuthActions.loginFailure({ error }));
-            })
-          );
-        } else {
-          return of({ type: 'a' });
-        }
+        return this.authService.checkSession$({}).pipe(
+          map((authResult: any) => {
+            if (authResult && authResult.idToken) {
+              this.authService.setAuth(authResult.idToken);
+              return AuthActions.loginSuccess({ redirectUrl });
+            } else {
+              return AuthActions.loginFailure('Missing Access Token');
+            }
+          }),
+          catchError(error => {
+            return of(AuthActions.loginFailure({ error }));
+          })
+        );
       })
     )
   );

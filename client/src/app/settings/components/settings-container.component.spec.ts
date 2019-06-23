@@ -1,6 +1,6 @@
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TestingModule } from '@testing/utils.spec';
 
@@ -19,7 +19,7 @@ describe('SettingsComponent', () => {
   const getSelectOptions = () =>
     fixture.debugElement.queryAll(By.css('mat-option'));
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TestingModule],
       declarations: [SettingsContainerComponent]
@@ -40,7 +40,7 @@ describe('SettingsComponent', () => {
     fixture = TestBed.createComponent(SettingsContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  }));
+  });
 
   it('should dispatch change language action on language selection', () => {
     dispatchSpy = spyOn(store, 'dispatch');

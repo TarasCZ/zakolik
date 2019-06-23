@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
@@ -8,8 +8,8 @@ import {
   changeAnimationsElements,
   changeAnimationsPage,
   changeLanguage,
-  changeTheme,
-  changeStickyHeader
+  changeStickyHeader,
+  changeTheme
 } from '../store/settings.actions';
 import { SettingsState, State } from '../store/settings.model';
 import { selectSettings } from '../store/settings.selectors';

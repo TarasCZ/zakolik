@@ -2,7 +2,7 @@ import { ActivationEnd, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { select, Store } from '@ngrx/store';
-import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { TranslateService } from '@ngx-translate/core';
 import { merge, of } from 'rxjs';
 import {
@@ -27,6 +27,7 @@ import * as SettingsActions from './settings.actions';
 import { selectSettingsState, selectTheme } from './settings.selectors';
 import { SettingsState, State } from '@app/settings';
 import { SettingsDataService } from '@app/settings/services/settings-data.service';
+import { hideSpinner } from '@app/core/ui/ui.actions';
 
 export const SETTINGS_KEY = 'SETTINGS';
 
@@ -45,6 +46,13 @@ export class SettingsEffects {
           map((settings: SettingsState) => SettingsActions.loadAll(settings))
         )
       )
+    )
+  );
+
+  settingsLoaded$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(SettingsActions.loadAll),
+      map(() => hideSpinner())
     )
   );
 

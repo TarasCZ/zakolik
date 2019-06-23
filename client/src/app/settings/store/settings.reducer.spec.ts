@@ -5,8 +5,8 @@ import {
   changeAnimationsPage,
   changeAnimationsPageDisabled,
   changeLanguage,
-  changeTheme,
-  changeStickyHeader
+  changeStickyHeader,
+  changeTheme
 } from './settings.actions';
 
 describe('SettingsReducer', () => {

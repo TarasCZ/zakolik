@@ -1,6 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  AfterViewChecked,
+  AfterViewInit
+} from '@angular/core';
 import { AppState, login } from '@app/core';
 import { Store } from '@ngrx/store';
+import { showSpinner } from '@app/core/ui/ui.actions';
 
 @Component({
   selector: 'zklk-login',
@@ -11,7 +18,8 @@ import { Store } from '@ngrx/store';
 export class LoginComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    setTimeout(() => this.store.dispatch(showSpinner()));
     this.store.dispatch(login());
   }
 }

@@ -37,4 +37,3 @@ export class TransactionEntity implements Transaction {
     @ManyToOne(type => UserEntity, user => user.transactions, { eager: false })
     user: User;
 }
-

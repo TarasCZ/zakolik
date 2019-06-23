@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
 export class CallbackComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.store.dispatch(loginComplete());
   }
 }

@@ -4,6 +4,7 @@ import { select, Store } from '@ngrx/store';
 
 import {
   AppState,
+  AuthService,
   checkLogin,
   LocalStorageService,
   logout,
@@ -21,6 +22,8 @@ import {
   selectTheme
 } from './settings';
 import { Observable } from 'rxjs';
+import { selectIsLoading } from '@app/core/ui/ui.selectors';
+import { showSpinner } from '@app/core/ui/ui.actions';
 
 @Component({
   selector: 'zklk-root',
@@ -31,6 +34,7 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
   stickyHeader$: Observable<boolean>;
+  isLoading$: Observable<boolean>;
   language$: Observable<string>;
   profile$: Observable<string>;
   theme$: Observable<string>;
@@ -79,7 +83,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private authService: AuthService
   ) {}
 
   private static isIEorEdgeOrSafari() {
@@ -89,24 +94,35 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.localStorageService.testLocalStorage();
 
+    this.checkLoginIfAuthenticated();
+
     const pageAnimationsDisabled = AppComponent.isIEorEdgeOrSafari();
     this.store.dispatch(
       changeAnimationsPageDisabled({ pageAnimationsDisabled })
     );
 
-    this.store.dispatch(checkLogin({ redirectUrl: window.location.pathname }));
     this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
     this.stickyHeader$ = this.store.pipe(select(selectSettingsStickyHeader));
+    this.isLoading$ = this.store.pipe(select(selectIsLoading));
     this.language$ = this.store.pipe(select(selectSettingsLanguage));
     this.profile$ = this.store.pipe(select(selectPicture));
     this.theme$ = this.store.pipe(select(selectTheme));
   }
 
   onLogoutClick() {
+    this.store.dispatch(showSpinner());
     this.store.dispatch(logout());
   }
 
   onLanguageSelect({ value: language }) {
     this.store.dispatch(changeLanguage({ language }));
+  }
+
+  private checkLoginIfAuthenticated() {
+    if (this.authService.authenticated) {
+      this.store.dispatch(
+        checkLogin({ redirectUrl: window.location.pathname })
+      );
+    }
   }
 }
