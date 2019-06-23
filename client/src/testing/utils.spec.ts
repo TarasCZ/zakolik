@@ -35,10 +35,7 @@ export class TestingModule {
   constructor() {}
 }
 
-export const createSpyObj = (
-  baseName: string,
-  methodNames: string[]
-): { [key: string]: Mock<any> } => {
+export const createSpyObj = (baseName: string, methodNames: string[]) => {
   const obj: any = {};
 
   for (let i = 0; i < methodNames.length; i++) {
@@ -47,3 +44,22 @@ export const createSpyObj = (
 
   return obj;
 };
+
+export function expectEffectFactory(metadata) {
+  return (effect: string) => {
+    return {
+      toBeAbleToDispatchAction: () =>
+        expect(metadata[effect]).toEqual({
+          dispatch: true,
+          resubscribeOnError: true
+        }),
+      not: {
+        toBeAbleToDispatchAction: () =>
+          expect(metadata[effect]).toEqual({
+            dispatch: false,
+            resubscribeOnError: true
+          })
+      }
+    };
+  };
+}

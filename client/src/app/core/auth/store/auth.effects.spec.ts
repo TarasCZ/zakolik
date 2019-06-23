@@ -4,7 +4,7 @@ import * as AuthActions from './auth.actions';
 
 import { AuthEffects } from './auth.effects';
 import { TestBed } from '@angular/core/testing';
-import { createSpyObj } from '@testing/utils.spec';
+import { createSpyObj, expectEffectFactory } from '@testing/utils.spec';
 import { of, ReplaySubject, throwError } from 'rxjs';
 import { Actions, getEffectsMetadata } from '@ngrx/effects';
 import { AuthService } from '@app/core';
@@ -24,6 +24,7 @@ describe('AuthEffects', () => {
   let authService;
   let authEffects;
   let metadata;
+  let expectEffect;
 
   beforeEach(() => {
     actions$ = new ReplaySubject(1);
@@ -41,6 +42,7 @@ describe('AuthEffects', () => {
     authService = TestBed.get<AuthService>(AuthService);
     authEffects = TestBed.get<AuthEffects>(AuthEffects);
     metadata = getEffectsMetadata(authEffects);
+    expectEffect = expectEffectFactory(metadata);
   });
 
   it('should be created', () => {
@@ -48,10 +50,8 @@ describe('AuthEffects', () => {
   });
 
   describe('login', () => {
-    it(
-      'should not be able to dispatch any action',
-      expectEffect('login$').not.toBeAbleToDispatchAction
-    );
+    it('should not be able to dispatch any action', () =>
+      expectEffect('login$').not.toBeAbleToDispatchAction());
 
     it('should call login on AuthService', done => {
       actions$.next(AuthActions.login());
@@ -64,10 +64,8 @@ describe('AuthEffects', () => {
   });
 
   describe('loginComplete', () => {
-    it(
-      'should be able to dispatch any action',
-      expectEffect('loginComplete$').toBeAbleToDispatchAction
-    );
+    it('should be able to dispatch any action', () =>
+      expectEffect('loginComplete$').toBeAbleToDispatchAction());
 
     it('should dispatch LoginSuccess Action', done => {
       authService.parseHash$.mockReturnValue(of({ idToken: 'idToken' }));
@@ -109,10 +107,8 @@ describe('AuthEffects', () => {
   });
 
   describe('loginRedirect', () => {
-    it(
-      'should not be able to dispatch any action',
-      expectEffect('loginRedirect$').not.toBeAbleToDispatchAction
-    );
+    it('should not be able to dispatch any action', () =>
+      expectEffect('loginRedirect$').not.toBeAbleToDispatchAction());
 
     it('should call login on AuthService', done => {
       const redirectUrl = 'redirectUrl';
@@ -126,10 +122,8 @@ describe('AuthEffects', () => {
   });
 
   describe('loginErrorRedirect', () => {
-    it(
-      'should not be able to dispatch any action',
-      expectEffect('loginErrorRedirect$').not.toBeAbleToDispatchAction
-    );
+    it('should not be able to dispatch any action', () =>
+      expectEffect('loginErrorRedirect$').not.toBeAbleToDispatchAction());
 
     it('should navigate to root', done => {
       const redirectUrl = '';
@@ -143,10 +137,8 @@ describe('AuthEffects', () => {
   });
 
   describe('logout', () => {
-    it(
-      'should not be able to dispatch any action',
-      expectEffect('logout$').not.toBeAbleToDispatchAction
-    );
+    it('should not be able to dispatch any action', () =>
+      expectEffect('logout$').not.toBeAbleToDispatchAction());
 
     it('should call setItem on LocalStorageService and navigate to about', done => {
       actions$.next(AuthActions.logout());
@@ -163,10 +155,8 @@ describe('AuthEffects', () => {
 
     beforeEach(() => (authService.authenticated = true));
 
-    it(
-      'should be able to dispatch any action',
-      expectEffect('checkLogin$').toBeAbleToDispatchAction
-    );
+    it('should be able to dispatch any action', () =>
+      expectEffect('checkLogin$').toBeAbleToDispatchAction());
 
     it('should dispatch LoginSuccess Action with redirectUrl', done => {
       authService.checkSession$.mockReturnValue(of({ idToken: 'idToken' }));
@@ -218,21 +208,4 @@ describe('AuthEffects', () => {
       });
     });
   });
-
-  function expectEffect(effect: string) {
-    return {
-      toBeAbleToDispatchAction: () =>
-        expect(metadata[effect]).toEqual({
-          dispatch: true,
-          resubscribeOnError: true
-        }),
-      not: {
-        toBeAbleToDispatchAction: () =>
-          expect(metadata[effect]).toEqual({
-            dispatch: false,
-            resubscribeOnError: true
-          })
-      }
-    };
-  }
 });

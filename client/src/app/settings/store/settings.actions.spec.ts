@@ -8,7 +8,7 @@ import {
 } from './settings.actions';
 
 describe('Settings Actions', () => {
-  it('should upsert changeTheme action', () => {
+  it('should create changeTheme action', () => {
     const action = changeTheme({
       theme: 'DARK_THEME'
     });
@@ -16,7 +16,7 @@ describe('Settings Actions', () => {
     expect(action.theme).toEqual('DARK_THEME');
   });
 
-  it('should upsert changeAnimationsElements action', () => {
+  it('should create changeAnimationsElements action', () => {
     const action = changeAnimationsElements({
       elementsAnimations: true
     });
@@ -24,7 +24,7 @@ describe('Settings Actions', () => {
     expect(action.elementsAnimations).toEqual(true);
   });
 
-  it('should upsert changeAnimationsPage action', () => {
+  it('should create changeAnimationsPage action', () => {
     const action = changeAnimationsPage({
       pageAnimations: true
     });
@@ -32,7 +32,7 @@ describe('Settings Actions', () => {
     expect(action.pageAnimations).toEqual(true);
   });
 
-  it('should upsert changeAnimationsPageDisabled action', () => {
+  it('should create changeAnimationsPageDisabled action', () => {
     const action = changeAnimationsPageDisabled({
       pageAnimationsDisabled: true
     });
@@ -40,7 +40,7 @@ describe('Settings Actions', () => {
     expect(action.pageAnimationsDisabled).toEqual(true);
   });
 
-  it('should upsert changeLanguage action', () => {
+  it('should create changeLanguage action', () => {
     const action = changeLanguage({
       language: 'en'
     });
@@ -48,7 +48,7 @@ describe('Settings Actions', () => {
     expect(action.language).toEqual('en');
   });
 
-  it('should upsert changeStickyHeader action', () => {
+  it('should create changeStickyHeader action', () => {
     const action = changeStickyHeader({
       stickyHeader: true
     });

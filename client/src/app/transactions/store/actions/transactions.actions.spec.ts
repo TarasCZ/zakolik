@@ -1,6 +1,6 @@
 import * as TransactionActions from './transactions.actions';
 
-describe('Books Actions', () => {
+describe('Transaction Actions', () => {
   it('should upsert ActionUpsertOneTransaction action', () => {
     const transaction = {
       id: '1',

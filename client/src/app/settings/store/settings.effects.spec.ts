@@ -1,7 +1,7 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { TranslateService } from '@ngx-translate/core';
 import { Actions, getEffectsMetadata } from '@ngrx/effects';
-import { Store, StoreModule } from '@ngrx/store';
+import { Action, Store, StoreModule } from '@ngrx/store';
 import { of, ReplaySubject } from 'rxjs';
 
 import {
@@ -21,7 +21,7 @@ import {
   changeTheme,
   loadAll
 } from './settings.actions';
-import { createSpyObj } from '@testing/utils.spec';
+import { createSpyObj, expectEffectFactory } from '@testing/utils.spec';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { SettingsDataService } from '@app/settings/services/settings-data.service';
@@ -41,16 +41,19 @@ describe('SettingsEffects', () => {
   };
 
   let settingsEffects: SettingsEffects;
-  let settingsDataService;
-  let router: any;
-  let actions;
-  let localStorageService;
-  let overlayContainer;
-  let titleService;
-  let animationsService;
-  let translateService;
+  let actions: ReplaySubject<Action>;
   let store: MockStore<Partial<State>>;
+
+  let settingsDataService: any;
+  let router: any;
+  let localStorageService: any;
+  let overlayContainer: any;
+  let titleService: any;
+  let animationsService: any;
+  let translateService: any;
+
   let metadata;
+  let expectEffect;
 
   beforeEach(() => {
     actions = new ReplaySubject(2);
@@ -101,6 +104,7 @@ describe('SettingsEffects', () => {
     });
     settingsEffects = TestBed.get<SettingsEffects>(SettingsEffects);
     metadata = getEffectsMetadata(settingsEffects);
+    expectEffect = expectEffectFactory(metadata);
   });
 
   describe('loadSettings', () => {
@@ -348,21 +352,4 @@ describe('SettingsEffects', () => {
       });
     });
   });
-
-  function expectEffect(effect: string) {
-    return {
-      toBeAbleToDispatchAction: () =>
-        expect(metadata[effect]).toEqual({
-          dispatch: true,
-          resubscribeOnError: true
-        }),
-      not: {
-        toBeAbleToDispatchAction: () =>
-          expect(metadata[effect]).toEqual({
-            dispatch: false,
-            resubscribeOnError: true
-          })
-      }
-    };
-  }
 });
