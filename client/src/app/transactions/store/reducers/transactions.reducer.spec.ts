@@ -20,7 +20,7 @@ describe('TransactionReducer', () => {
     }
   };
 
-  it('should return the default state', () => {
+  it('should return the initial state', () => {
     const action = {} as any;
     const state = transactionReducer(undefined, action);
 
@@ -46,31 +46,25 @@ describe('TransactionReducer', () => {
 
   it('should update a transaction', () => {
     const id = TEST_INITIAL_STATE.ids[0] as string;
-    const action = TransactionActions.upsertTransaction({
-      transaction: {
-        id: id,
-        value: 12000,
-        name: 'updated',
-        type: 'updated',
-        description: 'updated',
-        date: 123
-      }
-    });
-
+    const transaction = {
+      id: id,
+      value: 12000,
+      name: 'updated',
+      type: 'updated',
+      description: 'updated',
+      date: 123
+    };
+    const action = TransactionActions.upsertTransaction({ transaction });
     const state = transactionReducer(TEST_INITIAL_STATE, action);
-    expect(state.entities[id]).toEqual(
-      jasmine.objectContaining({
-        name: 'updated',
-        type: 'updated',
-        description: 'updated'
-      })
-    );
+
+    expect(state.entities[id]).toEqual(transaction);
   });
 
   it('should remove a transaction', () => {
     const id = TEST_INITIAL_STATE.ids[0] as string;
     const action = TransactionActions.deleteTransaction({ id });
     const state = transactionReducer(TEST_INITIAL_STATE, action);
+
     expect(state.entities[id]).toBe(undefined);
   });
 });
