@@ -1,6 +1,11 @@
-import {Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  OnChanges
+} from '@angular/core';
 
-enum ColorLevel {
+export enum ColorLevel {
   Red = 'red',
   Redder = 'redder',
   Reddest = 'reddest',
@@ -15,8 +20,7 @@ enum ColorLevel {
   styleUrls: ['./transaction-amount.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TransactionAmountComponent implements OnInit {
-
+export class TransactionAmountComponent implements OnChanges {
   @Input()
   value: number;
 
@@ -25,29 +29,27 @@ export class TransactionAmountComponent implements OnInit {
 
   color: string;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-    this.color = this.getColorLevel()
+  ngOnChanges(): void {
+    this.color = this.getColorLevel();
   }
 
   private getColorLevel() {
-    const {value} = this;
+    const { value } = this;
 
-    if        (value < -5000) {
+    if (value < -5000) {
       return ColorLevel.Reddest;
     } else if (value < -1000) {
-      return ColorLevel.Redder
+      return ColorLevel.Redder;
     } else if (value < 0) {
-      return ColorLevel.Red
+      return ColorLevel.Red;
     } else if (value > 10000) {
-      return ColorLevel.Greenest
+      return ColorLevel.Greenest;
     } else if (value > 2000) {
-      return ColorLevel.Greener
+      return ColorLevel.Greener;
     } else if (value > 0) {
-      return ColorLevel.Green
+      return ColorLevel.Green;
     }
   }
-
 }

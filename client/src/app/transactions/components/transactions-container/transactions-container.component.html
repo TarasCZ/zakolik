@@ -20,7 +20,7 @@
           ></zklk-transaction-card>
       </div>
 
-      <p *ngIf="(transactions$ | async)?.length === 0">
+      <p *ngIf="(transactions$ | async)?.length === 0" data-testid="no-transaction-information">
         {{'zklk.transaction.empty' | translate}}
       </p>
     </div>

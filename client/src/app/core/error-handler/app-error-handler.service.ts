@@ -3,9 +3,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { NotificationService } from '../notifications/notification.service';
 
-/** Application-wide error handler that adds a UI notification to the error handling
- * provided by the default Angular ErrorHandler.
- */
 @Injectable()
 export class AppErrorHandler extends ErrorHandler {
   constructor(private notificationsService: NotificationService) {
@@ -20,6 +17,9 @@ export class AppErrorHandler extends ErrorHandler {
     } else {
       displayMessage += ' Please refresh the page.';
     }
+
+    console.log(error);
+    console.error(error); // errors won't show anymore
 
     this.notificationsService.error(displayMessage);
 

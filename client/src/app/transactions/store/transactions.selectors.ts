@@ -1,18 +1,17 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import {transactionAdapter} from './reducers/transactions.reducer';
-import {TransactionState} from '@app/transactions/model/transaction.model';
+import { transactionAdapter } from './reducers/transactions.reducer';
+import { TransactionState } from '@app/transactions/model/transaction.model';
 
-export const selectTransactionState = createFeatureSelector<TransactionState>('transaction');
+export const selectTransactionState = createFeatureSelector<TransactionState>(
+  'transaction'
+);
 
-export const {
-  selectIds,
+export const { selectEntities, selectAll } = transactionAdapter.getSelectors(
+  selectTransactionState
+);
+
+export const selectTransaction = createSelector(
   selectEntities,
-  selectAll,
-  selectTotal,
-} = transactionAdapter.getSelectors(selectTransactionState);
-
-export const selectTransaction = (id: string) => createSelector(
-  selectEntities,
-  entities => entities[id]
+  (entities, id) => entities[id]
 );

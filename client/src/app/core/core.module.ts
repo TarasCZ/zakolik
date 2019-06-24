@@ -51,7 +51,7 @@ import { WebAuth } from 'auth0-js';
     environment.production
       ? []
       : StoreDevtoolsModule.instrument({
-          name: 'Angular NgRx Material Starter'
+          name: 'Zakolik'
         }),
 
     // 3rd party

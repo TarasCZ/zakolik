@@ -148,9 +148,7 @@ library.add(
     MatDatepickerModule,
     MatNativeDateModule,
 
-    FontAwesomeModule,
-
-    StopClickPropagationDirective
+    FontAwesomeModule
   ]
 })
 export class SharedModule {}

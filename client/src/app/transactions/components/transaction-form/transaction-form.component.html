@@ -8,20 +8,20 @@
         <div class="row">
           <mat-form-field class="col" color="accent">
             <input matInput placeholder="{{ 'zklk.transaction.form.name.placeholder' | translate }}"
-                   formControlName="name" autofocus>
+                   formControlName="name" autofocus data-testid="name-control">
           </mat-form-field>
         </div>
 
         <div class="row">
           <mat-form-field class="col" color="accent">
             <input matInput placeholder="{{ 'zklk.transaction.form.value.placeholder' | translate }}"
-                   formControlName="value" type="number" lang="fr">
+                   formControlName="value" type="number" lang="fr" data-testid="value-control">
             <mat-error *ngIf="transactionFormGroup.get('value').hasError('required')"
-                       color="warn" data-testid="error-author-crud">
+                       color="warn" data-testid="error-value-missing">
               {{ 'zklk.transaction.form.value.error.missing' | translate }}
             </mat-error>
             <mat-error *ngIf="transactionFormGroup.get('value').hasError('zero')"
-                       color="warn" data-testid="error-author-crud">
+                       color="warn" data-testid="error-value-zero">
               {{ 'zklk.transaction.form.value.error.zero' | translate }}
             </mat-error>
           </mat-form-field>
@@ -29,14 +29,17 @@
 
         <div class="row">
           <mat-form-field class="col" color="accent">
-            <input matInput [matDatepicker]="datePicker" lang="fr" [max]="maxDate" formControlName="date" placeholder="{{ 'zklk.transaction.form.date.placeholder' | translate }}">
+            <input matInput [matDatepicker]="datePicker" lang="fr"
+                   [max]="maxDate" formControlName="date"
+                   placeholder="{{ 'zklk.transaction.form.date.placeholder' | translate }}"
+                   data-testid="date-control">
             <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
             <mat-datepicker #datePicker [touchUi]="isTouchDevice" [disabled]="false"></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field class="col" color="accent">
             <mat-label>{{ 'zklk.transaction.form.type.placeholder' | translate }}</mat-label>
-            <mat-select [formControl]="selectTypeFormControl">
+            <mat-select formControlName="type" data-testid="type-control">
               <mat-select-trigger>
                 <mat-icon><fa-icon [icon]="TransactionTypeIcons[selectTypeFormControl.value]?.icon"></fa-icon></mat-icon>
                 {{selectTypeFormControl.value | titlecase}}
@@ -52,17 +55,17 @@
         <div class="row">
           <mat-form-field class="col" color="accent">
             <textarea matInput placeholder="{{ 'zklk.transaction.form.description.placeholder' | translate }}"
-                      formControlName="description" rows="5"></textarea>
+                      formControlName="description" rows="5" data-testid="description-control"></textarea>
           </mat-form-field>
         </div>
 
         <div class="row">
           <div class="col-12 d-flex justify-content-between">
             <button (click)="save()" mat-raised-button color="primary" type="button" color="accent"
-                    [disabled]="transactionFormGroup.invalid">
+                    [disabled]="transactionFormGroup.invalid" data-testid="save-button">
               {{'zklk.transaction.form.save' | translate }}
             </button>
-            <button routerLink="/transactions" mat-raised-button type="button" color="warn">
+            <button routerLink="/transactions" mat-raised-button type="button" color="warn" data-testid="cancel-button">
               {{'zklk.transaction.form.cancel' | translate }}
             </button>
           </div>

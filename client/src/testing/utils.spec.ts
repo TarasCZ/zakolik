@@ -6,7 +6,6 @@ import { StoreModule } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HAMMER_LOADER } from '@angular/platform-browser';
 import { provideMockStore } from '@ngrx/store/testing';
-import Mock = jest.Mock;
 
 export function provideDummyHammerLoader() {
   return {

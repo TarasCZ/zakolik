@@ -7,19 +7,21 @@ import {
 import { select, Store } from '@ngrx/store';
 import {
   Transaction,
+  TransactionState,
   TransactionTypes
 } from '@app/transactions/model/transaction.model';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { v4 as uuid } from 'uuid';
-import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
+import { AppState, ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 import { notZeroValidator } from '@app/shared/validators/not-zero.validator';
 import * as fromTransactions from '@app/transactions/store/transactions.selectors';
-import { first } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 import browser from 'browser-detect';
 import { isDefined } from '@app/shared/utils/helper-functions';
 import { TransactionTypeIcons } from '@app/transactions/model/transaction.model';
 import { upsertTransaction } from '@app/transactions/store/actions/transactions.actions';
+import { selectRouterParam } from '@app/core/router/router.selectors';
 
 @Component({
   selector: 'zklk-transaction-edit',
@@ -48,18 +50,21 @@ export class TransactionFormComponent implements OnInit {
   id: string;
 
   constructor(
-    public store: Store<Transaction>,
+    public store: Store<AppState>,
     public fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.id = this.route.params['value'].id;
+    this.store
+      .pipe(select(selectRouterParam, 'id'))
+      .subscribe(id => (this.id = id));
+
     this.isTouchDevice = browser().mobile;
 
     this.store
-      .pipe(select(fromTransactions.selectTransaction(this.id)))
+      .pipe(select(fromTransactions.selectTransaction, this.id))
       .pipe(first(isDefined))
       .subscribe(transaction => {
         this.transactionFormGroup.patchValue({
