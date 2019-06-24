@@ -18,8 +18,7 @@ export class AppErrorHandler extends ErrorHandler {
       displayMessage += ' Please refresh the page.';
     }
 
-    console.log(error);
-    console.error(error); // errors won't show anymore
+    console.log(error); // errors won't show anymore
 
     this.notificationsService.error(displayMessage);
 

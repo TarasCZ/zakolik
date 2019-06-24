@@ -31,7 +31,9 @@ export class AuthEffects {
               this.authService.setAuth(authResult.idToken);
               return AuthActions.loginSuccess({ redirectUrl: '' });
             } else {
-              return AuthActions.loginFailure('Missing Access Token');
+              return AuthActions.loginFailure({
+                error: 'Missing Access Token'
+              });
             }
           }),
           catchError(error => of(AuthActions.loginFailure({ error })))
@@ -53,14 +55,15 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActions.loginFailure),
-        tap((err: any) => {
-          if (err.error_description) {
-            // ToDo: Error handling
-            console.error(`Error: ${err.error_description}`);
+        exhaustMap(({ error }) => {
+          this.router.navigate(['']);
+          if (typeof error === 'string') {
+            return of(new Error(error));
+          } else if (error.error_description) {
+            return of(new Error(error.error_description));
           } else {
-            console.error(`Error: ${JSON.stringify(err)}`);
+            return of(new Error(JSON.stringify(error)));
           }
-          return this.router.navigate(['']);
         })
       ),
     { dispatch: false }
@@ -87,7 +90,9 @@ export class AuthEffects {
               this.authService.setAuth(authResult.idToken);
               return AuthActions.loginSuccess({ redirectUrl });
             } else {
-              return AuthActions.loginFailure('Missing Access Token');
+              return AuthActions.loginFailure({
+                error: 'Missing Access Token'
+              });
             }
           }),
           catchError(error => {

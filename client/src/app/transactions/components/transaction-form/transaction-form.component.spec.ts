@@ -44,10 +44,7 @@ describe('TransactionFormComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule
       ],
-      declarations: [
-        TransactionFormComponent,
-        MockPipe(TranslatePipe, val => `translated ${val}`)
-      ],
+      declarations: [TransactionFormComponent, MockPipe(TranslatePipe)],
       providers: [provideFrLocale(), provideMockStore()],
       schemas: [NO_ERRORS_SCHEMA]
     });

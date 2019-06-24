@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
   envName = env.envName;
   version = env.versions.app;
   year = new Date().getFullYear();
-  logo = require('../assets/logo.png');
+  logo = '../assets/logo.png';
   languages = ['en', 'cz', 'sk'];
   navigation = [
     {

@@ -1,26 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CallbackComponent } from './callback.component';
-import { TestingModule } from '@testing/utils.spec';
+import { loginComplete } from '@app/core';
+import { Store } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('CallbackComponent', () => {
   let component: CallbackComponent;
   let fixture: ComponentFixture<CallbackComponent>;
+  let store: MockStore<any>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TestingModule],
-      declarations: [CallbackComponent]
+      declarations: [CallbackComponent],
+      providers: [provideMockStore()]
     });
-  });
 
-  beforeEach(() => {
+    store = TestBed.get(Store);
+    spyOn(store, 'dispatch');
+
     fixture = TestBed.createComponent(CallbackComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should upsert', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should dispatch loginComplete action', () => {
+    expect(store.dispatch).toHaveBeenCalledWith(loginComplete());
   });
 });

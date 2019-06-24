@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import * as uiActions from './ui.actions';
 import { UiState } from '@app/core/ui/ui.state';
 
-const initialState: UiState = {
+export const initialState: UiState = {
   isLoading: true
 };
 

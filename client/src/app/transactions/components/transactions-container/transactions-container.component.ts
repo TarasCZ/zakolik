@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 
-import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
+import { AppState, ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 
 import { Transaction } from '../../model/transaction.model';
 import { selectAll } from '@app/transactions/store/transactions.selectors';
@@ -23,7 +23,7 @@ export class TransactionsContainerComponent {
 
   transactions$: Observable<Transaction[]> = this.store.pipe(select(selectAll));
 
-  constructor(private store: Store<Transaction>, private router: Router) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   addNewTransaction() {
     this.router.navigate(['transactions/new']);

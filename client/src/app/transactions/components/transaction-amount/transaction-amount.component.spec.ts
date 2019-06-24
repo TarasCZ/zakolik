@@ -1,11 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TransactionAmountComponent } from './transaction-amount.component';
+import {
+  ColorLevel,
+  TransactionAmountComponent
+} from './transaction-amount.component';
 import { By } from '@angular/platform-browser';
 import { provideFrLocale } from '@app/app.module';
 
 describe('TransactionAmountComponent', () => {
-  const value = 123;
+  const defaultValue = 123;
   const currency = 'Kč';
   let component: TransactionAmountComponent;
   let fixture: ComponentFixture<TransactionAmountComponent>;
@@ -18,7 +21,7 @@ describe('TransactionAmountComponent', () => {
 
     fixture = TestBed.createComponent(TransactionAmountComponent);
     component = fixture.componentInstance;
-    component.value = value;
+    component.value = defaultValue;
     component.currency = currency;
     fixture.detectChanges();
     component.ngOnChanges();
@@ -31,11 +34,25 @@ describe('TransactionAmountComponent', () => {
   it('should display a value', () => {
     const valueElement = getTransactionValue();
 
-    expect(valueElement.nativeElement.innerHTML).toBe(`${value} ${currency}`);
+    expect(valueElement.nativeElement.innerHTML).toBe(
+      `${defaultValue} ${currency}`
+    );
   });
 
   it('should have green color', () => {
-    expect(component.color).toBe('green');
+    [
+      { value: -5001, expectedColor: ColorLevel.Reddest },
+      { value: -1001, expectedColor: ColorLevel.Redder },
+      { value: -1, expectedColor: ColorLevel.Red },
+      { value: 1, expectedColor: ColorLevel.Green },
+      { value: 2001, expectedColor: ColorLevel.Greener },
+      { value: 10001, expectedColor: ColorLevel.Greenest }
+    ].forEach(({ value, expectedColor }) => {
+      component.value = value;
+      component.ngOnChanges();
+
+      expect(component.color).toBe(expectedColor);
+    });
   });
 
   function getTransactionValue() {

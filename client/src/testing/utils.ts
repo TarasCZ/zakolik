@@ -34,7 +34,10 @@ export class TestingModule {
   constructor() {}
 }
 
-export const createSpyObj = (baseName: string, methodNames: string[]) => {
+export const createSpyObj = (
+  baseName: string,
+  methodNames: string[]
+) => jest => {
   const obj: any = {};
 
   for (let i = 0; i < methodNames.length; i++) {
@@ -44,7 +47,7 @@ export const createSpyObj = (baseName: string, methodNames: string[]) => {
   return obj;
 };
 
-export function expectEffectFactory(metadata) {
+export function expectEffectFactory(metadata, expect) {
   return (effect: string) => {
     return {
       toBeAbleToDispatchAction: () =>

@@ -58,7 +58,6 @@ import {
   faWallet,
   faWindowMaximize
 } from '@fortawesome/free-solid-svg-icons';
-import { StopClickPropagationDirective } from '@app/shared/directives/stop-click-propagation.directive';
 
 library.add(
   faBars,
@@ -119,7 +118,6 @@ library.add(
 
     FontAwesomeModule
   ],
-  declarations: [StopClickPropagationDirective],
   exports: [
     CommonModule,
     FormsModule,

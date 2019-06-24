@@ -13,9 +13,9 @@ describe('Auth Actions', () => {
   });
 
   it('should create loginFailure action', () => {
-    const action = AuthActions.loginFailure(error);
+    const action = AuthActions.loginFailure({ error });
     expect(action).toEqual({
-      ...error,
+      ...{ error },
       type: action.type
     });
   });

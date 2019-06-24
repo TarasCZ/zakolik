@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TransactionCardComponent } from './transaction-card.component';
-import { TestingModule } from '@testing/utils.spec';
+import { TestingModule } from '@testing/utils';
 import { TransactionAmountComponent } from '@app/transactions/components/transaction-amount/transaction-amount.component';
 import { MockComponent } from 'ng-mocks';
 import { createTransaction } from '@testing/transaction.factory';

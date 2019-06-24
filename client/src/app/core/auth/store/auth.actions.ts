@@ -9,7 +9,10 @@ export const loginSuccess = createAction(
   ({ redirectUrl }): { redirectUrl: string } => ({ redirectUrl })
 );
 
-export const loginFailure = createAction('[Auth] Login Failure', props());
+export const loginFailure = createAction(
+  '[Auth] Login Failure',
+  props<{ error }>()
+);
 
 export const logout = createAction('[Auth] Logout');
 

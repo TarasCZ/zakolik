@@ -21,12 +21,13 @@ import {
   changeTheme,
   loadAll
 } from './settings.actions';
-import { createSpyObj, expectEffectFactory } from '@testing/utils.spec';
+import { createSpyObj, expectEffectFactory } from '@testing/utils';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { SettingsDataService } from '@app/settings/services/settings-data.service';
 import { first } from 'rxjs/operators';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { hideSpinner } from '@app/core/ui/ui.actions';
 
 describe('SettingsEffects', () => {
   const isNotInitTrigger = val => val[0].type !== 'zklk-init-effect-trigger';
@@ -68,16 +69,18 @@ describe('SettingsEffects', () => {
     settingsDataService = createSpyObj('SettingsDataService', [
       'getAllSettings',
       'updateAllSettings'
-    ]);
-    localStorageService = createSpyObj('LocalStorageService', ['setItem']);
+    ])(jest);
+    localStorageService = createSpyObj('LocalStorageService', ['setItem'])(
+      jest
+    );
     overlayContainer = createSpyObj('OverlayContainer', [
       'getContainerElement'
-    ]);
-    titleService = createSpyObj('TitleService', ['setTitle']);
+    ])(jest);
+    titleService = createSpyObj('TitleService', ['setTitle'])(jest);
     animationsService = createSpyObj('AnimationsService', [
       'updateRouteAnimationType'
-    ]);
-    translateService = createSpyObj('TranslateService', ['use']);
+    ])(jest);
+    translateService = createSpyObj('TranslateService', ['use'])(jest);
 
     TestBed.configureTestingModule({
       imports: [StoreModule.forRoot({})],
@@ -104,7 +107,7 @@ describe('SettingsEffects', () => {
     });
     settingsEffects = TestBed.get<SettingsEffects>(SettingsEffects);
     metadata = getEffectsMetadata(settingsEffects);
-    expectEffect = expectEffectFactory(metadata);
+    expectEffect = expectEffectFactory(metadata, expect);
   });
 
   describe('loadSettings', () => {
@@ -113,10 +116,8 @@ describe('SettingsEffects', () => {
       actions.next(loginSuccess({ redirectUrl: '' }));
     });
 
-    it(
-      'should be able to dispatch any action',
-      expectEffect('loadSettings$').toBeAbleToDispatchAction
-    );
+    it('should be able to dispatch any action', () =>
+      expectEffect('loadSettings$').toBeAbleToDispatchAction());
 
     it('should setItem on localStorageService', done => {
       settingsEffects.loadSettings$.subscribe(() => {
@@ -136,6 +137,20 @@ describe('SettingsEffects', () => {
     });
   });
 
+  describe('settingsLoaded', () => {
+    it('should be able to dispatch any action', () =>
+      expectEffect('settingsLoaded$').toBeAbleToDispatchAction());
+
+    it('should dispatch hideSpinner action', done => {
+      actions.next(loadAll({} as SettingsState));
+
+      settingsEffects.settingsLoaded$.subscribe(action => {
+        expect(action).toEqual(hideSpinner());
+        done();
+      });
+    });
+  });
+
   describe('persistSettings', () => {
     const possibleChangeActions = [
       changeAnimationsElements({ elementsAnimations: true }),
@@ -149,10 +164,8 @@ describe('SettingsEffects', () => {
       settingsDataService.updateAllSettings.mockReturnValue(of({}))
     );
 
-    it(
-      'should not dispatch any action',
-      expectEffect('persistSettings$').not.toBeAbleToDispatchAction
-    );
+    it('should not be able to dispatch any action', () =>
+      expectEffect('persistSettings$').not.toBeAbleToDispatchAction());
 
     describe('for every possible action when not authenticated', () => {
       possibleChangeActions.forEach(action => {
@@ -219,10 +232,8 @@ describe('SettingsEffects', () => {
   });
 
   describe('updateRouteAnimationType', () => {
-    it(
-      'should not dispatch any action',
-      expectEffect('updateRouteAnimationType$').not.toBeAbleToDispatchAction
-    );
+    it('should not be able to dispatch any action', () =>
+      expectEffect('updateRouteAnimationType$').not.toBeAbleToDispatchAction());
 
     describe('when effect is initialized', () => {
       it('should pass state to updateRouteAnimationType on animationsService', done => {
@@ -295,10 +306,8 @@ describe('SettingsEffects', () => {
       actions.next(changeTheme(actionPayload));
     });
 
-    it(
-      'should not dispatch any action',
-      expectEffect('updateTheme$').not.toBeAbleToDispatchAction
-    );
+    it('should not be able to dispatch any action', () =>
+      expectEffect('updateTheme$').not.toBeAbleToDispatchAction());
 
     describe('when effect is initialized', () => {
       it('should only remove theme from classList', done => {
@@ -340,10 +349,10 @@ describe('SettingsEffects', () => {
   });
 
   describe('setTranslateServiceLanguage', () => {
-    it(
-      'should not dispatch any action',
-      expectEffect('setTranslateServiceLanguage$').not.toBeAbleToDispatchAction
-    );
+    it('should not be able to dispatch any action', () =>
+      expectEffect(
+        'setTranslateServiceLanguage$'
+      ).not.toBeAbleToDispatchAction());
 
     it('should use language on translateService from the store', done => {
       settingsEffects.setTranslateServiceLanguage$.subscribe(() => {

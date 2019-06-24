@@ -4,20 +4,20 @@ import * as AuthActions from './auth.actions';
 
 import { AuthEffects } from './auth.effects';
 import { TestBed } from '@angular/core/testing';
-import { createSpyObj, expectEffectFactory } from '@testing/utils.spec';
+import { createSpyObj, expectEffectFactory } from '@testing/utils';
 import { of, ReplaySubject, throwError } from 'rxjs';
 import { Actions, getEffectsMetadata } from '@ngrx/effects';
 import { AuthService } from '@app/core';
 
 describe('AuthEffects', () => {
-  const routerMock = createSpyObj('Router', ['navigate']);
+  const routerMock = createSpyObj('Router', ['navigate'])(jest);
   const authServiceMock = createSpyObj('AuthService', [
     'login',
     'logout',
     'setAuth',
     'checkSession$',
     'parseHash$'
-  ]);
+  ])(jest);
 
   let actions$;
   let router;
@@ -42,7 +42,7 @@ describe('AuthEffects', () => {
     authService = TestBed.get<AuthService>(AuthService);
     authEffects = TestBed.get<AuthEffects>(AuthEffects);
     metadata = getEffectsMetadata(authEffects);
-    expectEffect = expectEffectFactory(metadata);
+    expectEffect = expectEffectFactory(metadata, expect);
   });
 
   it('should be created', () => {
@@ -85,7 +85,7 @@ describe('AuthEffects', () => {
 
       authEffects.loginComplete$.subscribe(action => {
         expect(action).toEqual(
-          AuthActions.loginFailure('Missing Access Token')
+          AuthActions.loginFailure({ error: 'Missing Access Token' })
         );
         done();
       });
@@ -127,10 +127,40 @@ describe('AuthEffects', () => {
 
     it('should navigate to root', done => {
       const redirectUrl = '';
-      actions$.next(AuthActions.loginFailure('testing error'));
+      actions$.next(AuthActions.loginFailure({ error: 'testing error' }));
 
       authEffects.loginErrorRedirect$.subscribe(() => {
         expect(router.navigate).toHaveBeenCalledWith([redirectUrl]);
+        done();
+      });
+    });
+
+    it('should return new Error if error is string', done => {
+      const expectedError = { error: 'testing error' };
+      actions$.next(AuthActions.loginFailure(expectedError));
+
+      authEffects.loginErrorRedirect$.subscribe(error => {
+        expect(error).toEqual(new Error(expectedError.error));
+        done();
+      });
+    });
+
+    it('should return new Error with description when error has error_description', done => {
+      const expectedError = { error: { error_description: 'testing error' } };
+      actions$.next(AuthActions.loginFailure(expectedError));
+
+      authEffects.loginErrorRedirect$.subscribe(error => {
+        expect(error).toEqual(new Error(expectedError.error.error_description));
+        done();
+      });
+    });
+
+    it('should return new Error with stringified error when error is object', done => {
+      const expectedError = { error: { otherParam: 'testing error' } };
+      actions$.next(AuthActions.loginFailure(expectedError));
+
+      authEffects.loginErrorRedirect$.subscribe(error => {
+        expect(error).toEqual(new Error(JSON.stringify(expectedError.error)));
         done();
       });
     });
@@ -188,7 +218,7 @@ describe('AuthEffects', () => {
 
       authEffects.checkLogin$.subscribe(action => {
         expect(action).toEqual(
-          AuthActions.loginFailure('Missing Access Token')
+          AuthActions.loginFailure({ error: 'Missing Access Token' })
         );
         done();
       });

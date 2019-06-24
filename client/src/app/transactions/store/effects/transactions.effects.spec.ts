@@ -8,7 +8,7 @@ import { TitleService } from '@app/core';
 import { TransactionEffects } from './transactions.effects';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of, ReplaySubject } from 'rxjs';
-import { createSpyObj, expectEffectFactory } from '@testing/utils.spec';
+import { createSpyObj, expectEffectFactory } from '@testing/utils';
 import { TestBed } from '@angular/core/testing';
 import { TransactionDataService } from '@app/transactions/services/transaction-data.service';
 import * as TransactionActions from '@app/transactions/store/actions/transactions.actions';
@@ -48,13 +48,13 @@ describe('SettingsEffects', () => {
       events: routerEvents
     };
 
-    titleService = createSpyObj('TitleService', ['setTitle']);
-    translateService = createSpyObj('TranslateService', ['use']);
+    titleService = createSpyObj('TitleService', ['setTitle'])(jest);
+    translateService = createSpyObj('TranslateService', ['use'])(jest);
     transactionDataService = createSpyObj('TransactionDataService', [
       'getAllTransactions',
       'postTransaction',
       'deleteTransaction'
-    ]);
+    ])(jest);
 
     TestBed.configureTestingModule({
       providers: [
@@ -70,7 +70,7 @@ describe('SettingsEffects', () => {
 
     transactionEffects = TestBed.get(TransactionEffects);
     const metadata = getEffectsMetadata(transactionEffects);
-    expectEffect = expectEffectFactory(metadata);
+    expectEffect = expectEffectFactory(metadata, expect);
   });
 
   describe('loadAllTransactions', () => {

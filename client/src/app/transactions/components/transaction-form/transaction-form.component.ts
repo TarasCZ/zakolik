@@ -1,13 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import {
   Transaction,
-  TransactionState,
+  TransactionTypeIcons,
   TransactionTypes
 } from '@app/transactions/model/transaction.model';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -16,10 +11,9 @@ import { v4 as uuid } from 'uuid';
 import { AppState, ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 import { notZeroValidator } from '@app/shared/validators/not-zero.validator';
 import * as fromTransactions from '@app/transactions/store/transactions.selectors';
-import { first, tap } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import browser from 'browser-detect';
 import { isDefined } from '@app/shared/utils/helper-functions';
-import { TransactionTypeIcons } from '@app/transactions/model/transaction.model';
 import { upsertTransaction } from '@app/transactions/store/actions/transactions.actions';
 import { selectRouterParam } from '@app/core/router/router.selectors';
 
@@ -46,14 +40,12 @@ export class TransactionFormComponent implements OnInit {
     date: { value: new Date(), disabled: true }
   });
 
-  @Input()
   id: string;
 
   constructor(
     public store: Store<AppState>,
     public fb: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {}
 
   ngOnInit(): void {

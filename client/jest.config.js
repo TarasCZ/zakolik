@@ -9,5 +9,5 @@ module.exports = {
     '@testing/(.*)': '<rootDir>/src/testing/$1'
   },
   transformIgnorePatterns: ['node_modules/(?!(jest-test))'],
-  testMatch: ['**/*.spec.ts']
+  testMatch: ['<rootDir>/src/app/**/*.spec.ts']
 };

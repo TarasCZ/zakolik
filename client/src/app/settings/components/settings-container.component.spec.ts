@@ -2,7 +2,7 @@ import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestingModule } from '@testing/utils.spec';
+import { TestingModule } from '@testing/utils';
 
 import { SettingsContainerComponent } from './settings-container.component';
 import * as SettingsActions from '../store/settings.actions';
