@@ -1,4 +1,4 @@
-FROM node:11.1.0 as npm_builder
+FROM node:11.6.0 as npm_builder
 # Set the entrypoint as bin bash incase we want to inspect the container
 ENTRYPOINT ["/bin/bash"]
 # Manually copy the package.json
@@ -29,7 +29,7 @@ WORKDIR /usr/src/app
 RUN npm install compression@1.7.3
 RUN npm install express@4.16.4
 # Create 2 empty environment variables
-ENV CONTEXT=
-ENV PORT=
+ENV CONTEXT=""
+ENV PORT=""
 # Run the node server which should be used for production
 CMD ["node", "server.js"]

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import {
   Transaction,
@@ -6,16 +11,19 @@ import {
   TransactionTypes
 } from '@app/transactions/model/transaction.model';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { v4 as uuid } from 'uuid';
 import { AppState, ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 import { notZeroValidator } from '@app/shared/validators/not-zero.validator';
 import * as fromTransactions from '@app/transactions/store/transactions.selectors';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import browser from 'browser-detect';
 import { isDefined } from '@app/shared/utils/helper-functions';
 import { upsertTransaction } from '@app/transactions/store/actions/transactions.actions';
 import { selectRouterParam } from '@app/core/router/router.selectors';
+import { DateAdapter } from '@angular/material';
+import { selectSettingsLanguage } from '@app/settings';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'zklk-transaction-edit',
@@ -23,13 +31,16 @@ import { selectRouterParam } from '@app/core/router/router.selectors';
   styleUrls: ['./transaction-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TransactionFormComponent implements OnInit {
+export class TransactionFormComponent implements OnInit, OnDestroy {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
+  localeSubscription: Subscription;
+
   TransactionTypeIcons = TransactionTypeIcons;
+  types = Object.values(TransactionTypes);
 
   isTouchDevice: boolean;
   maxDate = new Date();
-  types = Object.values(TransactionTypes);
+
   selectTypeFormControl = this.fb.control('OTHER');
   transactionFormGroup = this.fb.group({
     id: uuid(),
@@ -43,9 +54,10 @@ export class TransactionFormComponent implements OnInit {
   id: string;
 
   constructor(
-    public store: Store<AppState>,
-    public fb: FormBuilder,
-    private router: Router
+    private store: Store<AppState>,
+    private fb: FormBuilder,
+    private router: Router,
+    private dateAdapter: DateAdapter<any>
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +76,17 @@ export class TransactionFormComponent implements OnInit {
           date: new Date(transaction.date)
         });
       });
+
+    this.localeSubscription = this.store
+      .pipe(
+        select(selectSettingsLanguage),
+        map(this.mapLanguageToLocale)
+      )
+      .subscribe(language => this.dateAdapter.setLocale(language));
+  }
+
+  ngOnDestroy(): void {
+    this.localeSubscription.unsubscribe();
   }
 
   save() {
@@ -74,6 +97,17 @@ export class TransactionFormComponent implements OnInit {
       };
       this.store.dispatch(upsertTransaction({ transaction }));
       this.router.navigate(['transactions']);
+    }
+  }
+
+  private mapLanguageToLocale(language: string): string {
+    switch (language) {
+      case 'en':
+        return 'en-UK';
+      case 'cz':
+        return 'cs';
+      default:
+        return language;
     }
   }
 }

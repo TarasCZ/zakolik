@@ -20,7 +20,7 @@ import { AuthEffects } from './auth/store/auth.effects';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AnimationsService } from './animations/animations.service';
 import { TitleService } from './title/title.service';
-import { metaReducers, reducers } from './core.state';
+import { metaReducers, ROOT_REDUCERS } from './core.state';
 import { AppErrorHandler } from './error-handler/app-error-handler.service';
 import { CustomSerializer } from './router/custom-serializer';
 import { NotificationService } from './notifications/notification.service';
@@ -35,7 +35,7 @@ import { WebAuth } from 'auth0-js';
     HttpClientModule,
 
     // ngrx
-    StoreModule.forRoot(reducers, {
+    StoreModule.forRoot(ROOT_REDUCERS, {
       metaReducers,
       runtimeChecks: {
         strictStateImmutability: true,

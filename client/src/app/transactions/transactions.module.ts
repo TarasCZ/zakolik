@@ -18,12 +18,13 @@ import { TransactionDataService } from '@app/transactions/services/transaction-d
 import { Transaction } from '@app/transactions/model/transaction.model';
 import { TransactionAmountComponent } from './components/transaction-amount/transaction-amount.component';
 import { loadAllTransactions } from '@app/transactions/store/actions/transactions.actions';
+import { TRANSACTIONS_REDUCER } from '@app/transactions/store/transaction.state';
 
 @NgModule({
   imports: [
     SharedModule,
     TransactionsRoutingModule,
-    StoreModule.forFeature('transaction', transactionReducer),
+    StoreModule.forFeature('transaction', TRANSACTIONS_REDUCER),
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

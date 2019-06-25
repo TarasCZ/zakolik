@@ -5,11 +5,12 @@ import { AppState, AuthService, LocalStorageService, logout } from '@app/core';
 
 import { AppComponent } from './app.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { provideFrLocale } from '@app/app.module';
+import { registerFrLocale } from '@app/app.module';
 import { MockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { changeAnimationsPageDisabled, changeLanguage } from '@app/settings';
 import { showSpinner } from '@app/core/ui/ui.actions';
+import { MAT_DATE_LOCALE } from '@angular/material';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -21,13 +22,14 @@ describe('AppComponent', () => {
   beforeEach(() => {
     browserName = 'chrome';
     require('browser-detect').default = () => ({ name: browserName });
+    registerFrLocale();
     authService = { authenticated: true };
     TestBed.configureTestingModule({
       imports: [TestingModule],
       declarations: [AppComponent],
       providers: [
         LocalStorageService,
-        provideFrLocale(),
+        { provide: MAT_DATE_LOCALE, useValue: 'fr' },
         { provide: AuthService, useValue: authService }
       ],
       schemas: [NO_ERRORS_SCHEMA]

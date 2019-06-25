@@ -1,8 +1,4 @@
-import {
-  ActionReducerMap,
-  MetaReducer,
-  createFeatureSelector
-} from '@ngrx/store';
+import { Action, ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 
 import { environment } from '@env/environment';
@@ -14,12 +10,17 @@ import { authReducer } from './auth/store/auth.reducer';
 import { RouterStateUrl } from './router/router.state';
 import { UiState } from '@app/core/ui/ui.state';
 import { uiReducer } from '@app/core/ui/ui.reducer';
+import { InjectionToken } from '@angular/core';
 
-export const reducers: ActionReducerMap<AppState> = {
-  auth: authReducer,
-  router: routerReducer,
-  ui: uiReducer
-};
+export const ROOT_REDUCERS = new InjectionToken<
+  ActionReducerMap<AppState, Action>
+>('Root reducers token', {
+  factory: () => ({
+    auth: authReducer,
+    router: routerReducer,
+    ui: uiReducer
+  })
+});
 
 export const metaReducers: MetaReducer<AppState>[] = [
   initStateFromLocalStorage
@@ -27,12 +28,6 @@ export const metaReducers: MetaReducer<AppState>[] = [
 if (!environment.test) {
   metaReducers.unshift(debug);
 }
-
-export const selectAuthState = createFeatureSelector<AppState, AuthState>(
-  'auth'
-);
-
-export const selectUiState = createFeatureSelector<AppState, UiState>('ui');
 
 export interface AppState {
   auth: AuthState;

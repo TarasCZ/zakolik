@@ -24,7 +24,11 @@ import {
 } from '@app/core';
 
 import * as SettingsActions from './settings.actions';
-import { selectSettingsState, selectTheme } from './settings.selectors';
+import {
+  selectSettingsLanguage,
+  selectSettingsState,
+  selectTheme
+} from './settings.selectors';
 import { SettingsState, State } from '@app/settings';
 import { SettingsDataService } from '@app/settings/services/settings-data.service';
 import { hideSpinner } from '@app/core/ui/ui.actions';
@@ -141,8 +145,7 @@ export class SettingsEffects {
   setTranslateServiceLanguage$ = createEffect(
     () =>
       this.store.pipe(
-        select(selectSettingsState),
-        map(settings => settings.language),
+        select(selectSettingsLanguage),
         distinctUntilChanged(),
         tap(language => this.translateService.use(language))
       ),

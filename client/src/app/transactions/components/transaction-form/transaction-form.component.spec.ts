@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TransactionFormComponent } from '@app/transactions/components';
-import { provideFrLocale } from '@app/app.module';
+import { registerFrLocale } from '@app/app.module';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import {
+  MAT_DATE_LOCALE,
   MatDatepickerModule,
   MatFormFieldModule,
   MatInputModule,
@@ -32,6 +33,7 @@ describe('TransactionFormComponent', () => {
   let router: Router;
 
   beforeEach(() => {
+    registerFrLocale();
     require('browser-detect').default = () => ({ mobile: false });
     TestBed.configureTestingModule({
       imports: [
@@ -45,7 +47,10 @@ describe('TransactionFormComponent', () => {
         RouterTestingModule
       ],
       declarations: [TransactionFormComponent, MockPipe(TranslatePipe)],
-      providers: [provideFrLocale(), provideMockStore()],
+      providers: [
+        provideMockStore(),
+        { provide: MAT_DATE_LOCALE, useValue: 'fr' }
+      ],
       schemas: [NO_ERRORS_SCHEMA]
     });
 

@@ -5,7 +5,8 @@ import {
   TransactionAmountComponent
 } from './transaction-amount.component';
 import { By } from '@angular/platform-browser';
-import { provideFrLocale } from '@app/app.module';
+import { registerFrLocale } from '@app/app.module';
+import { MAT_DATE_LOCALE } from '@angular/material';
 
 describe('TransactionAmountComponent', () => {
   const defaultValue = 123;
@@ -14,9 +15,10 @@ describe('TransactionAmountComponent', () => {
   let fixture: ComponentFixture<TransactionAmountComponent>;
 
   beforeEach(() => {
+    registerFrLocale();
     TestBed.configureTestingModule({
       declarations: [TransactionAmountComponent],
-      providers: [provideFrLocale()]
+      providers: [{ provide: MAT_DATE_LOCALE, useValue: 'fr' }]
     });
 
     fixture = TestBed.createComponent(TransactionAmountComponent);
