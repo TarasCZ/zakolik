@@ -2,13 +2,13 @@ version: '3.7'
 services:
   web:
     image: persistentcontainerregistry.azurecr.io/brothinjord.client
-    container_name: b_client
+    container_name: zakolik_client_prod
     build:
       context: .
       dockerfile: Production.Dockerfile
       target: production
     environment:
-      - CONTEXT=zakolik
+      - CONTEXT=
       - PORT=150
     ports:
-      - '100:150'
+      - '4200:150'

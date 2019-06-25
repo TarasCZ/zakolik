@@ -19,20 +19,20 @@ describe('Auth Service', () => {
   };
 
   let authService: AuthService;
-  let webAuth: WebAuth;
   let localStorageService: LocalStorageService;
 
   beforeEach(async () => {
+    require('auth0-js').WebAuth = function() {
+      return webAuthMock;
+    };
     await TestBed.configureTestingModule({
       providers: [
         AuthService,
-        { provide: WebAuth, useValue: webAuthMock },
         { provide: LocalStorageService, useValue: localStorageServiceMock }
       ]
     });
 
     authService = TestBed.get<AuthService>(AuthService);
-    webAuth = TestBed.get<WebAuth>(WebAuth);
     localStorageService = TestBed.get<LocalStorageService>(LocalStorageService);
   });
 
@@ -46,7 +46,7 @@ describe('Auth Service', () => {
 
   it('should call authenticate when login', () => {
     authService.login();
-    expect(webAuth.authorize).toHaveBeenCalledTimes(1);
+    expect(webAuthMock.authorize).toHaveBeenCalledTimes(1);
   });
 
   it('should parseHash', async () => {
@@ -63,7 +63,7 @@ describe('Auth Service', () => {
     beforeEach(() => authService.logout());
 
     it('should call logout method', () => {
-      expect(webAuth.logout).toHaveBeenCalledTimes(1);
+      expect(webAuthMock.logout).toHaveBeenCalledTimes(1);
     });
 
     it('should set localStorage isAuthenticated to false', () => {

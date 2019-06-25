@@ -26,7 +26,6 @@ import { CustomSerializer } from './router/custom-serializer';
 import { NotificationService } from './notifications/notification.service';
 import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effects';
 import { AuthService } from '@app/core/auth/auth.service';
-import { WebAuth } from 'auth0-js';
 
 @NgModule({
   imports: [
@@ -73,8 +72,7 @@ import { WebAuth } from 'auth0-js';
     httpInterceptorProviders,
     TitleService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
-    { provide: RouterStateSerializer, useClass: CustomSerializer },
-    { provide: WebAuth, useValue: new WebAuth(environment.auth0Config) }
+    { provide: RouterStateSerializer, useClass: CustomSerializer }
   ],
   exports: [TranslateModule]
 })

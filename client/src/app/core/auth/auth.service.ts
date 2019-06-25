@@ -6,13 +6,12 @@ import { environment } from '@env/environment';
 
 @Injectable()
 export class AuthService {
+  auth0 = new WebAuth(environment.auth0Config);
+
   parseHash$ = bindNodeCallback(this.auth0.parseHash.bind(this.auth0));
   checkSession$ = bindNodeCallback(this.auth0.checkSession.bind(this.auth0));
 
-  constructor(
-    private localStorageService: LocalStorageService,
-    private auth0: WebAuth
-  ) {}
+  constructor(private localStorageService: LocalStorageService) {}
 
   get authenticated(): boolean {
     return this.localStorageService.getItem('isAuthenticated');
