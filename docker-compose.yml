@@ -7,13 +7,12 @@ services:
     build:
       context: ./client/
       dockerfile: Dockerfile
+      target: development
     volumes:
       - './client:/usr/src/app'
       - '/usr/src/app/node_modules'
     ports:
       - '4200:4200'
-    links:
-      - server
     environment:
       - NODE_ENV=development
 
@@ -41,7 +40,5 @@ services:
       - ./data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
-    environment:
-      - POSTGRES_USER=zakolik
-      - POSTGRES_PASSWORD=development
-      - POSTGRES_DB=zakolik
+    env_file:
+      - server/development.env

@@ -1,12 +1,15 @@
 <div class="container">
   <div class="row" [ngClass]="routeAnimationsElements">
     <div class="col-md">
-      <h1>Welcome to Zakolik App!</h1>
-      <h2>Your personal financial tracker</h2>
       <br/>
-      <h2>Please <b>Sign In</b> to continue</h2>
+      <h1>{{'zklk.welcome.title' | translate}}</h1>
+      <h2>{{'zklk.welcome.description' | translate}}</h2>
       <br/>
-      <button mat-raised-button color="primary" type="button" routerLink="/login">Sign In</button>
+      <h2>{{'zklk.welcome.sign.message' | translate}}</h2>
+      <br/>
+      <button mat-flat-button class="sign-in-button" color="accent" type="button" routerLink="/login">
+        {{'zklk.menu.login' | translate}}
+      </button>
     </div>
   </div>
 </div>

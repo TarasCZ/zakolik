@@ -1,0 +1,14 @@
+{
+  "name": "zakolik",
+  "version": "1.0.0",
+  "description": "Zakolik App",
+  "scripts": {
+    "prod-up": "docker-compose -f Production.docker-compose.yml up -d" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TarasCZ/zakolik.git"
+  },
+  "author": "Jiri Tarasovic",
+  "license": "MIT"
+}

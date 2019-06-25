@@ -1,4 +1,7 @@
 {
+  "zklk.welcome.title": "Vitaj v aplikácii Zakolik!",
+  "zklk.welcome.description": "Tvoj osobný finančný pomocník",
+  "zklk.welcome.sign.message": "Pre pokračovanie sa prosím prihlas",
   "zklk.footer.changelog": "Zobraziť list zmien",
   "zklk.menu.dashboard": "Nástenka",
   "zklk.menu.transactions": "Transakcie",

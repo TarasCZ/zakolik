@@ -5,7 +5,23 @@ import * as helmet from 'helmet';
 import * as rateLimit from 'express-rate-limit';
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule, { cors: true });
+    const fs = require('fs');
+
+    let key;
+    let cert;
+    let ca;
+
+    try {
+        key = fs.readFileSync('/etc/letsencrypt/live/zakolik.eu/privkey.pem');
+        cert = fs.readFileSync('/etc/letsencrypt/live/zakolik.eu/fullchain.pem');
+    } catch (err) {
+        console.warn('Certificates not found, running server without https');
+    }
+
+    const nestOptions = { cors: true };
+    // if (key && cert) Object.defineProperty(nestOptions, 'httpsOptions', { value: { key, cert } });
+
+    const app = await NestFactory.create(AppModule, nestOptions);
     app.useGlobalPipes(new ValidationPipe());
     app.use(helmet());
     app.use(

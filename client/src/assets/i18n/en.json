@@ -1,4 +1,7 @@
 {
+  "zklk.welcome.title": "Welcome to Zakolik App!",
+  "zklk.welcome.description": "Your personal financial tracker",
+  "zklk.welcome.sign.message": "Please Sign In to continue",
   "zklk.footer.changelog": "Show changelog",
   "zklk.menu.dashboard": "Dashboard",
   "zklk.menu.transactions": "Transactions",

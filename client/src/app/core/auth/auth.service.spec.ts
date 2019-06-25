@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { WebAuth } from 'auth0-js';
 import { AuthService, LocalStorageService } from '@app/core';
 
 describe('Auth Service', () => {

@@ -1,12 +1,12 @@
 const packageJson = require('../../package.json');
 
-const appUrl = 'http://localhost:4200';
+const appUrl = 'https://zakolik.eu';
 
 export const environment = {
   appName: 'Zakolik',
   envName: 'PROD',
   appUrl,
-  apiUrl: 'http://localhost:4000',
+  apiUrl: 'https://zakolik.eu/api',
   production: true,
   test: false,
   i18nPrefix: '',

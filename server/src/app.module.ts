@@ -5,10 +5,11 @@ import {TransactionModule} from './transactions/transaction.module';
 import {ConfigModule} from './config/config.module';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {UserSettingsModule} from './user-settings/user-settings.module';
+import {ConfigService} from './config/config.service';
 
 @Module({
     imports: [
-        TypeOrmModule.forRoot(),
+        provideDatabaseOrmModule(),
         UserModule,
         UserSettingsModule,
         TransactionModule,
@@ -18,5 +19,19 @@ import {UserSettingsModule} from './user-settings/user-settings.module';
     controllers: [],
     providers: [],
 })
-export class AppModule {
+export class AppModule {}
+
+function provideDatabaseOrmModule() {
+    const configService = new ConfigService(`${process.env.NODE_ENV}.env`);
+
+    return TypeOrmModule.forRoot({
+        type: 'postgres',
+        host: 'database',
+        port: 5432,
+        username: configService.get('POSTGRES_USER'),
+        password: configService.get('POSTGRES_PASSWORD'),
+        database: configService.get('POSTGRES_DB'),
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: true,
+    });
 }
