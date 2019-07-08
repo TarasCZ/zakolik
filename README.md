@@ -4,8 +4,15 @@
 
 Web application created for personal finance tracking.
 
-Frontend application is being developed by Angular 7 
-Backend application is being developed by NestJS 5
+Technologies used on Front end:
+- Angular 8
+- NgRx 8
+- RxJs 6
+- Material Design
+
+Technologies used on Back end:
+- NestJS 5
+- RxJs 6
 
 Upcoming features:
 - [x] Incomes/Expenses tracking
